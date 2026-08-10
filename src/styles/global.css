@@ -1,0 +1,160 @@
+/* Hallmark · genre: atmospheric · macrostructure: Split Workbench · theme: custom (midnight 262 / phosphor 150) · designed-as-app · design-system: design.md */
+@import "tailwindcss";
+
+@theme {
+  /* TRACE design tokens — see design.md (locked system) */
+  --color-bg: oklch(13% 0.012 262);
+  --color-panel: oklch(17% 0.014 262);
+  --color-panel2: oklch(21% 0.016 262);
+  --color-border: oklch(28% 0.014 262);
+  --color-muted: oklch(66% 0.012 262);
+  --color-text: oklch(93% 0.008 262);
+  --color-accent: oklch(78% 0.13 150);
+  --color-warning: oklch(78% 0.14 80);
+  --color-danger: oklch(62% 0.19 25);
+  --color-success: oklch(75% 0.13 155);
+  --color-focus: oklch(78% 0.13 150);
+
+  --font-sans: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  --radius-card: 8px;
+  --shadow-card: 0 4px 16px oklch(0% 0 0 / 0.4);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--color-accent) 30%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Tabular numbers for all data displays */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Animations — functional only: panel fade, semantic urgency pulse, typing dots */
+@utility animate-fade-in {
+  animation: fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-slide-in {
+  animation: slide-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-pulse-danger {
+  animation: pulse-danger 0.9s ease-in-out infinite;
+}
+
+@utility animate-pulse-warning {
+  animation: pulse-warning 0.9s ease-in-out infinite;
+}
+
+@utility typing-dot {
+  animation: blink-dot 1.2s infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-danger {
+  0%,
+  100% {
+    color: var(--color-danger);
+    opacity: 1;
+  }
+  50% {
+    color: var(--color-danger);
+    opacity: 0.6;
+  }
+}
+
+@keyframes pulse-warning {
+  0%,
+  100% {
+    color: var(--color-warning);
+    opacity: 1;
+  }
+  50% {
+    color: var(--color-warning);
+    opacity: 0.7;
+  }
+}
+
+@keyframes blink-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-panel);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(38% 0.014 262);
+}
+
+/* Reduced motion: collapse everything to instant opacity crossfade */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
