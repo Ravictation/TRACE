@@ -1,14 +1,17 @@
 import { useGame } from '../../game/GameContext';
+import { STRINGS } from '../../i18n/strings';
 import { useCountUpLocale } from '../../utils/useCountUp';
 
 export default function PlatformFacebook() {
   const { state, currentCase } = useGame();
+  const T = STRINGS[state.language];
   const post = currentCase.viralPost;
-  const shares = useCountUpLocale(state.shareCount);
-  const likes = useCountUpLocale(state.shareCount * 0.8);
+  const locale = state.language === 'id' ? 'id-ID' : 'en-US';
+  const shares = useCountUpLocale(state.shareCount, undefined, locale);
+  const likes = useCountUpLocale(state.shareCount * 0.8, undefined, locale);
 
   return (
-    <div className="rounded-xl border border-border bg-[#242526] p-4">
+    <div className="border-2 border-border bg-[#242526] p-4 shadow-hard">
       {/* Post header */}
       <div className="flex items-start gap-3">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#3a3b3c] font-mono text-sm font-bold text-white">
@@ -22,7 +25,7 @@ export default function PlatformFacebook() {
             </svg>
           </div>
           <div className="flex items-center gap-1 text-xs text-[#b0b3b8]">
-            <span>Sponsored</span>
+            <span>{T.platforms.sponsored}</span>
             <span>·</span>
             <span>{post.postedAgo}</span>
             <span className="ml-1 flex items-center gap-1">🌐</span>
@@ -48,7 +51,7 @@ export default function PlatformFacebook() {
       {/* Image */}
       <div className="mt-3 overflow-hidden border-y border-[#3e4042] bg-[#18191a]">
         <div className="flex aspect-video items-center justify-center text-[#b0b3b8]">
-          <span className="font-mono text-xs">[ flood photo ]</span>
+          <span className="font-mono text-xs">{T.platforms.photoPlaceholder}</span>
         </div>
       </div>
 
@@ -63,21 +66,21 @@ export default function PlatformFacebook() {
           <span className="tabular-nums ml-1.5">{likes}</span>
         </div>
         <span className="flex gap-3">
-          <span className="tabular-nums">{Math.round(state.shareCount * 0.35).toLocaleString()} comments</span>
-          <span className="tabular-nums font-semibold text-white">{shares} shares</span>
+          <span className="tabular-nums">{Math.round(state.shareCount * 0.35).toLocaleString(locale)} {T.platforms.comments}</span>
+          <span className="tabular-nums font-semibold text-white">{shares} {T.platforms.shares}</span>
         </span>
       </div>
 
       {/* Action buttons */}
       <div className="flex items-center justify-between border-t border-[#3e4042] pt-1.5 text-[13px] font-semibold text-[#b0b3b8]">
         <button className="flex flex-1 items-center justify-center gap-2 rounded-md py-2 transition hover:bg-[#3a3b3c]">
-          <span>👍</span> Like
+          <span>👍</span> {T.platforms.like}
         </button>
         <button className="flex flex-1 items-center justify-center gap-2 rounded-md py-2 transition hover:bg-[#3a3b3c]">
-          <span>💬</span> Comment
+          <span>💬</span> {T.platforms.comment}
         </button>
         <button className="flex flex-1 items-center justify-center gap-2 rounded-md py-2 text-white transition hover:bg-[#3a3b3c]">
-          <span>↗️</span> Share
+          <span>↗️</span> {T.platforms.share}
         </button>
       </div>
     </div>

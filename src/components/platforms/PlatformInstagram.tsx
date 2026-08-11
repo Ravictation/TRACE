@@ -1,14 +1,17 @@
 import { useGame } from '../../game/GameContext';
+import { STRINGS } from '../../i18n/strings';
 import { useCountUpLocale } from '../../utils/useCountUp';
 
 export default function PlatformInstagram() {
   const { state, currentCase } = useGame();
+  const T = STRINGS[state.language];
   const post = currentCase.viralPost;
-  const reposts = useCountUpLocale(state.shareCount);
-  const comments = useCountUpLocale(Math.round(state.shareCount * 0.4));
+  const locale = state.language === 'id' ? 'id-ID' : 'en-US';
+  const reposts = useCountUpLocale(state.shareCount, undefined, locale);
+  const comments = useCountUpLocale(Math.round(state.shareCount * 0.4), undefined, locale);
 
   return (
-    <div className="rounded-xl border border-border bg-black p-4">
+    <div className="border-2 border-border bg-black p-4 shadow-hard">
       {/* Post header */}
       <div className="flex items-center gap-3">
         {/* Gradient ring avatar */}
@@ -29,7 +32,7 @@ export default function PlatformInstagram() {
       {/* Image */}
       <div className="my-3 overflow-hidden rounded border border-[#262626]">
         <div className="flex aspect-video items-center justify-center bg-[#1a1a1a] text-[#8e8e8e]">
-          <span className="font-mono text-xs">[ flood photo ]</span>
+          <span className="font-mono text-xs">{T.platforms.photoPlaceholder}</span>
         </div>
       </div>
 
@@ -50,18 +53,18 @@ export default function PlatformInstagram() {
       </div>
 
       <p className="tabular-nums mt-3 text-sm font-semibold text-white">
-        {reposts} reposts
+        {reposts} {T.platforms.reposts}
       </p>
 
       {/* Caption */}
       <p className="mt-1 text-sm text-white">
         <span className="font-semibold">{post.authorHandle.slice(1)}</span>{' '}
         {post.content}
-        <span className="ml-1 text-[#3897f0]">#BreakingNews #Floods #Help</span>
+        <span className="ml-1 text-[#3897f0]">{T.platforms.instaHashtags}</span>
       </p>
 
-      <div className="tabular-nums mt-1 text-[13px] text-[#8e8e8e]">View all {comments} comments</div>
-      <div className="mt-2 text-[10px] uppercase tracking-wider text-[#8e8e8e]">2 hours ago</div>
+      <div className="tabular-nums mt-1 text-[13px] text-[#8e8e8e]">{T.platforms.viewAllComments(comments)}</div>
+      <div className="mt-2 text-[10px] uppercase tracking-wider text-[#8e8e8e]">{T.platforms.hoursAgo}</div>
     </div>
   );
 }

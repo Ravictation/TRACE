@@ -1,7 +1,9 @@
 import { useGame } from '../game/GameContext';
+import { STRINGS } from '../i18n/strings';
 
 export default function VerdictPanel() {
   const { state, dispatch, currentCase } = useGame();
+  const T = STRINGS[state.language];
 
   const submit = () => {
     if (!state.verdictSelected || !state.actionSelected) return;
@@ -9,65 +11,54 @@ export default function VerdictPanel() {
   };
 
   return (
-    <div className="border-t border-border bg-panel2 p-4">
+    <div className="border-t-2 border-border bg-panel2 p-4">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="font-mono text-sm font-bold tracking-wider text-text">VERDICT</h3>
-        <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted">
-          What's your conclusion?
+        <h3 className="font-display text-base font-bold uppercase tracking-wide text-text">
+          {T.verdict.heading}
+        </h3>
+        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-muted">
+          {T.verdict.prompt}
         </span>
       </div>
 
       {/* Conclusion options */}
-      <div className="mb-3 space-y-1.5">
-        {currentCase.verdict.options.map((opt) => (
-          <label
-            key={opt.id}
-            className={`flex cursor-pointer items-center gap-2.5 rounded-md border px-3 py-2 text-sm transition ${
-              state.verdictSelected === opt.id
-                ? 'border-accent bg-accent/10 text-text'
-                : 'border-border bg-panel text-muted hover:border-accent/50'
-            }`}
-          >
-            <input
-              type="radio"
-              name="verdict"
-              className="accent-accent"
-              checked={state.verdictSelected === opt.id}
-              onChange={() => dispatch({ type: 'SELECT_VERDICT', verdictId: opt.id })}
-            />
-            {opt.label}
-          </label>
-        ))}
-      </div>
-
-      {/* Confidence slider */}
-      <div className="mb-3">
-        <div className="mb-1 flex items-center justify-between font-mono text-xs">
-          <span className="uppercase tracking-[0.08em] text-muted">Confidence</span>
-          <span className="tabular-nums font-bold text-text">{state.confidence}%</span>
-        </div>
-        <input
-          type="range"
-          min={0}
-          max={100}
-          value={state.confidence}
-          onChange={(e) => dispatch({ type: 'SET_CONFIDENCE', value: Number(e.target.value) })}
-          className="w-full accent-accent"
-        />
+      <div className="mb-3 space-y-2">
+        {currentCase.verdict.options.map((opt) => {
+          const isSelected = state.verdictSelected === opt.id;
+          return (
+            <label
+              key={opt.id}
+              className={`flex cursor-pointer items-center gap-2.5 border-2 border-border px-3 py-2 text-sm transition ${
+                isSelected
+                  ? 'bg-accent text-border shadow-[2px_2px_0_0_#1f1b16]'
+                  : 'bg-panel text-text hover:bg-accent/30'
+              }`}
+            >
+              <input
+                type="radio"
+                name="verdict"
+                className="accent-border"
+                checked={isSelected}
+                onChange={() => dispatch({ type: 'SELECT_VERDICT', verdictId: opt.id })}
+              />
+              {opt.label}
+            </label>
+          );
+        })}
       </div>
 
       {/* Action */}
       <div className="mb-4">
-        <div className="mb-1 font-mono text-xs uppercase tracking-[0.08em] text-muted">
-          Recommended action
+        <div className="mb-1 font-mono text-xs font-bold uppercase tracking-[0.08em] text-muted">
+          {T.verdict.recommendedAction}
         </div>
         <select
           value={state.actionSelected ?? ''}
           onChange={(e) => dispatch({ type: 'SELECT_ACTION', action: e.target.value })}
-          className="w-full rounded-md border border-border bg-panel px-3 py-2 text-sm text-text outline-none focus:border-accent"
+          className="w-full border-2 border-border bg-panel px-3 py-2 text-sm text-text outline-none focus:outline-3 focus:outline-focus"
         >
           <option value="" disabled>
-            Select action...
+            {T.verdict.selectAction}
           </option>
           {currentCase.verdict.actionOptions.map((a) => (
             <option key={a} value={a}>
@@ -80,9 +71,9 @@ export default function VerdictPanel() {
       <button
         onClick={submit}
         disabled={!state.verdictSelected || !state.actionSelected}
-        className="w-full rounded-lg border border-accent bg-accent/15 py-3 font-mono text-sm font-bold tracking-wider text-accent transition hover:bg-accent/25 disabled:cursor-not-allowed disabled:border-border disabled:bg-panel disabled:text-muted"
+        className="btn-brutal w-full bg-accent py-3 font-mono text-sm font-bold tracking-wider text-border disabled:cursor-not-allowed disabled:bg-panel disabled:text-muted disabled:shadow-none"
       >
-        SUBMIT VERDICT
+        {T.verdict.submit}
       </button>
     </div>
   );

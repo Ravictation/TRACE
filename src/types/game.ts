@@ -1,3 +1,5 @@
+export type Lang = 'id' | 'en';
+
 export type PlatformId = 'twitter' | 'instagram' | 'facebook' | 'whatsapp' | 'tiktok';
 
 export type ToolType =
@@ -5,7 +7,6 @@ export type ToolType =
   | 'account'
   | 'news-wire'
   | 'link'
-  | 'image-exam'
   | 'source'
   | 'fundraiser'
   | 'official';
@@ -19,6 +20,12 @@ export interface VerdictOption {
 
 export interface Debrief {
   headline: string;
+  /** Shown when the case ends in failure (timeout or saturation). */
+  failHeadline: string;
+  /** What actually happened because the player failed. */
+  failConsequence: string;
+  /** Light educational extra shown on the debrief screen. */
+  funFact: string;
   sift: { s: string; i: string; f: string; t: string };
   realWorldTakeaway: string;
   stats: {
@@ -87,12 +94,6 @@ export interface LinkData {
   mismatchNote: string;
 }
 
-export interface ImageExamData {
-  imageUrl: string;
-  zoomHint: string;
-  clues: { id: string; x: number; y: number; label: string; detail: string }[];
-}
-
 export interface SourceData {
   witnessName: string;
   introLines: string[];
@@ -129,7 +130,6 @@ export interface CaseTools {
   account?: AccountData;
   newsWire?: NewsWireData;
   link?: LinkData;
-  imageExam?: ImageExamData;
   source?: SourceData;
   fundraiser?: FundraiserData;
   official?: OfficialData;
@@ -169,8 +169,33 @@ export interface ChatMessage {
   deflection?: boolean;
 }
 
+export type EndReason = 'verdict' | 'timeout' | 'saturation';
+
+export interface CaseResult {
+  caseId: string;
+  correct: boolean;
+  verdictId: string;
+  actionId: string;
+  confidence: number;
+  timeSeconds: number;
+  cluesFound: number;
+  sharesAtSubmit: number;
+  score: number;
+  completedAt: string;
+  /** How the case ended: player verdict, time ran out, or the post saturated. */
+  endReason: EndReason;
+}
+
+export interface LeaderboardEntry {
+  name: string;
+  score: number;
+  casesSolved: number;
+  date: string;
+}
+
 export interface GameState {
   caseIndex: number;
+  language: Lang;
   phase: Phase;
   elapsedSeconds: number;
   shareCount: number;
@@ -178,10 +203,13 @@ export interface GameState {
   maxFocusPoints: number;
   discoveredClues: Clue[];
   activeTool: ToolType | null;
+  /** Tools already paid for — reopening one is free. */
+  openedTools: ToolType[];
   interrogationMessages: ChatMessage[];
   isSourceTyping: boolean;
   submitted: boolean;
   verdictSelected: string | null;
   actionSelected: string | null;
   confidence: number;
+  completedResults: (CaseResult | null)[];
 }

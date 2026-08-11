@@ -2,6 +2,8 @@
 
 **TRACE** adalah game verifikasi fakta bergaya OSINT (Open-Source Intelligence) untuk UNESCO Youth Hackathon 2026. Pemain berperan sebagai jurnalis di meja verifikasi — menerima konten viral, menyelidiki dengan tools OSINT simulasi, menginterogasi sumber (AI), dan memutuskan: *benarkah ini?*
 
+**🌐 Bilingual (ID/EN):** seluruh game tersedia dalam Bahasa Indonesia dan English. Pilih bahasa di layar intro (default: Indonesia), preferensi tersimpan di localStorage. Semua konten kasus & UI diterjemahkan penuh.
+
 **Vertikal slice: 4 kasus hoaks Indonesia.** Konten viral dirender ulang dalam mock platform sosial media yang realistis (X, TikTok, Instagram, Facebook, WhatsApp) — karena konten palsu nyebar di platform yang pemain pakai sehari-hari.
 
 ---
@@ -13,14 +15,14 @@ Konten viral masuk (share counter naik live)
       ↓
 Pilih tool investigasi (5 focus point, tiap tool habis 1)
       ↓
-Temukan clue → verdict (confidence slider + action)
+Temukan clue → verdict + action
       ↓
 Konsekuensi + debrief SIFT (Stop / Investigate / Find / Trace)
       ↓
 Kasus berikutnya → 4 kasus total
 ```
 
-**Tekanan waktu nyata:** share counter berdetak (+120–300/menit). Salah verdict = penipuan menyebar. Counter berubah amber ≥70% threshold, merah ≥90%.
+**Tekanan waktu nyata:** share counter berdetak (+120–300/menit). Salah verdict = penipuan menyebar. Counter berubah amber ≥70% threshold, merah ≥90%. **End game:** waktu habis (limit per kasus) atau counter mencapai threshold = kasus gagal otomatis dengan konsekuensi khusus per kasus (mis. penipu mengantongi donasi). Skor: dasar + bonus kecepatan (makin cepat makin tinggi) + share dicegah.
 
 ## 🗂 Kasus
 
@@ -39,7 +41,6 @@ Kasus berikutnya → 4 kasus total
 | 👤 Account Inspector | Profil: followers, umur akun, verifikasi, recent posts, red flags |
 | 📰 News Wire | Headline media — ketiadaan liputan = bukti |
 | 🔗 Link Inspector | Expand short link, bandingkan domain asli vs klaim |
-| 🔬 Image Examiner | Hotspot zoom — petunjuk geolocation (plat, rambu, vegetasi) |
 | 💬 Interrogate Source | Chat bebas dengan saksi AI — cari kontradiksi |
 | 🏛 Official Sources | Pernyataan lembaga resmi (PVMBG, Kemenkes, WHO, dll) |
 | 💰 Fundraiser Check | Mockup halaman galang dana — verifikasi badge, rekening, lembaga |
@@ -90,6 +91,7 @@ src/
 │   ├── embedding.ts           — transformers.js + keyword fallback
 │   └── useCountUp.ts          — animasi angka count-up (easeOutCubic)
 ├── components/
+│   ├── Mascot                 — 8-bit detektif pixel art (grid CSS + keyframes, klik = wave)
 │   ├── DesktopTerminal        — shell split-screen
 │   ├── StatusBar              — timer + share counter + focus points
 │   ├── SocialFeed             — platform tabs per kasus

@@ -1,18 +1,17 @@
 import { useGame } from '../../game/GameContext';
+import { STRINGS } from '../../i18n/strings';
 import { useCountUpLocale } from '../../utils/useCountUp';
-
-const GROUP_MESSAGES = [
-  { sender: 'Budi', text: 'guys ada info gede nih, tolong dibaca 🙏', time: '13:41' },
-  { sender: 'Sari', text: 'iya aku dapat forward yang sama di grup lain 😱', time: '13:42' },
-];
 
 export default function PlatformWhatsApp() {
   const { state, currentCase } = useGame();
+  const T = STRINGS[state.language];
+  const locale = state.language === 'id' ? 'id-ID' : 'en-US';
   const post = currentCase.viralPost;
-  const forwards = useCountUpLocale(state.shareCount);
+  const forwards = useCountUpLocale(state.shareCount, undefined, locale);
+  const groupMessages = T.platforms.groupMessages;
 
   return (
-    <div className="rounded-xl border border-border bg-[#0b141a] p-4">
+    <div className="border-2 border-border bg-[#0b141a] p-4 shadow-hard">
       {/* Chat header */}
       <div className="mb-3 flex items-center gap-3 border-b border-[#1f2c34] pb-3">
         <div className="relative">
@@ -22,12 +21,12 @@ export default function PlatformWhatsApp() {
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-1 font-semibold text-[#e9edef]">
-            🚨 Info Warga — Berita
+            {T.platforms.groupName}
             <svg viewBox="0 0 20 20" className="size-4 fill-[#53bdeb]">
               <path d="M7 16.5l-1.1 1.1a.8.8 0 0 1-1.1 0 .8.8 0 0 1 0-1.1l2.4-2.4.6-.6H6.6l-2.8 2.8a.8.8 0 0 1-1.1 0 .8.8 0 0 1 0-1.1L5.5 12H3.5a.8.8 0 1 1 0-1.7h1.9l2.6-2.6a.8.8 0 0 1 1.1 1.1l-.7.7h6.9l-.7-.7a.8.8 0 1 1 1.1-1.1l2.6 2.6h1.9a.8.8 0 1 1 0 1.7h-2l2.8 2.8a.8.8 0 0 1 0 1.1.8.8 0 0 1-1.1 0l-2.8-2.8h-1.7l.6.6 2.4 2.4a.8.8 0 0 1 0 1.1.8.8 0 0 1-1.1 0L14 16.5z" />
             </svg>
           </div>
-          <div className="text-xs text-[#8696a0]">27 members · online</div>
+          <div className="text-xs text-[#8696a0]">{T.platforms.membersOnline}</div>
         </div>
         <button className="text-[#8696a0]">⋯</button>
       </div>
@@ -35,7 +34,7 @@ export default function PlatformWhatsApp() {
       {/* Messages */}
       <div className="space-y-2">
         {/* Group messages */}
-        {GROUP_MESSAGES.map((m, i) => (
+        {groupMessages.map((m, i) => (
           <div key={i} className="flex justify-start">
             <div className="max-w-[85%] rounded-lg rounded-tl-none bg-[#202c33] px-3 py-1.5">
               <div className="text-xs font-semibold text-[#53bdeb]">{m.sender}</div>
@@ -49,7 +48,7 @@ export default function PlatformWhatsApp() {
         <div className="flex justify-start">
           <div className="max-w-[88%] rounded-lg rounded-tl-none bg-[#202c33] px-3 py-2">
             <div className="mb-1 flex items-center gap-1.5 text-[11px] text-[#8696a0]">
-              <span className="rounded bg-[#182229] px-1.5 py-0.5 text-[#f7f8f8]">⏩ Forwarded many times</span>
+              <span className="rounded bg-[#182229] px-1.5 py-0.5 text-[#f7f8f8]">{T.platforms.forwardedMany}</span>
             </div>
             <div className="mb-1.5 text-sm text-[#53bdeb]">
               <span className="font-semibold">{post.authorName}</span>
@@ -60,7 +59,7 @@ export default function PlatformWhatsApp() {
             </p>
             <div className="mt-2 overflow-hidden rounded-lg border border-[#2a3942]">
               <div className="flex aspect-video items-center justify-center bg-[#182229] text-[#8696a0]">
-                <span className="font-mono text-xs">[ flood photo ]</span>
+                <span className="font-mono text-xs">{T.platforms.photoPlaceholder}</span>
               </div>
             </div>
             <div className="mt-1.5 flex justify-end gap-1 text-[10px] text-[#8696a0]">
@@ -76,7 +75,7 @@ export default function PlatformWhatsApp() {
         {/* Live spread indicator */}
         <div className="flex justify-center">
           <span className="tabular-nums rounded-full bg-[#202c33] px-3 py-1 font-mono text-[10px] text-[#8696a0]">
-            ⚡ forwarded {forwards}× across chats
+            {T.platforms.forwardedAcross(forwards)}
           </span>
         </div>
       </div>
@@ -85,7 +84,7 @@ export default function PlatformWhatsApp() {
       <div className="mt-3 flex items-center gap-2 border-t border-[#1f2c34] pt-3">
         <button className="text-[#8696a0]">▢</button>
         <div className="flex-1 rounded-full bg-[#2a3942] px-4 py-2 text-sm text-[#8696a0]">
-          Message
+          {T.platforms.message}
         </div>
         <div className="flex size-9 items-center justify-center rounded-full bg-[#00a884] text-white">
           <svg viewBox="0 0 24 24" className="size-5 fill-current"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>

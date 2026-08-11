@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useGame } from '../../game/GameContext';
+import { STRINGS } from '../../i18n/strings';
 import type { Clue } from '../../types/game';
 
 export default function OfficialStatements() {
-  const { dispatch, currentCase } = useGame();
+  const { state, dispatch, currentCase } = useGame();
+  const T = STRINGS[state.language];
   const off = currentCase.tools.official;
   const [confirmed, setConfirmed] = useState(false);
 
@@ -15,7 +17,7 @@ export default function OfficialStatements() {
     const clue: Clue = {
       id: 'clue-official',
       tool: 'official',
-      title: 'Lembaga resmi menyatakan sebaliknya',
+      title: T.official.clueTitle,
       description: off.summaryNote,
       category: 'red_flag',
     };
@@ -25,7 +27,7 @@ export default function OfficialStatements() {
   return (
     <div className="animate-slide-in">
       <div className="mb-3">
-        <h3 className="font-mono text-sm font-bold tracking-wider text-text">🏛 OFFICIAL SOURCES</h3>
+        <h3 className="font-mono text-sm font-bold tracking-wider text-text">{T.official.heading}</h3>
         <p className="font-mono text-xs text-muted">{off.description}</p>
       </div>
 
@@ -33,7 +35,7 @@ export default function OfficialStatements() {
         {off.statements.map((s) => (
           <div
             key={`${s.agency}-${s.date}`}
-            className="rounded-md border border-border bg-panel p-2.5"
+            className="rounded-none border-2 border-border bg-panel p-2.5"
           >
             <div className="flex items-center gap-2">
               <span
@@ -55,15 +57,15 @@ export default function OfficialStatements() {
         ))}
       </div>
 
-      <div className="mt-3 rounded-md border border-border bg-panel2 p-3">
+      <div className="mt-3 rounded-none border-2 border-border bg-panel2 p-3">
         <p className="mb-2 font-mono text-xs leading-relaxed text-muted">{off.summaryNote}</p>
         <button
           onClick={confirm}
           disabled={confirmed}
-          className={`w-full rounded-md border py-2 font-mono text-xs font-bold tracking-wider transition ${
+          className={`w-full rounded-none border py-2 font-mono text-xs font-bold tracking-wider transition ${
             confirmed
-              ? 'border-success bg-success/10 text-success'
-              : 'border-warning bg-warning/10 text-warning hover:bg-warning/20'
+              ? 'animate-pop-in border-2 border-success bg-success text-white'
+              : 'border-2 border-warning bg-warning text-white hover:bg-warning/90'
           }`}
         >
           {confirmed ? off.confirmSuccessLabel : off.confirmLabel}

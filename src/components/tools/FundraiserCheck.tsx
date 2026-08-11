@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useGame } from '../../game/GameContext';
+import { STRINGS } from '../../i18n/strings';
 import type { Clue } from '../../types/game';
 
 export default function FundraiserCheck() {
-  const { dispatch, currentCase } = useGame();
+  const { state, dispatch, currentCase } = useGame();
+  const T = STRINGS[state.language];
   const fr = currentCase.tools.fundraiser;
   const [checked, setChecked] = useState<Set<string>>(new Set());
 
@@ -33,17 +35,15 @@ export default function FundraiserCheck() {
   return (
     <div className="animate-slide-in">
       <div className="mb-3">
-        <h3 className="font-mono text-sm font-bold tracking-wider text-text">💰 FUNDRAISER CHECK</h3>
-        <p className="font-mono text-xs text-muted">
-          Mockup platform galang dana — cek verifikasi, rekening, dan lembaga
-        </p>
+        <h3 className="font-mono text-sm font-bold tracking-wider text-text">{T.fundraiser.heading}</h3>
+        <p className="font-mono text-xs text-muted">{T.fundraiser.sub}</p>
       </div>
 
       {/* Donation page mockup */}
-      <div className="overflow-hidden rounded-md border border-border bg-panel">
+      <div className="overflow-hidden rounded-none border-2 border-border bg-panel">
         {/* Page header */}
         <div className="flex items-center justify-between border-b border-border bg-panel2 px-4 py-2.5">
-          <span className="font-mono text-xs font-bold text-text">GALANG DANA ONLINE</span>
+          <span className="font-mono text-xs font-bold text-text">{T.fundraiser.pageHeader}</span>
           <span className="font-mono text-[10px] text-muted">donasi.id</span>
         </div>
 
@@ -59,25 +59,25 @@ export default function FundraiserCheck() {
             </div>
             {fr.isVerified ? (
               <span className="flex shrink-0 items-center gap-1 rounded-full bg-success/15 px-2.5 py-1 font-mono text-[10px] font-bold text-success">
-                ✓ TERVERIFIKASI
+                {T.fundraiser.verified}
               </span>
             ) : (
               <span className="flex shrink-0 items-center gap-1 rounded-full bg-danger/15 px-2.5 py-1 font-mono text-[10px] font-bold text-danger">
-                ✗ TIDAK TERVERIFIKASI
+                {T.fundraiser.unverified}
               </span>
             )}
           </div>
 
           {/* Photo */}
-          <div className="mb-3 flex aspect-video items-center justify-center rounded border border-border bg-panel2 text-muted">
-            <span className="font-mono text-xs">[ foto korban ]</span>
+          <div className="mb-3 flex aspect-video items-center justify-center rounded border-2 border-border bg-panel2 text-muted">
+            <span className="font-mono text-xs">{T.fundraiser.photoPlaceholder}</span>
           </div>
 
           {/* Progress */}
           <div className="mb-1.5 flex items-end justify-between">
             <div>
               <div className="text-lg font-bold text-text">{fr.raisedAmount}</div>
-              <div className="font-mono text-[11px] text-muted">dari target {fr.targetAmount}</div>
+              <div className="font-mono text-[11px] text-muted">{T.fundraiser.fromTarget(fr.targetAmount)}</div>
             </div>
             <div className="text-right font-mono text-[11px] text-muted">
               <div>{fr.backersCount}</div>
@@ -89,27 +89,45 @@ export default function FundraiserCheck() {
           </div>
 
           {/* Fund details */}
-          <div className="mb-3 space-y-1.5 rounded border border-border bg-panel2 p-3 font-mono text-xs">
+          <div className="mb-3 space-y-1.5 rounded border-2 border-border bg-panel2 p-3 font-mono text-xs">
             <div className="flex justify-between gap-3">
-              <span className="text-muted">Dana masuk ke:</span>
-              <span className={`text-right font-bold ${fr.bankAccountName.includes('pribadi') ? 'text-danger' : 'text-text'}`}>
+              <span className="text-muted">{T.fundraiser.fundsGoTo}</span>
+              <span
+                className={`text-right font-bold ${
+                  fr.bankAccountName.includes('pribadi') || fr.bankAccountName.includes('personal')
+                    ? 'text-danger'
+                    : 'text-text'
+                }`}
+              >
                 {fr.bankAccountName}
               </span>
             </div>
             <div className="flex justify-between gap-3">
-              <span className="text-muted">Lembaga:</span>
-              <span className={`text-right ${fr.charityName.includes('tidak') ? 'text-danger' : 'text-text'}`}>
+              <span className="text-muted">{T.fundraiser.agency}</span>
+              <span
+                className={`text-right ${
+                  fr.charityName.includes('tidak') || fr.charityName.includes('not')
+                    ? 'text-danger'
+                    : 'text-text'
+                }`}
+              >
                 {fr.charityName}
               </span>
             </div>
             <div className="flex justify-between gap-3">
-              <span className="text-muted">Terdaftar di Kemensos:</span>
-              <span className={`text-right ${fr.registeredSince.includes('belum') ? 'text-danger' : 'text-text'}`}>
+              <span className="text-muted">{T.fundraiser.registeredAt}</span>
+              <span
+                className={`text-right ${
+                  fr.registeredSince.includes('belum') || fr.registeredSince.includes('not')
+                    ? 'text-danger'
+                    : 'text-text'
+                }`}
+              >
                 {fr.registeredSince}
               </span>
             </div>
             <div className="flex justify-between gap-3">
-              <span className="text-muted">Galang dana dibuat:</span>
+              <span className="text-muted">{T.fundraiser.created}</span>
               <span className="text-right text-warning">{fr.createdDaysAgo}</span>
             </div>
           </div>
@@ -119,16 +137,16 @@ export default function FundraiserCheck() {
       {/* Red flag marking */}
       <div className="mt-3">
         <div className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-muted">
-          Apa yang kamu temukan? (klik untuk tandai)
+          {T.fundraiser.noticePrompt}
         </div>
         <div className="space-y-1.5">
           {fr.redFlags.map((f) => (
             <button
               key={f.id}
               onClick={() => toggle(f.id)}
-              className={`flex w-full items-center justify-between rounded-md border px-3 py-2 text-left text-xs transition ${
+              className={`flex w-full items-center justify-between rounded-none border px-3 py-2 text-left text-xs transition ${
                 checked.has(f.id)
-                  ? 'border-success bg-success/10 text-text'
+                  ? 'animate-pop-in border-2 border-success bg-success text-white'
                   : 'border-border bg-panel text-muted hover:border-accent'
               }`}
             >

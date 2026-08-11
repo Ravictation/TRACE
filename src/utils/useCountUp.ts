@@ -34,7 +34,7 @@ export function useCountUp(value: number, duration = 700): number {
 }
 
 /** Formatted helper: keeps the raw number for toLocaleString usage. */
-export function useCountUpLocale(value: number, duration?: number): string {
+export function useCountUpLocale(value: number, duration?: number, locale?: string): string {
   const display = useCountUp(value, duration);
-  return display.toLocaleString();
+  return display.toLocaleString(locale);
 }

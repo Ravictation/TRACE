@@ -2,6 +2,15 @@
   {
     "date": "2026-08-10",
     "macrostructure": "Split Workbench",
+    "theme": "custom neobrutalism (cream 90 / signal-yellow 95)",
+    "enrichment": "none",
+    "brief": "TRACE UI theme conversion to neobrutalism",
+    "scope": "app",
+    "theme_axes": "light / display-sans / yellow-accent"
+  },
+  {
+    "date": "2026-08-10",
+    "macrostructure": "Split Workbench",
     "theme": "custom (midnight 262 / phosphor 150)",
     "enrichment": "none",
     "brief": "TRACE gamified OSINT game — dark newsroom terminal UI redesign",

@@ -1,25 +1,25 @@
-/* Hallmark · genre: atmospheric · macrostructure: Split Workbench · theme: custom (midnight 262 / phosphor 150) · designed-as-app · design-system: design.md */
+/* Hallmark · genre: neobrutalism · macrostructure: Split Workbench · theme: custom (cream 90 / signal-yellow 95) · designed-as-app · design-system: design.md */
 @import "tailwindcss";
 
 @theme {
-  /* TRACE design tokens — see design.md (locked system) */
-  --color-bg: oklch(13% 0.012 262);
-  --color-panel: oklch(17% 0.014 262);
-  --color-panel2: oklch(21% 0.016 262);
-  --color-border: oklch(28% 0.014 262);
-  --color-muted: oklch(66% 0.012 262);
-  --color-text: oklch(93% 0.008 262);
-  --color-accent: oklch(78% 0.13 150);
-  --color-warning: oklch(78% 0.14 80);
-  --color-danger: oklch(62% 0.19 25);
-  --color-success: oklch(75% 0.13 155);
-  --color-focus: oklch(78% 0.13 150);
+  /* TRACE design tokens — see design.md (locked system, neobrutalism) */
+  --color-bg: oklch(95% 0.02 90);
+  --color-panel: oklch(98% 0.015 90);
+  --color-panel2: oklch(88% 0.03 85);
+  --color-border: oklch(22% 0.03 60);
+  --color-muted: oklch(48% 0.03 70);
+  --color-text: oklch(18% 0.03 60);
+  --color-accent: oklch(86% 0.19 95);
+  --color-warning: oklch(70% 0.19 55);
+  --color-danger: oklch(58% 0.22 30);
+  --color-success: oklch(58% 0.17 150);
+  --color-focus: oklch(22% 0.03 60);
+
+  --shadow-hard: 4px 4px 0 0 oklch(22% 0.03 60);
 
   --font-sans: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk Variable", "Geist Variable", system-ui, sans-serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, "Cascadia Code", Consolas, monospace;
-
-  --radius-card: 8px;
-  --shadow-card: 0 4px 16px oklch(0% 0 0 / 0.4);
 }
 
 @layer base {
@@ -39,11 +39,12 @@
   }
 
   ::selection {
-    background: color-mix(in oklch, var(--color-accent) 30%, transparent);
+    background: var(--color-accent);
+    color: var(--color-border);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-focus);
+    outline: 3px solid var(--color-focus);
     outline-offset: 2px;
   }
 
@@ -53,7 +54,40 @@
   }
 }
 
-/* Animations — functional only: panel fade, semantic urgency pulse, typing dots */
+/* ── Neobrutalist primitives ───────────────────────────────── */
+
+/* Sticker card: 2px black border, hard shadow, square corners */
+@utility card-brutal {
+  border: 2px solid var(--color-border);
+  border-radius: 0;
+  background: var(--color-panel);
+  box-shadow: var(--shadow-hard);
+}
+
+/* Chunky button: sticker that gets pushed into the wall on press */
+@utility btn-brutal {
+  border: 2px solid var(--color-border);
+  border-radius: 0;
+  box-shadow: var(--shadow-hard);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition:
+    transform 50ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 50ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-brutal:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 0 var(--color-border);
+}
+.btn-brutal:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* ── Animations ────────────────────────────────────────────── */
+
+/* Panel transitions */
 @utility animate-fade-in {
   animation: fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -62,6 +96,46 @@
   animation: slide-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Sticker pop — scales in with a hard overshoot (neobrutalist stamp) */
+@utility animate-pop-in {
+  animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Stamp — big to small hard landing, for the wordmark */
+@utility animate-stamp-in {
+  animation: stamp-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Wrong-answer shake */
+@utility animate-shake {
+  animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Wrong-verdict wobble */
+@utility animate-wobble {
+  animation: wobble 0.5s ease-in-out both;
+}
+
+/* Clue toast: slides in from the left edge */
+@utility animate-toast-in {
+  animation: toast-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@utility animate-toast-out {
+  animation: toast-out 0.25s ease-in both;
+}
+
+/* Counter tick — one quick pulse when urgency tier changes */
+@utility animate-tick-pop {
+  animation: tick-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Subtle attention blink for LIVE / TRENDING badges */
+@utility animate-blink {
+  animation: blink-badge 1.6s ease-in-out infinite;
+}
+
+/* Semantic urgency pulse (chips) */
 @utility animate-pulse-danger {
   animation: pulse-danger 0.9s ease-in-out infinite;
 }
@@ -96,14 +170,123 @@
   }
 }
 
-@keyframes pulse-danger {
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(2.4) rotate(-4deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.94) rotate(0deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
   0%,
   100% {
-    color: var(--color-danger);
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  40% {
+    transform: rotate(7deg);
+  }
+  60% {
+    transform: rotate(-5deg);
+  }
+  80% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes toast-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+}
+
+@keyframes tick-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes blink-badge {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
-    color: var(--color-danger);
+    opacity: 0.55;
+  }
+}
+
+@keyframes pulse-danger {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
     opacity: 0.6;
   }
 }
@@ -111,11 +294,9 @@
 @keyframes pulse-warning {
   0%,
   100% {
-    color: var(--color-warning);
     opacity: 1;
   }
   50% {
-    color: var(--color-warning);
     opacity: 0.7;
   }
 }
@@ -131,20 +312,73 @@
   }
 }
 
+/* Mascot */
+@keyframes mascot-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes mascot-wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(-8deg);
+  }
+  35% {
+    transform: rotate(7deg);
+  }
+  55% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes mascot-glass-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+}
+
+@keyframes mascot-glass-wave {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-9px) rotate(-14deg);
+  }
+  60% {
+    transform: translateY(-5px) rotate(7deg);
+  }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-panel);
+  background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
-  border-radius: 4px;
+  border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(38% 0.014 262);
+  background: oklch(38% 0.03 60);
 }
 
 /* Reduced motion: collapse everything to instant opacity crossfade */

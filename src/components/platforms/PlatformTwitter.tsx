@@ -1,14 +1,17 @@
 import { useGame } from '../../game/GameContext';
+import { STRINGS } from '../../i18n/strings';
 import { useCountUpLocale } from '../../utils/useCountUp';
 
 export default function PlatformTwitter() {
   const { state, currentCase } = useGame();
+  const T = STRINGS[state.language];
   const post = currentCase.viralPost;
-  const reposts = useCountUpLocale(state.shareCount);
-  const likes = useCountUpLocale(state.shareCount * 0.25);
+  const locale = state.language === 'id' ? 'id-ID' : 'en-US';
+  const reposts = useCountUpLocale(state.shareCount, undefined, locale);
+  const likes = useCountUpLocale(state.shareCount * 0.25, undefined, locale);
 
   return (
-    <div className="rounded-xl border border-border bg-[#15202b] p-4">
+    <div className="border-2 border-border bg-[#15202b] p-4 shadow-hard">
       {/* Post header */}
       <div className="flex items-start gap-3">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#263440] font-mono text-sm font-bold text-[#8899a6]">
@@ -22,8 +25,8 @@ export default function PlatformTwitter() {
             <span className="text-[#8899a6]">{post.postedAgo}</span>
             <span className="ml-auto cursor-pointer text-[#8899a6]">⋯</span>
           </div>
-          <span className="mt-0.5 inline-block rounded-full bg-[#1d9bf0]/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#1d9bf0]">
-            🔥 Trending
+          <span className="animate-blink mt-0.5 inline-block rounded-full bg-[#1d9bf0]/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#1d9bf0]">
+            {T.platforms.trending}
           </span>
         </div>
       </div>
