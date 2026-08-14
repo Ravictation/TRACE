@@ -20,6 +20,8 @@ export interface ReverseImageResult {
   title: string;
   source: string;
   url: string;
+  /** Thumbnail of the matched image, when the provider returns one. */
+  thumbnail?: string;
 }
 
 export interface ReverseImageSearchOutcome {
@@ -100,8 +102,15 @@ function normalizeResults(raw: unknown): ReverseImageResult[] {
         str(o.source) ?? str(o.host_page_domain) ?? str(o.domain) ?? str(o.displayed_link) ?? '';
       const url =
         str(o.link) ?? str(o.url) ?? str(o.source_url) ?? str(o.image_url) ?? str(o.thumbnail) ?? '';
+      const thumbnail =
+        str(o.thumbnail) ?? str(o.image_url) ?? str(o.image) ?? str(o.result_url) ?? str(o.img) ?? '';
       if (!title && !source && !url) return null;
-      return { title: title || '(tanpa judul)', source: source || '(sumber tidak diketahui)', url };
+      return {
+        title: title || '(tanpa judul)',
+        source: source || '(sumber tidak diketahui)',
+        url,
+        ...(thumbnail ? { thumbnail } : {}),
+      };
     })
     .filter((r): r is ReverseImageResult => r !== null);
 }
