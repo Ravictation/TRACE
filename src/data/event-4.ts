@@ -13,8 +13,18 @@ export const EVENT_4_ID: EventData = {
   ],
   scenario: {
     app: 'fb',
-    sender: 'InfoSehat.Alami',
-    message: 'JANGAN minum obat sirup X karena racun kimia! ⚠ Anak-anak bisa MENINGGAL! (poster infografis peringatan)',
+    detail: {
+      kind: 'fb',
+      pageName: 'InfoSehat.Alami',
+      postedAgo: '12 mnt · 🌐',
+      avatarInitial: 'IS',
+      avatarColor: '#4ade80',
+      text: 'JANGAN minum obat sirup X karena racun kimia! ⚠ Anak-anak bisa MENINGGAL! Share sebanyak-banyaknya demi keselamatan anak kita!!',
+      photo: '/images/event4-poster.svg',
+      likes: '3,4 rb',
+      comments: '2,8 rb',
+      shares: '1,9 rb',
+    },
     note: 'Bimo demam tinggi · Sri menangis histeris di samping tempat tidur',
   },
   miniGames: [
@@ -182,8 +192,18 @@ export const EVENT_4_EN: EventData = {
   ],
   scenario: {
     app: 'fb',
-    sender: 'HealthyNatural.Info',
-    message: 'Do NOT drink Syrup X — it contains chemical poison! ⚠ Children could DIE! (warning infographic poster)',
+    detail: {
+      kind: 'fb',
+      pageName: 'HealthyNatural.Info',
+      postedAgo: '12 min · 🌐',
+      avatarInitial: 'H',
+      avatarColor: '#4ade80',
+      text: 'Do NOT drink Syrup X — it contains chemical poison! ⚠ Children could DIE! Share this as much as possible for our children\'s safety!!',
+      photo: '/images/event4-poster.svg',
+      likes: '3.4K',
+      comments: '2.8K',
+      shares: '1.9K',
+    },
     note: 'Bimo has a high fever · Sri sobs hysterically beside the bed',
   },
   miniGames: [

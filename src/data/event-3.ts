@@ -13,8 +13,18 @@ export const EVENT_3_ID: EventData = {
   ],
   scenario: {
     app: 'fb',
-    sender: 'Info Gempa & Bencana',
-    message: 'GUNUNG MERAPI MELETUS DAHSYAT! 🔥 Lahar panas meluncur ke pemukiman! SEBARKAN!',
+    detail: {
+      kind: 'fb',
+      pageName: 'Info Gempa & Bencana',
+      postedAgo: '5 mnt · 🌐',
+      avatarInitial: 'IG',
+      avatarColor: '#1877F2',
+      text: 'GUNUNG MERAPI MELETUS DAHSYAT! 🔥 Lahar panas meluncur ke pemukiman! SEBARKAN SEBELUM DIHAPUS!',
+      photo: '/images/event3-eruption.svg',
+      likes: '2,1 rb',
+      comments: '1,4 rb',
+      shares: '890',
+    },
     note: 'Kilas (anak di Magelang) belum membalas chat — centang satu',
   },
   miniGames: [
@@ -182,8 +192,18 @@ export const EVENT_3_EN: EventData = {
   ],
   scenario: {
     app: 'fb',
-    sender: 'Quake & Disaster Info',
-    message: 'MOUNT MERAPI HAS ERUPTED VIOLENTLY! 🔥 Hot lava sliding toward residential areas! SPREAD THIS!',
+    detail: {
+      kind: 'fb',
+      pageName: 'Quake & Disaster Info',
+      postedAgo: '5 min · 🌐',
+      avatarInitial: 'Q',
+      avatarColor: '#1877F2',
+      text: 'MOUNT MERAPI HAS ERUPTED VIOLENTLY! 🔥 Hot lava sliding toward residential areas! SPREAD THIS BEFORE IT GETS DELETED!',
+      photo: '/images/event3-eruption.svg',
+      likes: '2.1K',
+      comments: '1.4K',
+      shares: '890',
+    },
     note: 'Kilas (his child in Magelang) has not replied — single grey tick',
   },
   miniGames: [

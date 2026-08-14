@@ -85,11 +85,66 @@ export interface EventStep {
   options: ChoiceOption[];
 }
 
+export type ScenarioApp = 'wa' | 'tiktok' | 'fb' | 'wag';
+
+export interface ScenarioChatMessage {
+  from: 'them' | 'me';
+  /** Group-chat author name (WAG only). */
+  author?: string;
+  text: string;
+  time: string;
+  /** Rendered like a WA forwarded message. */
+  forwarded?: boolean;
+}
+
+export interface WaScenarioDetail {
+  kind: 'wa';
+  contactName: string;
+  phone: string;
+  online: boolean;
+  avatarInitial: string;
+  avatarColor: string;
+  messages: ScenarioChatMessage[];
+}
+
+export interface TikTokScenarioDetail {
+  kind: 'tiktok';
+  handle: string;
+  caption: string;
+  hashtags: string[];
+  sound: string;
+  likes: string;
+  comments: string;
+  shares: string;
+  cover: string;
+}
+
+export interface FbScenarioDetail {
+  kind: 'fb';
+  pageName: string;
+  postedAgo: string;
+  avatarInitial: string;
+  avatarColor: string;
+  text: string;
+  photo: string;
+  likes: string;
+  comments: string;
+  shares: string;
+}
+
+export interface WagScenarioDetail {
+  kind: 'wag';
+  groupName: string;
+  memberCount: string;
+  messages: ScenarioChatMessage[];
+  typing?: string;
+}
+
 /** The incoming message that triggers the crisis (spec §4: Scenario Box). */
 export interface Scenario {
-  app: 'wa' | 'tiktok' | 'fb' | 'wag';
-  sender: string;
-  message: string;
+  app: ScenarioApp;
+  /** Platform-specific payload rendered by ScenarioMock. */
+  detail: WaScenarioDetail | TikTokScenarioDetail | FbScenarioDetail | WagScenarioDetail;
   /** Extra context line, e.g. "Kilas belum membalas — centang satu". */
   note?: string;
 }

@@ -13,9 +13,21 @@ export const EVENT_5_ID: EventData = {
   ],
   scenario: {
     app: 'wag',
-    sender: 'Pesan diteruskan berkali-kali',
-    message: 'Air PDAM tercemar limbah beracun se-JAKARTA! JANGAN MANDI, JANGAN MINUM! SEBARKAN! (grafis peringatan)',
-    note: '200 anggota WAG Warga menunggu keputusan admin',
+    detail: {
+      kind: 'wag',
+      groupName: '🚨 WAG Warga RT 05',
+      memberCount: '200 anggota · 27 online',
+      messages: [
+        { from: 'them', author: 'Pak Dodi', text: 'ADA YG LIAT INI?? AIR PDAM TERACUN SE-JAKARTA 😱😱', time: '19:52' },
+        { from: 'them', author: 'Bu Sari', text: 'Ya Allah, anak-anakku barusan minum air keran...', time: '19:53' },
+        { from: 'them', author: 'Pak Dodi', text: 'Air PDAM tercemar limbah beracun se-JAKARTA! JANGAN MANDI, JANGAN MINUM! SEBARKAN!', time: '19:54', forwarded: true },
+        { from: 'them', author: 'Bu Rina', text: 'Admin tolong kasih info dong 🙏', time: '19:55' },
+        { from: 'them', author: 'Mas Yudi', text: '@Anton gmn nih pak? 200 orang nungguin', time: '19:56' },
+        { from: 'me', text: 'Saya cek dulu sebentar, mohon tenang.', time: '19:57' },
+      ],
+      typing: 'Bu Sari sedang mengetik…',
+    },
+    note: '17 panggilan tak terjawab · 200 anggota menunggu keputusan admin',
   },
   miniGames: [
     {
@@ -182,9 +194,21 @@ export const EVENT_5_EN: EventData = {
   ],
   scenario: {
     app: 'wag',
-    sender: 'Message forwarded many times',
-    message: 'PDAM water is contaminated with toxic waste across ALL OF JAKARTA! DO NOT BATHE, DO NOT DRINK! SPREAD IT! (warning graphic)',
-    note: '200 residents in the group await their admin\'s decision',
+    detail: {
+      kind: 'wag',
+      groupName: '🚨 Residents WAG RT 05',
+      memberCount: '200 members · 27 online',
+      messages: [
+        { from: 'them', author: 'Pak Dodi', text: 'DID ANYONE SEE THIS?? PDAM WATER IS POISONED ACROSS JAKARTA 😱😱', time: '19:52' },
+        { from: 'them', author: 'Bu Sari', text: 'Oh God, my kids just drank tap water...', time: '19:53' },
+        { from: 'them', author: 'Pak Dodi', text: 'PDAM water is contaminated with toxic waste across ALL OF JAKARTA! DO NOT BATHE, DO NOT DRINK! SPREAD IT!', time: '19:54', forwarded: true },
+        { from: 'them', author: 'Bu Rina', text: 'Admin, please give us some info 🙏', time: '19:55' },
+        { from: 'them', author: 'Mas Yudi', text: '@Anton what now, sir? 200 people are waiting', time: '19:56' },
+        { from: 'me', text: 'Let me check for a moment, please stay calm.', time: '19:57' },
+      ],
+      typing: 'Bu Sari is typing…',
+    },
+    note: '17 missed calls · 200 members await their admin\'s decision',
   },
   miniGames: [
     {

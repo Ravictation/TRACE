@@ -13,9 +13,17 @@ export const EVENT_2_ID: EventData = {
   ],
   scenario: {
     app: 'tiktok',
-    sender: 'Video viral TikTok',
-    message:
-      'SEMBAKO MAU HABIS! BORONG BERAS SEKARANG SEBELUM HARGA NAIK! (video rak minimarket kosong + narasi lockdown ekonomi)',
+    detail: {
+      kind: 'tiktok',
+      handle: '@berita.ekonomi',
+      caption: 'SEMBAKO MAU HABIS! BORONG BERAS SEKARANG SEBELUM HARGA NAIK!',
+      hashtags: ['#lockdown', '#ekonomi', '#sembako'],
+      sound: 'suara asli — @berita.ekonomi',
+      likes: '12,4RB',
+      comments: '3,2RB',
+      shares: '8,9RB',
+      cover: '/images/event2-tiktok-shelves.svg',
+    },
     note: 'Sri menunjukkannya sambil menahan tangis',
   },
   miniGames: [
@@ -183,9 +191,17 @@ export const EVENT_2_EN: EventData = {
   ],
   scenario: {
     app: 'tiktok',
-    sender: 'Viral TikTok video',
-    message:
-      'GROCERIES ARE RUNNING OUT! STOCK UP ON RICE NOW BEFORE PRICES RISE! (video of empty minimarket shelves + economic lockdown narration)',
+    detail: {
+      kind: 'tiktok',
+      handle: '@berita.ekonomi',
+      caption: 'GROCERIES ARE RUNNING OUT! STOCK UP ON RICE NOW BEFORE PRICES RISE!',
+      hashtags: ['#lockdown', '#economy', '#groceries'],
+      sound: 'original sound — @berita.ekonomi',
+      likes: '12.4K',
+      comments: '3.2K',
+      shares: '8.9K',
+      cover: '/images/event2-tiktok-shelves.svg',
+    },
     note: 'Sri shows it to him, holding back tears',
   },
   miniGames: [

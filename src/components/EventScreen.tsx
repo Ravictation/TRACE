@@ -3,6 +3,7 @@ import { useGame } from '../game/GameContext';
 import { STRINGS } from '../i18n/strings';
 import type { ChoiceOption, SelectionSlot } from '../types/game';
 import ReverseImagePanel from './ReverseImagePanel';
+import ScenarioMock from './ScenarioMock';
 
 const LETTERS = ['A', 'B', 'C'];
 
@@ -60,25 +61,9 @@ export default function EventScreen() {
               ))}
             </div>
 
-            {/* The incoming message that triggers the crisis */}
-            <div className="mt-4 border-2 border-border bg-panel p-3 shadow-[3px_3px_0_0_#1f1b16]">
-              <div className="mb-1.5 flex items-center justify-between">
-                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-muted">
-                  {T.scenario.incoming}
-                </span>
-                <span className="border border-border bg-panel2 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-accent">
-                  {T.scenario.apps[e.scenario.app]}
-                </span>
-              </div>
-              <div className="font-mono text-[11px] font-bold text-text">{e.scenario.sender}</div>
-              <p className="mt-1.5 border-l-2 border-accent pl-2 font-mono text-xs leading-relaxed text-text">
-                {e.scenario.message}
-              </p>
-              {e.scenario.note && (
-                <p className="mt-2 font-mono text-[10px] italic leading-relaxed text-muted">
-                  ⚠ {e.scenario.note}
-                </p>
-              )}
+            {/* The incoming message that triggers the crisis — platform mock */}
+            <div className="mt-4">
+              <ScenarioMock scenario={e.scenario} lang={state.language} />
             </div>
           </div>
         </section>

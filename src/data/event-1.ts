@@ -13,10 +13,24 @@ export const EVENT_1_ID: EventData = {
   ],
   scenario: {
     app: 'wa',
-    sender: 'HRD PT Jaya Logistik',
-    message:
-      'Selamat! Anda diterima sebagai Supervisor Logistik. Gaji Rp 7.000.000/bulan. ⚠ Wajib transfer Rp 300.000 untuk administrasi seragam sebelum besok pagi. KUOTA TERBATAS!',
-    note: 'Diterima 02:15 · Nomor tidak dikenal · Foto profil berjas rapi',
+    detail: {
+      kind: 'wa',
+      contactName: 'HRD PT Jaya Logistik',
+      phone: '+62 812-3456-7890',
+      online: true,
+      avatarInitial: 'J',
+      avatarColor: '#075e54',
+      messages: [
+        { from: 'them', text: 'Selamat malam, Bapak Anton Wibowo. 🙏', time: '02:14' },
+        { from: 'them', text: 'Kami dari HRD PT Jaya Logistik. Lamaran Anda sebagai Supervisor Logistik DISETUJUI! 🎉', time: '02:14' },
+        { from: 'them', text: 'Gaji Rp 7.000.000/bulan + tunjangan. KUOTA TERBATAS — hanya 2 kandidat.', time: '02:15' },
+        { from: 'them', text: '⚠ Wajib transfer Rp 300.000 untuk administrasi seragam SEBELUM besok pagi.', time: '02:15' },
+        { from: 'them', text: 'SEGERA BALAS jika anda tertarik karrir bersama kami.', time: '02:16' },
+        { from: 'me', text: 'Gaji 7 juta? Serius ini?', time: '02:18' },
+        { from: 'them', text: 'Benar Pak. Transfer sekarang, konfirmasi, besok kontrak kami kirim. ⏰', time: '02:18' },
+      ],
+    },
+    note: 'Diterima 02:15 · Nomor tidak dikenal · Foto profil terlalu sempurna',
   },
   miniGames: [
     {
@@ -183,10 +197,24 @@ export const EVENT_1_EN: EventData = {
   ],
   scenario: {
     app: 'wa',
-    sender: 'HRD PT Jaya Logistik',
-    message:
-      'Congratulations! You have been accepted as a Logistics Supervisor. Salary Rp 7,000,000/month. ⚠ You must transfer Rp 300,000 for uniform administration before tomorrow morning. LIMITED QUOTA!',
-    note: 'Received 02:15 · Unknown number · Profile photo in a neat suit',
+    detail: {
+      kind: 'wa',
+      contactName: 'HRD PT Jaya Logistik',
+      phone: '+62 812-3456-7890',
+      online: true,
+      avatarInitial: 'J',
+      avatarColor: '#075e54',
+      messages: [
+        { from: 'them', text: 'Good evening, Mr. Anton Wibowo. 🙏', time: '02:14' },
+        { from: 'them', text: 'We are HRD PT Jaya Logistik. Your application as Logistics Supervisor has been APPROVED! 🎉', time: '02:14' },
+        { from: 'them', text: 'Salary Rp 7,000,000/month + benefits. LIMITED QUOTA — only 2 candidates.', time: '02:15' },
+        { from: 'them', text: '⚠ You must transfer Rp 300,000 for uniform administration BEFORE tomorrow morning.', time: '02:15' },
+        { from: 'them', text: 'REPLY SOON if you are interested in a carreer with us.', time: '02:16' },
+        { from: 'me', text: '7 million salary? Is this for real?', time: '02:18' },
+        { from: 'them', text: 'Yes sir. Transfer now, confirm, and we will send the contract tomorrow. ⏰', time: '02:18' },
+      ],
+    },
+    note: 'Received 02:15 · Unknown number · Profile photo too perfect',
   },
   miniGames: [
     {

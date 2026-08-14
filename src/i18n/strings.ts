@@ -44,6 +44,14 @@ export const STRINGS = {
         fb: 'Facebook',
         wag: 'WAG Warga',
       },
+      forwarded: 'Diteruskan',
+      fb: {
+        like: 'Suka',
+        comment: 'Komentar',
+        share: 'Bagikan',
+        comments: (n: string) => `${n} komentar`,
+        shares: (n: string) => `${n} dibagikan`,
+      },
     },
     tabs: {
       mg: (i: number) => `MG ${i}`,
@@ -199,6 +207,14 @@ export const STRINGS = {
         tiktok: 'TikTok',
         fb: 'Facebook',
         wag: 'Residents WAG',
+      },
+      forwarded: 'Forwarded',
+      fb: {
+        like: 'Like',
+        comment: 'Comment',
+        share: 'Share',
+        comments: (n: string) => `${n} comments`,
+        shares: (n: string) => `${n} shares`,
       },
     },
     tabs: {
