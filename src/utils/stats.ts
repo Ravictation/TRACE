@@ -1,4 +1,4 @@
-import type { StatEffect, Stats } from '../types/game';
+import type { EventData, EventSelections, StatEffect, Stats } from '../types/game';
 import {
   MAX_ACCURACY,
   MAX_HEALTH,
@@ -36,4 +36,32 @@ export function invertEffect(e: StatEffect): StatEffect {
     if (v !== undefined) inverted[key] = -v;
   }
   return inverted;
+}
+
+const EFFECT_KEYS = ['money', 'stress', 'health', 'reputation', 'accuracy', 'scam', 'hoaksShare', 'factCheck'] as const;
+
+/**
+ * Net delta across an event's six picks (before clamping) — shown on the
+ * "Event n Selesai" screen as the impact summary.
+ */
+export function aggregateEffect(event: EventData, selections: EventSelections): StatEffect {
+  const net: StatEffect = {};
+  const slots: { options: { id: string; effect: StatEffect }[] }[] = [
+    event.miniGames[0],
+    event.miniGames[1],
+    event.miniGames[2],
+    event.judgement,
+    event.action,
+    event.timeChoice,
+  ];
+  const pickedIds = [selections.mg1, selections.mg2, selections.mg3, selections.judgement, selections.action, selections.time];
+  for (let i = 0; i < slots.length; i++) {
+    const opt = slots[i].options.find((o) => o.id === pickedIds[i]);
+    if (!opt) continue;
+    for (const key of EFFECT_KEYS) {
+      const v = opt.effect[key];
+      if (v !== undefined && v !== 0) net[key] = (net[key] ?? 0) + v;
+    }
+  }
+  return net;
 }

@@ -1,20 +1,11 @@
 export type Lang = 'id' | 'en';
 
-/** One step in the per-event flow (see MVP.md §4). */
-export type StepId =
-  | 'prologue'
-  | 'atmo'
-  | 'mg1'
-  | 'mg2'
-  | 'mg3'
-  | 'judgement'
-  | 'action'
-  | 'time'
-  | 'eventEnd';
+/** One step in the per-event flow (see MD_MVP_new_1 §4-5). */
+export type StepId = 'prologue' | 'event' | 'eventEnd';
 
 export type FlowPhase = 'menu' | 'story' | 'ending';
 
-/** Core stats from MVP.md §2. */
+/** Core stats (spec §2). */
 export interface Stats {
   /** Rp saldo Anton. */
   money: number;
@@ -51,7 +42,7 @@ export const MAX_REPUTATION = 200;
 export const MIN_ACCURACY = 0;
 export const MAX_ACCURACY = 100;
 
-/** Stat deltas of a single choice (MVP.md lists these per option). */
+/** Stat deltas of a single choice (spec lists these per option). */
 export interface StatEffect {
   money?: number;
   stress?: number;
@@ -77,19 +68,28 @@ export interface ChoiceOption {
   outcome: string;
 }
 
-/** One mandatory mini-game per event (MVP.md: "Pilih 1 dari 3 opsi"). */
+/** One mandatory mini-game tab per event (spec: "Tab MG 1..3"). */
 export interface MiniGame {
   id: string;
   title: string;
-  /** Narrative setup — what Anton is doing. */
+  /** Narrative setup — what Anton is doing in this tab. */
   flavor: string;
   options: ChoiceOption[];
 }
 
-/** Judgement / Action / Time steps share the same shape. */
+/** Vonis / Tindakan / Waktu dropdowns share the same shape. */
 export interface EventStep {
   prompt: string;
   options: ChoiceOption[];
+}
+
+/** The incoming message that triggers the crisis (spec §4: Scenario Box). */
+export interface Scenario {
+  app: 'wa' | 'tiktok' | 'fb' | 'wag';
+  sender: string;
+  message: string;
+  /** Extra context line, e.g. "Kilas belum membalas — centang satu". */
+  note?: string;
 }
 
 export interface EventData {
@@ -99,15 +99,37 @@ export interface EventData {
   time: string;
   title: string;
   tag: string;
-  /** Narrative paragraphs shown before the mini-games. */
+  /** Narrative paragraphs shown in the scenario box. */
   atmosphere: string[];
+  scenario: Scenario;
   miniGames: [MiniGame, MiniGame, MiniGame];
   judgement: EventStep;
   action: EventStep;
   timeChoice: EventStep;
-  /** One-line media-literacy lesson shown at the event's end. */
+  /** The "Event n Selesai" quote from the spec. */
   lesson: string;
 }
+
+/** All six slots the player fills before pressing ENTER. */
+export interface EventSelections {
+  mg1: string | null;
+  mg2: string | null;
+  mg3: string | null;
+  judgement: string | null;
+  action: string | null;
+  time: string | null;
+}
+
+export type SelectionSlot = keyof EventSelections;
+
+export const EMPTY_SELECTIONS: EventSelections = {
+  mg1: null,
+  mg2: null,
+  mg3: null,
+  judgement: null,
+  action: null,
+  time: null,
+};
 
 export type EndingId = 'pariah' | 'hospitalized' | 'panic-spreader' | 'hero' | 'survivor';
 
@@ -141,7 +163,7 @@ export interface GameState {
   step: StepId;
   stats: Stats;
   flags: string[];
-  /** Option chosen in the current step — applied to stats, awaiting CONTINUE. */
-  chosenOption: string | null;
+  /** Picks made in the current event's 6 slots — applied at ENTER. */
+  selections: EventSelections;
   endingId: EndingId | null;
 }

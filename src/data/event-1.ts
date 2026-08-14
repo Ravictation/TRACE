@@ -1,6 +1,6 @@
 import type { EventData } from '../types/game';
 
-/** EVENT 1: Tawaran Kerja Kilat (Financial Trap) — MVP.md §4 */
+/** EVENT 1: Tawaran Kerja Kilat (Financial Trap) — MD_MVP_new_1 §5 */
 export const EVENT_1_ID: EventData = {
   id: 'job-scam',
   number: 1,
@@ -8,34 +8,40 @@ export const EVENT_1_ID: EventData = {
   title: 'Tawaran Kerja Kilat',
   tag: 'Jebakan Finansial',
   atmosphere: [
-    'Udara malam menusuk tulang. Anton belum juga bisa tidur — di layar ponselnya yang retak, pesan WhatsApp masuk dari "HRD PT Jaya Logistik".',
-    '"Selamat! Anda diterima sebagai Supervisor Logistik. Gaji Rp 7.000.000/bulan. Wajib transfer Rp 300.000 untuk administrasi seragam sebelum besok pagi."',
-    'Anton sangat butuh pekerjaan. Jemarinya bergetar di atas layar.',
+    'Udara malam menusuk tulang. Anton belum juga bisa tidur.',
+    'Dua bulan tanpa kerja. Tagihan menumpuk, gengsi sebagai kepala keluarga kian menipis — lalu tawaran ini datang: gaji 7 juta.',
   ],
+  scenario: {
+    app: 'wa',
+    sender: 'HRD PT Jaya Logistik',
+    message:
+      'Selamat! Anda diterima sebagai Supervisor Logistik. Gaji Rp 7.000.000/bulan. ⚠ Wajib transfer Rp 300.000 untuk administrasi seragam sebelum besok pagi. KUOTA TERBATAS!',
+    note: 'Diterima 02:15 · Nomor tidak dikenal · Foto profil berjas rapi',
+  },
   miniGames: [
     {
-      id: 'mg1-truecaller',
-      title: 'Truecaller — Cek Nomor',
+      id: 'mg1-reverse-image',
+      title: 'Reverse Image — Cek Foto Profil HRD',
       flavor:
-        'Anton menatap deretan angka asing di layar HP-nya yang berkedip di kegelapan malam, mencoba memeriksa identitas pengirim pesan.',
+        'Anton merasa janggal dengan foto profil WhatsApp sang HRD yang tampak terlalu sempurna layaknya model stok internet. Ia memutuskan menyeret foto tersebut ke mesin pencari visual.',
       options: [
         {
           id: 'a',
-          label: 'Abaikan peringatan aplikasi & percaya foto profil berjas rapi.',
-          effect: { stress: 20, reputation: -10 },
+          label: 'Langsung percaya pada foto profil berjas rapi karena tampak meyakinkan.',
+          effect: { stress: 20 },
           outcome: 'Anton memaksa hatinya tenang. "Orang berjas pasti terpercaya," bisiknya.',
         },
         {
           id: 'b',
-          label: 'Cek tag nomor — dapati label "Penipu Loker".',
+          label: 'Temukan bahwa foto tersebut dicotot dari profil LinkedIn CEO perusahaan lain di luar negeri.',
           effect: { stress: -10, accuracy: 15, factCheck: 1 },
-          outcome: 'Label merah "Penipu Loker" muncul di layar. Dadanya terasa lebih ringan.',
+          outcome: 'Wajah "HRD" itu ternyata milik seorang CEO asing. Foto curian — bendera merah pertama.',
         },
         {
           id: 'c',
-          label: 'Telepon langsung nomor itu tengah malam.',
-          effect: { reputation: 10, money: -20000 },
-          outcome: 'Pulsa terpotong Rp 20.000. Tidak ada yang mengangkat — hanya nada sibuk panjang.',
+          label: 'Abaikan foto dan langsung fokus pada nominal gajinya.',
+          effect: { stress: 10, accuracy: -5 },
+          outcome: 'Angka 7 juta berputar-putar di kepala. Foto profil? Tidak penting, pikirnya.',
         },
       ],
     },
@@ -43,7 +49,7 @@ export const EVENT_1_ID: EventData = {
       id: 'mg2-domain',
       title: 'Domain Checker — Cek Alamat Web',
       flavor:
-        'Jari Anton yang gemetar menyentuh tautan pendaftaran yang dikirimkan sang HRD, mencoba membaca alamat web dengan cermat.',
+        'Jari Anton yang gemetar menyentuh tautan pendaftaran yang dikirimkan sang HRD, mencoba membaca alamat web dengan cermat di bawah cahaya redup.',
       options: [
         {
           id: 'a',
@@ -97,19 +103,19 @@ export const EVENT_1_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Ini rezeki nomplok, perusahaan besar butuh cepat.',
+        label: 'Rezeki nomplok, perusahaan besar butuh cepat.',
         effect: { stress: 30, accuracy: -10 },
         outcome: 'Harapan palsu itu terasa manis. Anton mulai membayangkan gaji pertama.',
       },
       {
         id: 'b',
-        label: 'Ini mencurigakan, ada tanda-tanda penipuan (Scam).',
+        label: 'Penipuan (Scam) — ada tanda-tanda jelas.',
         effect: { stress: -15, accuracy: 10 },
         outcome: 'Makin ditimbang, makin janggal. Anton menarik napas dalam-dalam.',
       },
       {
         id: 'c',
-        label: 'Entahlah, coba transfer dulu siapa tahu beneran.',
+        label: 'Coba transfer dulu, siapa tahu beneran.',
         effect: { stress: 10, accuracy: -5 },
         outcome: '"Kalau salah, cuma rugi 300 ribu. Kalau benar, dapat kerja." Anton menggigit bibir.',
       },
@@ -120,19 +126,19 @@ export const EVENT_1_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Transfer uang Rp 300.000.',
+        label: 'Transfer Rp 300.000.',
         effect: { money: -300000, stress: -10, scam: 1 },
         outcome: 'Uang melayang ke rekening asing. Begitu terkirim, nomor "HRD" itu menghilang.',
       },
       {
         id: 'b',
-        label: 'Blokir nomor dan hapus pesan.',
+        label: 'Blokir nomor & hapus pesan.',
         effect: { stress: -5, reputation: 10 },
         outcome: 'Satu ketukan, nomor itu lenyap. Anton merasa selamat dari lubang jebakan.',
       },
       {
         id: 'c',
-        label: 'Tawar agar biaya admin dipotong gaji pertama.',
+        label: 'Tawar potong gaji pertama.',
         effect: { stress: 10 },
         outcome: 'Balasan datang singkat: "TIDAK BISA. TRANSFER SEKARANG ATAU HANGUS." Anton terdiam.',
       },
@@ -143,7 +149,7 @@ export const EVENT_1_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Transfer / bertindak detik ini juga.',
+        label: 'Bertindak detik ini juga.',
         effect: { stress: 20, health: -5, money: -50000 },
         outcome: 'Membabi buta karena takut kehilangan kesempatan. Anton bertindak sebelum sempat berpikir.',
       },
@@ -155,14 +161,13 @@ export const EVENT_1_ID: EventData = {
       },
       {
         id: 'c',
-        label: 'Tunggu sampai esok pagi.',
+        label: 'Biarkan sampai tidur.',
         effect: { stress: -20, accuracy: 5 },
         outcome: 'Malam berlalu. Di pagi hari, kabar itu terasa jauh lebih kecil.',
       },
     ],
   },
-  lesson:
-    'Perusahaan sungguhan tidak pernah meminta uang ke pelamar. Tawaran mendesak + wajib transfer = penipuan.',
+  lesson: 'Perusahaan sah tidak pernah meminta uang di awal.',
 };
 
 export const EVENT_1_EN: EventData = {
@@ -172,34 +177,40 @@ export const EVENT_1_EN: EventData = {
   title: 'The Lightning Job Offer',
   tag: 'Financial Trap',
   atmosphere: [
-    'The night air cuts to the bone. Anton still cannot sleep — on his cracked phone screen, a WhatsApp message arrives from "HRD PT Jaya Logistik".',
-    '"Congratulations! You have been accepted as a Logistics Supervisor. Salary Rp 7,000,000/month. You must transfer Rp 300,000 for uniform administration before tomorrow morning."',
-    'Anton desperately needs a job. His finger trembles over the screen.',
+    'The night air cuts to the bone. Anton still cannot sleep.',
+    'Two months without work. Bills piling up, his pride as a breadwinner thinning by the day — and then this offer arrives: 7 million a month.',
   ],
+  scenario: {
+    app: 'wa',
+    sender: 'HRD PT Jaya Logistik',
+    message:
+      'Congratulations! You have been accepted as a Logistics Supervisor. Salary Rp 7,000,000/month. ⚠ You must transfer Rp 300,000 for uniform administration before tomorrow morning. LIMITED QUOTA!',
+    note: 'Received 02:15 · Unknown number · Profile photo in a neat suit',
+  },
   miniGames: [
     {
-      id: 'mg1-truecaller',
-      title: 'Truecaller — Check the Number',
+      id: 'mg1-reverse-image',
+      title: 'Reverse Image — Check the HRD Profile Photo',
       flavor:
-        'Anton stares at the row of unknown digits blinking in the dark, trying to identify who sent the message.',
+        'Anton finds the HRD\'s WhatsApp profile photo suspicious — too perfect, like an internet stock model. He decides to drag it into a visual search engine.',
       options: [
         {
           id: 'a',
-          label: 'Ignore the app warning & trust the profile photo in a neat suit.',
-          effect: { stress: 20, reputation: -10 },
+          label: 'Trust the neat-suit profile photo right away because it looks convincing.',
+          effect: { stress: 20 },
           outcome: 'Anton forces his heart to calm down. "A man in a suit must be trustworthy," he whispers.',
         },
         {
           id: 'b',
-          label: 'Check the number tag — it reads "Job Scammer".',
+          label: 'Discover the photo was stolen from a foreign CEO\'s LinkedIn profile.',
           effect: { stress: -10, accuracy: 15, factCheck: 1 },
-          outcome: 'A red "Job Scammer" label appears. His chest suddenly feels lighter.',
+          outcome: 'The "HRD"\'s face belongs to a foreign CEO. A stolen photo — the first red flag.',
         },
         {
           id: 'c',
-          label: 'Call the number right away, in the middle of the night.',
-          effect: { reputation: 10, money: -20000 },
-          outcome: 'Rp 20,000 of credit gone. Nobody picks up — only a long busy tone.',
+          label: 'Ignore the photo and focus only on the salary figure.',
+          effect: { stress: 10, accuracy: -5 },
+          outcome: 'The number 7 million spins in his head. The profile photo? Unimportant, he thinks.',
         },
       ],
     },
@@ -207,7 +218,7 @@ export const EVENT_1_EN: EventData = {
       id: 'mg2-domain',
       title: 'Domain Checker — Read the URL',
       flavor:
-        'His trembling finger hovers over the registration link the "HRD" sent, trying to read the web address carefully.',
+        'His trembling finger hovers over the registration link the "HRD" sent, trying to read the web address carefully in the dim light.',
       options: [
         {
           id: 'a',
@@ -267,13 +278,13 @@ export const EVENT_1_EN: EventData = {
       },
       {
         id: 'b',
-        label: 'Suspicious — signs of a scam.',
+        label: 'A scam — there are clear warning signs.',
         effect: { stress: -15, accuracy: 10 },
         outcome: 'The more he weighs it, the stranger it looks. Anton takes a deep breath.',
       },
       {
         id: 'c',
-        label: 'Not sure — maybe transfer first, just in case it\'s real.',
+        label: 'Maybe transfer first, just in case it\'s real.',
         effect: { stress: 10, accuracy: -5 },
         outcome: '"If it\'s fake, I only lose 300 thousand. If it\'s real, I get a job." Anton bites his lip.',
       },
@@ -290,13 +301,13 @@ export const EVENT_1_EN: EventData = {
       },
       {
         id: 'b',
-        label: 'Block the number and delete the message.',
+        label: 'Block the number & delete the message.',
         effect: { stress: -5, reputation: 10 },
         outcome: 'One tap and the number is gone. Anton feels like he dodged a pit.',
       },
       {
         id: 'c',
-        label: 'Bargain to have the admin fee cut from his first salary.',
+        label: 'Bargain to pay from the first salary.',
         effect: { stress: 10 },
         outcome: 'The reply is short: "NO. TRANSFER NOW OR FORFEIT." Anton freezes.',
       },
@@ -307,7 +318,7 @@ export const EVENT_1_EN: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Transfer / act this very second.',
+        label: 'Act this very second.',
         effect: { stress: 20, health: -5, money: -50000 },
         outcome: 'Blinded by fear of losing the chance, Anton acts before he can think.',
       },
@@ -319,12 +330,11 @@ export const EVENT_1_EN: EventData = {
       },
       {
         id: 'c',
-        label: 'Wait until tomorrow morning.',
+        label: 'Leave it until he sleeps.',
         effect: { stress: -20, accuracy: 5 },
         outcome: 'The night passes. By morning, the matter feels far smaller.',
       },
     ],
   },
-  lesson:
-    'Real companies never ask applicants for money. Urgency + mandatory transfer = scam.',
+  lesson: 'Legitimate companies never ask for money upfront.',
 };

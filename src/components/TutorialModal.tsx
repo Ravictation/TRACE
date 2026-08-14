@@ -135,17 +135,17 @@ function StepStats() {
   );
 }
 
-/* ── Step 3: the event flow ──────────────────────────────── */
+/* ── Step 3: the tab & dropdown flow ─────────────────────── */
 
 function StepFlow({ T }: { T: UiStrings }) {
-  const flow = [T.steps.mg(1), T.steps.judgement, T.steps.action, T.steps.time];
+  const flow = [T.tabs.mg(1), T.tabs.mg(2), T.tabs.mg(3), T.decisions.vonis, T.decisions.tindakan, T.decisions.waktu, T.enter.label];
   return (
     <div className="flex flex-wrap items-center gap-2">
       {flow.map((label, i) => (
         <span key={i} className="flex items-center gap-2">
           <span
             className={`border-2 border-border px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider ${
-              i === 0 ? 'bg-accent text-border' : 'bg-panel text-text'
+              i < 3 ? 'bg-accent text-border' : i === flow.length - 1 ? 'bg-danger text-white' : 'bg-panel text-text'
             }`}
           >
             {label}

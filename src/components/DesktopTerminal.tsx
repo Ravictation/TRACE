@@ -3,7 +3,7 @@ import { STRINGS } from '../i18n/strings';
 import Mascot from './Mascot';
 import StatsBar from './StatsBar';
 import StoryScreen from './StoryScreen';
-import ChoiceScreen from './ChoiceScreen';
+import EventScreen from './EventScreen';
 import EventEndScreen from './EventEndScreen';
 import EndingScreen from './EndingScreen';
 import IntroScreen from './IntroScreen';
@@ -16,12 +16,13 @@ export default function DesktopTerminal() {
   if (state.phase === 'ending') return <EndingScreen />;
 
   const main =
-    state.step === 'prologue' || state.step === 'atmo' ? (
+    state.step === 'prologue' ? (
       <StoryScreen />
     ) : state.step === 'eventEnd' ? (
-      <EventEndScreen />
+      // key remounts the screen per event so its local state resets
+      <EventEndScreen key={currentEvent.id} />
     ) : (
-      <ChoiceScreen />
+      <EventScreen key={currentEvent.id} />
     );
 
   return (

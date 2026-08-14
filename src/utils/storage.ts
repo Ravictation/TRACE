@@ -1,4 +1,4 @@
-import type { EndingId, GameState, Lang, LeaderboardEntry, Stats } from '../types/game';
+import type { EndingId, EventSelections, GameState, Lang, LeaderboardEntry, Stats } from '../types/game';
 
 const PROGRESS_KEY = 'trace-progress';
 const LEADERBOARD_KEY = 'trace-leaderboard';
@@ -7,10 +7,10 @@ const LANG_KEY = 'trace-lang';
 const TUTORIAL_KEY = 'trace-tutorial-done';
 
 /**
- * Save format version. v1 = old TRACE journalist-game saves (4 OSINT cases,
- * share counters) — incompatible with Anton's Dilemma and discarded.
+ * Save format version. v1 = old TRACE journalist-game saves; v2 = sequential
+ * choice flow — both incompatible with the tab/dropdown flow and discarded.
  */
-const SAVE_VERSION = 2;
+const SAVE_VERSION = 3;
 
 /* ── Language preference ─────────────────────────────────── */
 
@@ -52,7 +52,7 @@ export interface SavedProgress {
   step: GameState['step'];
   stats: Stats;
   flags: string[];
-  chosenOption: string | null;
+  selections: EventSelections;
   endingId: EndingId | null;
   savedAt: number;
 }
@@ -65,7 +65,7 @@ export function saveProgress(state: GameState): void {
     step: state.step,
     stats: state.stats,
     flags: state.flags,
-    chosenOption: state.chosenOption,
+    selections: state.selections,
     endingId: state.endingId,
     savedAt: Date.now(),
   };

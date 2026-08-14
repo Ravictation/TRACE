@@ -1,6 +1,6 @@
 import type { EventData } from '../types/game';
 
-/** EVENT 5: Ujian Terakhir Admin WAG (Climax Broadcast) — MVP.md §4 */
+/** EVENT 5: Ujian Terakhir Admin WAG (Climax Broadcast) — MD_MVP_new_1 §5 */
 export const EVENT_5_ID: EventData = {
   id: 'water-crisis',
   number: 5,
@@ -9,45 +9,51 @@ export const EVENT_5_ID: EventData = {
   tag: 'Broadcast Klimaks',
   atmosphere: [
     'Pukul 20.00 malam. Anton kini jadi Admin WAG Warga. Ponselnya berdering tanpa henti.',
-    'Pesan masuk berantai: "Air PDAM tercemar limbah beracun se-JAKARTA! JANGAN MANDI, JANGAN MINUM!"',
     'Warga panik di grup. 200 anggota menunggu keputusan adminnya.',
   ],
+  scenario: {
+    app: 'wag',
+    sender: 'Pesan diteruskan berkali-kali',
+    message: 'Air PDAM tercemar limbah beracun se-JAKARTA! JANGAN MANDI, JANGAN MINUM! SEBARKAN! (grafis peringatan)',
+    note: '200 anggota WAG Warga menunggu keputusan admin',
+  },
   miniGames: [
     {
-      id: 'mg1-water-portal',
-      title: 'Portal Resmi Air Minum',
+      id: 'mg1-reverse-image',
+      title: 'Reverse Image Search — Poster Air Beracun',
       flavor:
-        'Anton memeriksa situs web resmi perusahaan air minum di tengah guncangan notifikasi warga yang menuntut jawaban.',
+        'Anton menerima grafis peringatan air PDAM beracun di grup warga. Sebelum meneruskannya, ia menguji keaslian grafis tersebut lewat pencarian gambar.',
       options: [
         {
           id: 'a',
-          label: 'Buka situs resmi — pencemaran hanya di 1 titik kecil dan teratasi.',
-          effect: { stress: -25, accuracy: 15, factCheck: 1 },
-          outcome: 'Rilis resmi: satu titik kecil, sudah ditangani, air keran tetap aman.',
+          label: 'Yakin grafis itu asli karena tampilannya menyerupai surat dinas.',
+          effect: { stress: 25 },
+          outcome: 'Kop surat dan stempelnya tampak resmi. Anton nyaris meneruskannya.',
         },
         {
           id: 'b',
-          label: 'Percaya pesan darurat tanpa melakukan pengecekan.',
-          effect: { stress: 35 },
-          outcome: 'Setiap dering ponsel terasa seperti sirene tanda bahaya.',
+          label: 'Temukan grafis itu adalah template poster fiktif yang biasa dipakai lelucon internet.',
+          effect: { stress: -25, accuracy: 15, factCheck: 1 },
+          outcome: 'Template meme lama yang dipakai berganti-ganti kota. Kali ini giliran Jakarta.',
         },
         {
           id: 'c',
-          label: 'Bertanya ke grup arisan tetangga.',
-          effect: { stress: 10, accuracy: 5 },
-          outcome: 'Grup arisan lebih ramai gosip daripada fakta.',
+          label: 'Tidak mengecek gambar dan langsung merinding.',
+          effect: { stress: 15 },
+          outcome: 'Tanpa dicek, grafis itu langsung terasa nyata.',
         },
       ],
     },
     {
       id: 'mg2-local-authority',
       title: 'Otoritas Lokal',
-      flavor: 'Anton menelepon Ketua RT untuk meminta arahan dan kejelasan situasi di wilayah mereka.',
+      flavor:
+        'Anton menelepon Ketua RT untuk meminta arahan dan kejelasan situasi di wilayah mereka.',
       options: [
         {
           id: 'a',
           label: 'Telepon Ketua RT, minta arahan dan koordinasi.',
-          effect: { stress: -20, accuracy: 15, factCheck: 1 },
+          effect: { stress: -20, accuracy: 15 },
           outcome: '"Tenang, kita cek bareng ke PDAM. Jangan ada yang panik dulu." Suara yang Anton butuhkan.',
         },
         {
@@ -73,7 +79,7 @@ export const EVENT_5_ID: EventData = {
         {
           id: 'a',
           label: 'Evaluasi logika: mustahil air tercemar se-Jakarta sekaligus.',
-          effect: { stress: -20, accuracy: 15, factCheck: 1 },
+          effect: { stress: -20, accuracy: 15 },
           outcome: 'Pipa Jakarta saling terpisah. Tercemar "se-Jakarta" sekaligus tidak masuk akal.',
         },
         {
@@ -96,19 +102,19 @@ export const EVENT_5_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Air beracun ini nyata, sebar peringatan darurat ke semua warga!',
+        label: 'Air beracun — sebar peringatan darurat!',
         effect: { stress: 40, accuracy: -15 },
         outcome: 'Anton membayangkan 200 keluarga keracunan. Ia harus bertindak SEKARANG.',
       },
       {
         id: 'b',
-        label: 'Ini hoaks dibesar-besarkan, air bersih aman terkendali.',
+        label: 'Hoaks dibesar-besarkan, air bersih aman.',
         effect: { stress: -30, accuracy: 20 },
         outcome: 'Bukti resmi di tangan. Kepanikan ini bisa dihentikan dengan satu pesan tenang.',
       },
       {
         id: 'c',
-        label: 'Saya bingung dan ketakutan, biarkan warga panik sendiri.',
+        label: 'Biarkan warga panik sendiri.',
         effect: { stress: 20, accuracy: -5 },
         outcome: 'Anton ingin menghilang dari grup ini selamanya.',
       },
@@ -119,19 +125,19 @@ export const EVENT_5_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Broadcast pesan mentah-mentah ke 200 warga.',
+        label: 'Broadcast pesan mentah ke 200 warga.',
         effect: { reputation: -50, hoaksShare: 1, stress: 30 },
         outcome: 'Dalam sejam, warga membeli air galon habis-habisan. Kepanikan meledak.',
       },
       {
         id: 'b',
-        label: 'Kirim klarifikasi tenang + screenshot rilis resmi PAM Jaya.',
+        label: 'Kirim klarifikasi tenang + rilis resmi PAM Jaya.',
         effect: { reputation: 50, stress: -25, flags: ['trueEndingKey'] },
         outcome: 'Grup mereda dalam hitungan menit. Warga berterima kasih satu per satu.',
       },
       {
         id: 'c',
-        label: 'Keluar grup (Leave Group), matikan HP, lalu tidur.',
+        label: 'Keluar grup.',
         effect: { reputation: -20, stress: -10 },
         outcome: 'Grup ditinggal tanpa kapten. Kepanikan berlanjut tanpa arah.',
       },
@@ -142,7 +148,7 @@ export const EVENT_5_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Broadcast panik sekarang detik ini.',
+        label: 'Broadcast panik sekarang.',
         effect: { reputation: -30, hoaksShare: 1, stress: 25 },
         outcome: 'Hoaks menyebar ke publik dalam hitungan detik. Tarik ulur tidak mungkin lagi.',
       },
@@ -154,14 +160,13 @@ export const EVENT_5_ID: EventData = {
       },
       {
         id: 'c',
-        label: 'Tunggu hingga esok hari.',
+        label: 'Keluar grup / matikan HP.',
         effect: { reputation: -15, stress: -5 },
         outcome: 'Semalaman warga gelisah tanpa jawaban. Kepercayaan pada adminnya luntur.',
       },
     ],
   },
-  lesson:
-    'Sebagai admin grup, klarifikasi tenang + bukti resmi lebih berharga daripada broadcast panik.',
+  lesson: 'Admin WAG memegang kendali atas ketenangan publik.',
 };
 
 export const EVENT_5_EN: EventData = {
@@ -172,33 +177,38 @@ export const EVENT_5_EN: EventData = {
   tag: 'Climax Broadcast',
   atmosphere: [
     '8 PM. Anton is now the admin of the neighborhood WhatsApp group. His phone rings non-stop.',
-    'A chain message lands: "PDAM water is contaminated with toxic waste across ALL OF JAKARTA! DO NOT BATHE, DO NOT DRINK!"',
     'The residents panic in the group. 200 members await their admin\'s decision.',
   ],
+  scenario: {
+    app: 'wag',
+    sender: 'Message forwarded many times',
+    message: 'PDAM water is contaminated with toxic waste across ALL OF JAKARTA! DO NOT BATHE, DO NOT DRINK! SPREAD IT! (warning graphic)',
+    note: '200 residents in the group await their admin\'s decision',
+  },
   miniGames: [
     {
-      id: 'mg1-water-portal',
-      title: 'Official Water Portal',
+      id: 'mg1-reverse-image',
+      title: 'Reverse Image Search — Toxic Water Poster',
       flavor:
-        'Anton checks the official water company website amid the shaking flood of notifications from residents demanding answers.',
+        'Anton receives a warning graphic about toxic PDAM water in the residents\' group. Before forwarding it, he tests its authenticity with an image search.',
       options: [
         {
           id: 'a',
-          label: 'Open the official site — contamination limited to 1 small point, already handled.',
-          effect: { stress: -25, accuracy: 15, factCheck: 1 },
-          outcome: 'Official release: one small point, already fixed, tap water remains safe.',
+          label: 'Believe the graphic is real because it looks like an official letter.',
+          effect: { stress: 25 },
+          outcome: 'The letterhead and stamp look official. Anton almost forwards it.',
         },
         {
           id: 'b',
-          label: 'Believe the emergency message without checking.',
-          effect: { stress: 35 },
-          outcome: 'Every phone buzz feels like an alarm siren.',
+          label: 'Discover the graphic is a fictional poster template used for internet jokes.',
+          effect: { stress: -25, accuracy: 15, factCheck: 1 },
+          outcome: 'An old meme template recycled with different cities. This time it\'s Jakarta\'s turn.',
         },
         {
           id: 'c',
-          label: 'Ask the neighbors\' arisan group.',
-          effect: { stress: 10, accuracy: 5 },
-          outcome: 'The arisan group trades more gossip than facts.',
+          label: 'Skip the image check and immediately get goosebumps.',
+          effect: { stress: 15 },
+          outcome: 'Unchecked, the graphic instantly feels real.',
         },
       ],
     },
@@ -211,7 +221,7 @@ export const EVENT_5_EN: EventData = {
         {
           id: 'a',
           label: 'Call Ketua RT, ask for guidance and coordination.',
-          effect: { stress: -20, accuracy: 15, factCheck: 1 },
+          effect: { stress: -20, accuracy: 15 },
           outcome: '"Stay calm, let\'s check with PDAM together. Nobody panic yet." The voice Anton needed.',
         },
         {
@@ -237,7 +247,7 @@ export const EVENT_5_EN: EventData = {
         {
           id: 'a',
           label: 'Logical check: impossible for water to be contaminated across all of Jakarta at once.',
-          effect: { stress: -20, accuracy: 15, factCheck: 1 },
+          effect: { stress: -20, accuracy: 15 },
           outcome: 'Jakarta\'s pipe networks are separate. "All of Jakarta at once" makes no sense.',
         },
         {
@@ -260,19 +270,19 @@ export const EVENT_5_EN: EventData = {
     options: [
       {
         id: 'a',
-        label: 'The poisoned water is real — broadcast an emergency warning to everyone!',
+        label: 'The water is poisoned — broadcast an emergency warning!',
         effect: { stress: 40, accuracy: -15 },
         outcome: 'Anton imagines 200 poisoned families. He must act NOW.',
       },
       {
         id: 'b',
-        label: 'An exaggerated hoax — the water is safe and under control.',
+        label: 'An exaggerated hoax — the water is safe.',
         effect: { stress: -30, accuracy: 20 },
         outcome: 'Official evidence in hand. One calm message can stop this panic.',
       },
       {
         id: 'c',
-        label: 'Confused and scared — let the residents panic on their own.',
+        label: 'Let the residents panic on their own.',
         effect: { stress: 20, accuracy: -5 },
         outcome: 'Anton wishes he could vanish from this group forever.',
       },
@@ -289,13 +299,13 @@ export const EVENT_5_EN: EventData = {
       },
       {
         id: 'b',
-        label: 'Send a calm clarification + screenshot of the official PAM Jaya release.',
+        label: 'Send a calm clarification + official PAM Jaya release.',
         effect: { reputation: 50, stress: -25, flags: ['trueEndingKey'] },
         outcome: 'The group settles within minutes. Residents thank him one by one.',
       },
       {
         id: 'c',
-        label: 'Leave the group, turn off the phone, and sleep.',
+        label: 'Leave the group.',
         effect: { reputation: -20, stress: -10 },
         outcome: 'The group is left without a captain. The panic drifts on, directionless.',
       },
@@ -306,7 +316,7 @@ export const EVENT_5_EN: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Broadcast the panic right this second.',
+        label: 'Broadcast the panic right now.',
         effect: { reputation: -30, hoaksShare: 1, stress: 25 },
         outcome: 'The hoax reaches the public in seconds. There is no taking it back.',
       },
@@ -318,12 +328,11 @@ export const EVENT_5_EN: EventData = {
       },
       {
         id: 'c',
-        label: 'Wait until tomorrow.',
+        label: 'Leave the group / turn off the phone.',
         effect: { reputation: -15, stress: -5 },
         outcome: 'All night the residents worry without an answer. Trust in their admin fades.',
       },
     ],
   },
-  lesson:
-    'As a group admin, a calm clarification + official evidence is worth more than a panic broadcast.',
+  lesson: 'A group admin holds the reins of public calm.',
 };

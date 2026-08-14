@@ -75,15 +75,16 @@ function report(label: string, r: Result, expect: string) {
 
 let failures = 0;
 
-// 1) Perfect play — the fact-checking option of every step (letter varies per
-//    MVP: E4 & E5 mini-games put the correct option at [A]) → Hero.
+// 1) Perfect play — the fact-checking option of every step (the correct
+//    letter varies per spec: E2 MG2 & E4/E5 MGs put it at [A], most at [B])
+//    → Hero.
 const perfect = play(
   path({
     1: ['b', 'b', 'b', 'b', 'b', 'b'],
     2: ['b', 'a', 'b', 'b', 'c', 'b'], // MG2 good=A; action C = klarifikasi WAG (+rep)
     3: ['b', 'b', 'b', 'b', 'b', 'b'],
-    4: ['a', 'a', 'a', 'b', 'b', 'b'], // E4 MGs good=A
-    5: ['a', 'a', 'a', 'b', 'b', 'b'], // E5 MGs good=A
+    4: ['b', 'a', 'a', 'b', 'b', 'b'], // MG1 good=B (poster editan), MG2/3 good=A
+    5: ['b', 'a', 'a', 'b', 'b', 'b'], // MG1 good=B (template fiktif), MG2/3 good=A
   }),
 );
 failures += report('Perfect play', perfect, 'hero') ? 0 : 1;
@@ -95,11 +96,11 @@ failures += report('Worst play (all A)', play(repeat('a')), 'hospitalized') ? 0 
 //    health-flag options → hoaks=3 & rep=0, but family healthy & no scam.
 const panic = play(
   path({
-    1: ['b', 'b', 'b', 'b', 'c', 'c'], // hindari rep +10/+5 dari action/time B
-    2: ['b', 'a', 'b', 'b', 'a', 'c'], // action A: borong beras (hoaks+1)
-    3: ['b', 'b', 'b', 'b', 'b', 'c'], // time C: tanpa rep +10
-    4: ['a', 'a', 'a', 'b', 'b', 'b'], // sehat, tidak percaya hoaks sirup
-    5: ['a', 'a', 'a', 'b', 'a', 'a'], // action A + time A (hoaks+2)
+    1: ['b', 'b', 'b', 'b', 'c', 'c'], // hindari rep +10/+5 dari tindakan/waktu B
+    2: ['b', 'a', 'b', 'b', 'a', 'c'], // tindakan A: borong beras (hoaks+1)
+    3: ['b', 'b', 'b', 'b', 'b', 'c'], // waktu C: tanpa rep +10
+    4: ['b', 'a', 'a', 'b', 'b', 'b'], // sehat, tidak percaya hoaks sirup
+    5: ['b', 'a', 'a', 'b', 'a', 'a'], // tindakan A + waktu A (hoaks+2)
   }),
 );
 failures += report('Panic spreader path', panic, 'panic-spreader') ? 0 : 1;
@@ -107,7 +108,7 @@ failures += report('Panic spreader path', panic, 'panic-spreader') ? 0 : 1;
 // 4) Health-believer path — trust the syrup hoax → Hospitalized.
 const health = play(
   path({
-    4: ['b', 'b', 'b', 'a', 'b', 'b'], // E4: vonis "obat beracun" → believedHealthHoax
+    4: ['b', 'b', 'b', 'a', 'b', 'b'], // E4: vonis "buang obat sekarang" → believedHealthHoax
   }),
 );
 failures += report('Believes health hoax', health, 'hospitalized') ? 0 : 1;
@@ -126,11 +127,11 @@ failures += report('Mediocre mixed path', survivor, 'survivor') ? 0 : 1;
 
 // 6) Pariah & bankrupt path — the most reckless playthrough: every
 //    money-draining option plus hoax shares in E2 & E5. Money floor is
-//    Rp 130.000 — the ending fires on the adjusted trigger (≤ Rp 200.000,
-//    deviation from MVP's unreachable `money <= 0`, see utils/score.ts).
+//    Rp 150.000 — the ending fires on the adjusted trigger (≤ Rp 200.000,
+//    deviation from the spec's unreachable `money <= 0`, see utils/score.ts).
 const pariah = play(
   path({
-    1: ['c', 'b', 'b', 'b', 'a', 'a'], // -20k telpon, -300k transfer, -50k buru-buru
+    1: ['b', 'b', 'b', 'b', 'a', 'a'], // -300k transfer, -50k buru-buru
     2: ['b', 'b', 'b', 'b', 'a', 'a'], // -1.5jt borong (hoaks+1), -100k buru-buru
     3: ['b', 'b', 'b', 'b', 'a', 'a'], // -2jt transfer (scam+1), -200k panik (scam+1)
     4: ['b', 'c', 'b', 'b', 'c', 'b'], // -200k IGD, -500k herbal

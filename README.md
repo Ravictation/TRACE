@@ -11,14 +11,13 @@
 ```
 Prolog (02:15 — Anton terjaga di kontrakannya)
       ↓
-Event 1–5, masing-masing:
-  3 Mini-Game cek fakta (pilih 1 dari 3 opsi)
+Event 1–5, layout yang sama di tiap event:
+  KIRI  — Scenario Box: pesan masuk yang memicu krisis
+  KANAN — 3 tab Mini-Game (MG 1–3) yang wajib diselesaikan
+          → membuka 3 dropdown keputusan [Vonis] [Tindakan] [Waktu]
+          → tombol ENTER memproses semua pilihan sekaligus
       ↓
-  VONIS (kesimpulan Anton)
-      ↓
-  TINDAKAN (apa yang dilakukan)
-      ↓
-  WAKTU (kapan bertindak — panik atau menunggu?)
+"Event n Selesai" — pesan event + ringkasan dampak pilihan
       ↓
 Event 5 selesai → 5 ending kondisional
 ```
@@ -37,13 +36,13 @@ Event 5 selesai → 5 ending kondisional
 
 ## 🗂 5 Event
 
-| # | Event | Waktu | Pelajaran |
+| # | Event | Waktu | Pesan Event |
 |---|---|---|---|
-| 1 | **Tawaran Kerja Kilat** — WA "HRD" minta transfer Rp 300rb | 02:30 | Perusahaan asli tidak meminta uang ke pelamar |
-| 2 | **Kepanikan Sembako** — video rak kosong viral | 08:00 | Cek tanggal & asal video sebelum panic buying |
-| 3 | **Hoaks Bencana Magelang** — "Merapi meletus", anak tak bisa dihubungi | 13:15 | Verifikasi ke sumber resmi & saksi langsung |
-| 4 | **Hoaks Obat Sirup Beracun** — anak demam, FB panik | 14:00 | Keputusan kesehatan jangan dari postingan medsos |
-| 5 | **Ujian Terakhir Admin WAG** — "Air PDAM beracun se-Jakarta" | 20:00 | Klarifikasi tenang + bukti resmi mengalahkan broadcast panik |
+| 1 | **Tawaran Kerja Kilat** — WA "HRD" minta transfer Rp 300rb | 02:30 | "Perusahaan sah tidak pernah meminta uang di awal." |
+| 2 | **Kepanikan Sembako** — video rak kosong viral | 08:00 | "Kepanikan adalah bahan bakar utama pembuat hoaks." |
+| 3 | **Hoaks Bencana Magelang** — "Merapi meletus", anak tak bisa dihubungi | 13:15 | "Validasi data menyelamatkan dompet dan kesehatan mental." |
+| 4 | **Hoaks Obat Sirup Beracun** — anak demam, FB panik | 14:00 | "Konsultasi pada ahli medis mencegah fatalitas." |
+| 5 | **Ujian Terakhir Admin WAG** — "Air PDAM beracun se-Jakarta" | 20:00 | "Admin WAG memegang kendali atas ketenangan publik." |
 
 ## 🎬 5 Ending (prioritas: Pariah → Hospitalized → Panic Spreader → Hero → Survivor)
 
@@ -94,18 +93,18 @@ src/
 ├── game/GameContext.tsx       — reducer + state machine (prolog → event → ending)
 ├── utils/
 │   ├── score.ts               — resolveEnding (prioritas MVP) + skor akhir
-│   ├── stats.ts               — applyEffect + invertEffect (clamp stat)
+│   ├── stats.ts               — applyEffect + aggregateEffect (clamp stat)
 │   ├── format.ts              — format Rupiah + delta chips efek
-│   ├── storage.ts             — save v2 (resume mid-story), leaderboard, lang
+│   ├── storage.ts             — save v3 (resume mid-story), leaderboard, lang
 │   └── useCountUp.ts          — animasi angka count-up
 ├── i18n/strings.ts            — semua label UI (ID/EN)
 ├── styles/global.css          — design tokens + animations
 └── components/
     ├── DesktopTerminal        — shell: header + stats bar + layar utama
     ├── StatsBar               — 5 statistik Anton + progres event
-    ├── StoryScreen            — prolog & atmosfer event
-    ├── ChoiceScreen           — mini-game / vonis / tindakan / waktu (3 opsi)
-    ├── EventEndScreen         — jeda antar event + pelajaran
+    ├── StoryScreen            — prolog
+    ├── EventScreen            — scenario box + tab MG 1–3 + dropdown keputusan + ENTER
+    ├── EventEndScreen         — pesan "Event Selesai" + dampak bersih pilihan
     ├── EndingScreen           — ending, skor, leaderboard, share
     ├── IntroScreen            — menu: profil Anton, bahasa, tutorial
     ├── TutorialModal          — cara main 4 langkah
@@ -123,7 +122,8 @@ scripts/
 
 ## 📄 Dokumen Terkait
 
-- `MVP.md` — proposal MVP Hoax Defender: Anton's Dilemma (spesifikasi game ini)
+- `MD_MVP_new_1 (1).md` — proposal MVP + spesifikasi UI terbaru (sistem tab & dropdown, spesifikasi game ini)
+- `MVP.md` — proposal MVP versi awal
 - `design.md` — locked design system (palette, typography, motion)
 
 ---

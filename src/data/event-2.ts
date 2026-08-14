@@ -1,6 +1,6 @@
 import type { EventData } from '../types/game';
 
-/** EVENT 2: Kepanikan Sembako (Panic Buying) — MVP.md §4 */
+/** EVENT 2: Kepanikan Sembako (Panic Buying) — MD_MVP_new_1 §5 */
 export const EVENT_2_ID: EventData = {
   id: 'panic-buying',
   number: 2,
@@ -9,15 +9,21 @@ export const EVENT_2_ID: EventData = {
   tag: 'Panic Buying',
   atmosphere: [
     'Pukul 08.00 pagi. Sri masuk membawa HP dengan wajah pucat.',
-    'Video TikTok menampilkan rak minimarket kosong dengan narasi lockdown ekonomi: "SEMBAKO MAU HABIS! BORONG BERAS SEKARANG SEBELUM HARGA NAIK!"',
     'Di depan, Bimo masih setengah mengunyah rotinya. Sri menatap Anton menunggu keputusan.',
   ],
+  scenario: {
+    app: 'tiktok',
+    sender: 'Video viral TikTok',
+    message:
+      'SEMBAKO MAU HABIS! BORONG BERAS SEKARANG SEBELUM HARGA NAIK! (video rak minimarket kosong + narasi lockdown ekonomi)',
+    note: 'Sri menunjukkannya sambil menahan tangis',
+  },
   miniGames: [
     {
       id: 'mg1-reverse-image',
-      title: 'Reverse Image Search',
+      title: 'Reverse Image Search — Rak Kosong',
       flavor:
-        'Anton mencolek layar HP-nya yang berminyak, menyeret video TikTok tersebut ke mesin pencari visual untuk melihat jejak rekam digitalnya.',
+        'Anton mencolek layar HP-nya yang berminyak, menyeret video TikTok rak kosong tersebut ke mesin pencari visual untuk melacak jejak rekam digitalnya.',
       options: [
         {
           id: 'a',
@@ -27,7 +33,7 @@ export const EVENT_2_ID: EventData = {
         },
         {
           id: 'b',
-          label: 'Temukan itu video arsip pandemi 2020.',
+          label: 'Temukan itu video arsip pandemi COVID-19 tahun 2020.',
           effect: { stress: -20, accuracy: 15, factCheck: 1 },
           outcome: 'Video yang sama pernah viral tahun 2020. Enam tahun lalu. Bukan hari ini.',
         },
@@ -41,9 +47,9 @@ export const EVENT_2_ID: EventData = {
     },
     {
       id: 'mg2-comments',
-      title: 'Sentimen Komentar',
+      title: 'Komentar Netizen',
       flavor:
-        'Anton menggulir layar ke kolom komentar, mencari suara jujur dari manusia nyata di balik deretan tulisan yang gaduh.',
+        'Anton menggulir layar ke kolom komentar video, mencari suara jujur dari manusia nyata di balik deretan tulisan yang gaduh.',
       options: [
         {
           id: 'a',
@@ -67,7 +73,7 @@ export const EVENT_2_ID: EventData = {
     },
     {
       id: 'mg3-authority',
-      title: 'Cek Otoritas — Bu RT',
+      title: 'Tanya Bu RT',
       flavor:
         'Jari Anton mengetik pesan singkat ke Bu RT lewat WhatsApp, mencari oase kebenaran di tengah gurun kepanikan.',
       options: [
@@ -103,13 +109,13 @@ export const EVENT_2_ID: EventData = {
       },
       {
         id: 'b',
-        label: 'Ini video lama disebar untuk ciptakan panik.',
+        label: 'Video lama yang disebar untuk ciptakan panik.',
         effect: { stress: -20, accuracy: 10 },
         outcome: 'Semua bukti mengarah ke satu jawaban: rekayasa panik.',
       },
       {
         id: 'c',
-        label: 'Ikut belanja banyak biar hati tenang.',
+        label: 'Belanja banyak biar hati tenang.',
         effect: { stress: 10, accuracy: -5 },
         outcome: '"Beli sedikit saja, biar bisa tidur nyenyak." Pikirnya.',
       },
@@ -149,20 +155,19 @@ export const EVENT_2_ID: EventData = {
       },
       {
         id: 'b',
-        label: 'Tunggu 30 menit mengecek warung depan.',
+        label: 'Tunggu 30 menit cek warung depan.',
         effect: { stress: -10, accuracy: 10, reputation: 5 },
         outcome: 'Warung depan rumah: beras menumpuk rapi. Kondisi riil jauh dari video.',
       },
       {
         id: 'c',
-        label: 'Tunggu hingga esok hari.',
+        label: 'Biarkan semalaman.',
         effect: { stress: -15 },
         outcome: 'Esoknya, isu itu mereda dengan sendirinya — seperti kebanyakan hoaks.',
       },
     ],
   },
-  lesson:
-    'Cek tanggal dan asal video sebelum belanja panik. Satu pencarian gambar bisa menenangkan satu pasar.',
+  lesson: 'Kepanikan adalah bahan bakar utama pembuat hoaks.',
 };
 
 export const EVENT_2_EN: EventData = {
@@ -173,15 +178,21 @@ export const EVENT_2_EN: EventData = {
   tag: 'Panic Buying',
   atmosphere: [
     '8 AM. Sri walks in holding her phone, her face pale.',
-    'A TikTok video shows empty minimarket shelves with an economic-lockdown narrative: "GROCERIES ARE RUNNING OUT! STOCK UP ON RICE NOW BEFORE PRICES RISE!"',
     'In front of them, Bimo is still half-chewing his toast. Sri stares at Anton, waiting for a decision.',
   ],
+  scenario: {
+    app: 'tiktok',
+    sender: 'Viral TikTok video',
+    message:
+      'GROCERIES ARE RUNNING OUT! STOCK UP ON RICE NOW BEFORE PRICES RISE! (video of empty minimarket shelves + economic lockdown narration)',
+    note: 'Sri shows it to him, holding back tears',
+  },
   miniGames: [
     {
       id: 'mg1-reverse-image',
-      title: 'Reverse Image Search',
+      title: 'Reverse Image Search — Empty Shelves',
       flavor:
-        'Anton pokes at his greasy phone screen, dragging the TikTok video into a visual search engine to see its digital footprint.',
+        'Anton pokes at his greasy phone screen, dragging the empty-shelf TikTok video into a visual search engine to trace its digital footprint.',
       options: [
         {
           id: 'a',
@@ -191,7 +202,7 @@ export const EVENT_2_EN: EventData = {
         },
         {
           id: 'b',
-          label: 'Find out it\'s archived footage from the 2020 pandemic.',
+          label: 'Discover it\'s archived footage from the 2020 COVID-19 pandemic.',
           effect: { stress: -20, accuracy: 15, factCheck: 1 },
           outcome: 'The same video went viral in 2020. Six years ago. Not today.',
         },
@@ -205,9 +216,9 @@ export const EVENT_2_EN: EventData = {
     },
     {
       id: 'mg2-comments',
-      title: 'Comment Sentiment',
+      title: 'Netizen Comments',
       flavor:
-        'Anton scrolls to the comment section, looking for honest voices from real people behind the noisy text.',
+        'Anton scrolls to the comment section of the video, looking for honest voices from real people behind the noisy text.',
       options: [
         {
           id: 'a',
@@ -231,7 +242,7 @@ export const EVENT_2_EN: EventData = {
     },
     {
       id: 'mg3-authority',
-      title: 'Authority Check — Mrs. RT',
+      title: 'Ask Bu RT',
       flavor:
         'Anton\'s fingers type a short WhatsApp message to the neighborhood head (Bu RT), looking for an oasis of truth in the desert of panic.',
       options: [
@@ -267,13 +278,13 @@ export const EVENT_2_EN: EventData = {
       },
       {
         id: 'b',
-        label: 'This is an old video spread to create panic.',
+        label: 'An old video spread to create panic.',
         effect: { stress: -20, accuracy: 10 },
         outcome: 'Every piece of evidence points one way: manufactured panic.',
       },
       {
         id: 'c',
-        label: 'Just buy a bit extra to calm his heart.',
+        label: 'Buy extra just to calm his heart.',
         effect: { stress: 10, accuracy: -5 },
         outcome: '"Just a little shopping, so I can sleep well." So he thinks.',
       },
@@ -319,12 +330,11 @@ export const EVENT_2_EN: EventData = {
       },
       {
         id: 'c',
-        label: 'Wait until tomorrow.',
+        label: 'Leave it overnight.',
         effect: { stress: -15 },
         outcome: 'By the next day, the issue dies down on its own — like most hoaxes.',
       },
     ],
   },
-  lesson:
-    'Check the date and origin of a video before panic-buying. One image search can calm an entire market.',
+  lesson: 'Panic is the main fuel of hoax-makers.',
 };

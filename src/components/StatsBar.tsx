@@ -61,24 +61,18 @@ export default function StatsBar() {
   const locale = state.language === 'id' ? 'id-ID' : 'en-US';
 
   const money = useCountUpLocale(stats.money, 600, locale);
+
+  // Right-hand chip: progress of the current event's mini-game tabs, or the
+  // current step for prologue / event-complete screens.
+  const mgDone = ['mg1', 'mg2', 'mg3'].filter((s) => state.selections[s as 'mg1'] !== null).length;
   const stepLabel =
     step === 'prologue'
       ? T.steps.prologue
-      : step === 'atmo'
-        ? `${T.steps.atmo} ${currentEvent.number}`
-        : step === 'mg1'
-          ? T.steps.mg(1)
-          : step === 'mg2'
-            ? T.steps.mg(2)
-            : step === 'mg3'
-              ? T.steps.mg(3)
-              : step === 'judgement'
-                ? T.steps.judgement
-                : step === 'action'
-                  ? T.steps.action
-                  : step === 'time'
-                    ? T.steps.time
-                    : `${T.steps.atmo} ${currentEvent.number}`;
+      : step === 'eventEnd'
+        ? T.steps.eventEnd
+        : state.phase === 'story'
+          ? `${T.steps.event(currentEvent.number)} · ${T.tabs.progress(mgDone, 3)}`
+          : T.steps.event(currentEvent.number);
 
   const moneyTone = stats.money <= 500000 ? 'danger' : stats.money <= 1500000 ? 'warning' : 'plain';
   const stressTone = stats.stress >= 75 ? 'danger' : stats.stress >= 50 ? 'warning' : 'success';

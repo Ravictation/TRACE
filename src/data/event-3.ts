@@ -1,6 +1,6 @@
 import type { EventData } from '../types/game';
 
-/** EVENT 3: Hoaks Bencana Magelang (Family Panic) — MVP.md §4 */
+/** EVENT 3: Hoaks Bencana Magelang (Family Panic) — MD_MVP_new_1 §5 */
 export const EVENT_3_ID: EventData = {
   id: 'magelang-disaster',
   number: 3,
@@ -11,30 +11,36 @@ export const EVENT_3_ID: EventData = {
     'Pukul 13.15 siang. Notifikasi Facebook: "GUNUNG MERAPI MELETUS DAHSYAT!"',
     'Kilas, anak Anton di Magelang, hanya berbalas centang satu di WhatsApp. Dadanya sesak membayangkan keselamatan anaknya.',
   ],
+  scenario: {
+    app: 'fb',
+    sender: 'Info Gempa & Bencana',
+    message: 'GUNUNG MERAPI MELETUS DAHSYAT! 🔥 Lahar panas meluncur ke pemukiman! SEBARKAN!',
+    note: 'Kilas (anak di Magelang) belum membalas chat — centang satu',
+  },
   miniGames: [
     {
-      id: 'mg1-profile',
-      title: 'Riwayat Profil',
+      id: 'mg1-reverse-image',
+      title: 'Reverse Image Search — Foto Erupsi',
       flavor:
-        'Anton meneliti akun Facebook yang membagikan video erupsi, melihat kapan akun itu dibuat dan apa saja isi postingannya.',
+        'Anton merasa ngeri melihat foto lahar panas di Facebook. Dengan tangan gemetar, ia memasukkan foto tersebut ke pencarian gambar terbalik untuk menguji keasliannya.',
       options: [
         {
           id: 'a',
-          label: 'Kira akun anonim itu jurnalis lapangan.',
+          label: 'Yakin foto itu adalah letusan hari ini karena tampak nyata.',
           effect: { stress: 25 },
-          outcome: 'Anton berpegang pada harapan bahwa si pembuat video sedang melaporkan dari lokasi.',
+          outcome: 'Api dan asapnya begitu hidup. Anton yakin itu baru saja terjadi.',
         },
         {
           id: 'b',
-          label: 'Temukan akun itu bot spam yang baru dibuat kemarin.',
+          label: 'Temukan foto tersebut adalah letusan Gunung Sinabung tahun 2018 yang dicatut.',
           effect: { stress: -25, accuracy: 15, factCheck: 1 },
-          outcome: 'Dibuat kemarin, satu video, nol teman. Pola akun bot klasik.',
+          outcome: 'Foto yang sama beredar sejak 2018 — dari Sinabung, bukan Merapi. Dicatut ulang.',
         },
         {
           id: 'c',
-          label: 'Keluar dari akun karena takut melihat penonton jutaan.',
+          label: 'Tutup HP karena tidak sanggup melihatnya.',
           effect: { stress: 15 },
-          outcome: 'Angka "2,1 juta penonton" membuat lututnya lemas.',
+          outcome: 'Layar dimatikan, tapi gambar lahar itu terus membakar di ingatannya.',
         },
       ],
     },
@@ -53,12 +59,12 @@ export const EVENT_3_ID: EventData = {
         {
           id: 'b',
           label: 'Baca data resmi: Status Merapi Waspada II, normal.',
-          effect: { stress: -30, accuracy: 15, factCheck: 1 },
+          effect: { stress: -30, accuracy: 15 },
           outcome: 'Status Waspada II — aktivitas normal. Tidak ada letusan. Nafas Anton kembali.',
         },
         {
           id: 'c',
-          label: 'Tanya grup Facebook pendaki gunung acak.',
+          label: 'Tanya grup FB pendaki gunung acak.',
           effect: { stress: 10, accuracy: 5 },
           outcome: 'Jawaban bercampur antara candaan dan spekulasi. Tidak ada yang pasti.',
         },
@@ -66,7 +72,7 @@ export const EVENT_3_ID: EventData = {
     },
     {
       id: 'mg3-witness',
-      title: 'Saksi Langsung — Dosen',
+      title: 'Dosen Magelang',
       flavor:
         'Anton menekan tombol chat WhatsApp ke dosen pembimbing Kilas, mempertaruhkan kewarasannya menunggu balasan.',
       options: [
@@ -79,7 +85,7 @@ export const EVENT_3_ID: EventData = {
         {
           id: 'b',
           label: 'Chat dosen — dibalas: "Kilas di perpustakaan, HP silent."',
-          effect: { stress: -40, accuracy: 15, factCheck: 1 },
+          effect: { stress: -40, accuracy: 15 },
           outcome: '"Tenang Pak, Kilas sedang belajar di perpus. Ponselnya silent." Air mata berubah lega.',
         },
         {
@@ -102,13 +108,13 @@ export const EVENT_3_ID: EventData = {
       },
       {
         id: 'b',
-        label: 'Ini hoaks video lama clickbait.',
+        label: 'Hoaks video lama clickbait.',
         effect: { stress: -30, accuracy: 15 },
-        outcome: 'Video lama, akun bot, portal resmi normal. Semua mengarah ke clickbait.',
+        outcome: 'Foto lama, portal resmi normal, dosen tenang. Semua mengarah ke clickbait.',
       },
       {
         id: 'c',
-        label: 'Tidak tahu, ketakutan di luar batas.',
+        label: 'Tidak tahu — ketakutan di luar batas.',
         effect: { stress: 20, accuracy: -5 },
         outcome: 'Anton terombang-ambing antara data dan ketakutan.',
       },
@@ -119,9 +125,9 @@ export const EVENT_3_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Transfer Rp 2 juta ke rekening "Tim Evakuasi".',
+        label: 'Transfer Rp 2 juta ke relawan.',
         effect: { money: -2000000, stress: 30, scam: 1 },
-        outcome: 'Uang tabungan meluncur ke "Tim Evakuasi" yang tidak pernah ada.',
+        outcome: 'Uang tabungan meluncur ke "relawan evakuasi" yang tidak pernah ada.',
       },
       {
         id: 'b',
@@ -131,7 +137,7 @@ export const EVENT_3_ID: EventData = {
       },
       {
         id: 'c',
-        label: 'Telepon kerabat suruh anak kabur tanpa arah.',
+        label: 'Suruh anak kabur tanpa arah.',
         effect: { stress: 30, reputation: -10 },
         outcome: 'Keluarga besar ikut panik. Kilas kebingungan disuruh kabur dari kos.',
       },
@@ -142,7 +148,7 @@ export const EVENT_3_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Kirim uang panik sekarang juga.',
+        label: 'Kirim uang panik sekarang.',
         effect: { stress: 35, money: -200000, scam: 1 },
         outcome: 'Bertindak impulsif akibat ancaman keselamatan anak. Uang melayang dalam hitungan menit.',
       },
@@ -154,14 +160,13 @@ export const EVENT_3_ID: EventData = {
       },
       {
         id: 'c',
-        label: 'Tunggu 3 jam hingga anak merespons.',
+        label: 'Menangis diam-diam.',
         effect: { stress: 10, health: -5 },
-        outcome: 'Waktu berjalan dalam cemas. Akhirnya Kilas membalas: "Pak, aku di kos, aman."',
+        outcome: 'Air mata jatuh tanpa suara. Malam ini tidak ada keputusan yang diambil.',
       },
     ],
   },
-  lesson:
-    'Saat takut, verifikasi ke sumber resmi dan saksi langsung — jangan pernah transfer ke "tim evakuasi" tak dikenal.',
+  lesson: 'Validasi data menyelamatkan dompet dan kesehatan mental.',
 };
 
 export const EVENT_3_EN: EventData = {
@@ -174,30 +179,36 @@ export const EVENT_3_EN: EventData = {
     '1:15 PM. A Facebook notification: "MOUNT MERAPI HAS ERUPTED VIOLENTLY!"',
     'Kilas, Anton\'s child in Magelang, only sends a single grey tick on WhatsApp. Anton\'s chest tightens imagining his child\'s safety.',
   ],
+  scenario: {
+    app: 'fb',
+    sender: 'Quake & Disaster Info',
+    message: 'MOUNT MERAPI HAS ERUPTED VIOLENTLY! 🔥 Hot lava sliding toward residential areas! SPREAD THIS!',
+    note: 'Kilas (his child in Magelang) has not replied — single grey tick',
+  },
   miniGames: [
     {
-      id: 'mg1-profile',
-      title: 'Profile History',
+      id: 'mg1-reverse-image',
+      title: 'Reverse Image Search — Eruption Photo',
       flavor:
-        'Anton inspects the Facebook account that shared the eruption video — when it was created and what it has posted.',
+        'Anton is horrified by the photo of hot lava on Facebook. With trembling hands, he runs it through a reverse image search to test its authenticity.',
       options: [
         {
           id: 'a',
-          label: 'Assume the anonymous account is a field journalist.',
+          label: 'Believe the photo is today\'s eruption because it looks so real.',
           effect: { stress: 25 },
-          outcome: 'Anton clings to the hope that the uploader is reporting from the scene.',
+          outcome: 'The fire and smoke look so alive. Anton is sure it just happened.',
         },
         {
           id: 'b',
-          label: 'Discover it\'s a spam bot created yesterday.',
+          label: 'Discover the photo is the 2018 Mount Sinabung eruption, recycled.',
           effect: { stress: -25, accuracy: 15, factCheck: 1 },
-          outcome: 'Created yesterday, one video, zero friends. A classic bot pattern.',
+          outcome: 'The same photo has circulated since 2018 — from Sinabung, not Merapi. Recycled.',
         },
         {
           id: 'c',
-          label: 'Close the profile, scared by the millions of viewers.',
+          label: 'Close the phone — he cannot bear to look.',
           effect: { stress: 15 },
-          outcome: 'The "2.1 million views" number makes his knees weak.',
+          outcome: 'The screen goes dark, but the lava keeps burning in his memory.',
         },
       ],
     },
@@ -216,7 +227,7 @@ export const EVENT_3_EN: EventData = {
         {
           id: 'b',
           label: 'Read the official data: Merapi at Alert Level II, normal.',
-          effect: { stress: -30, accuracy: 15, factCheck: 1 },
+          effect: { stress: -30, accuracy: 15 },
           outcome: 'Alert Level II — normal activity. No eruption. Anton\'s breath returns.',
         },
         {
@@ -229,7 +240,7 @@ export const EVENT_3_EN: EventData = {
     },
     {
       id: 'mg3-witness',
-      title: 'Direct Witness — the Lecturer',
+      title: 'The Magelang Lecturer',
       flavor:
         'Anton presses send on a WhatsApp message to Kilas\'s academic advisor, betting his sanity on the reply.',
       options: [
@@ -242,7 +253,7 @@ export const EVENT_3_EN: EventData = {
         {
           id: 'b',
           label: 'Message the lecturer — reply: "Kilas is in the library, phone on silent."',
-          effect: { stress: -40, accuracy: 15, factCheck: 1 },
+          effect: { stress: -40, accuracy: 15 },
           outcome: '"Relax, sir. Kilas is studying in the library, phone on silent." Tears turn to relief.',
         },
         {
@@ -265,9 +276,9 @@ export const EVENT_3_EN: EventData = {
       },
       {
         id: 'b',
-        label: 'This is a hoax — old clickbait footage.',
+        label: 'A hoax — old clickbait footage.',
         effect: { stress: -30, accuracy: 15 },
-        outcome: 'Old footage, bot account, calm official portal. Everything points to clickbait.',
+        outcome: 'Old photo, calm official portal, calm lecturer. Everything points to clickbait.',
       },
       {
         id: 'c',
@@ -282,9 +293,9 @@ export const EVENT_3_EN: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Transfer Rp 2 million to an "Evacuation Team" account.',
+        label: 'Transfer Rp 2 million to volunteers.',
         effect: { money: -2000000, stress: 30, scam: 1 },
-        outcome: 'Savings slide into an "Evacuation Team" that never existed.',
+        outcome: 'Savings slide into "evacuation volunteers" that never existed.',
       },
       {
         id: 'b',
@@ -294,7 +305,7 @@ export const EVENT_3_EN: EventData = {
       },
       {
         id: 'c',
-        label: 'Call relatives and tell his child to flee aimlessly.',
+        label: 'Tell his child to flee aimlessly.',
         effect: { stress: 30, reputation: -10 },
         outcome: 'The whole extended family panics. Kilas is bewildered, told to flee the boarding house.',
       },
@@ -317,12 +328,11 @@ export const EVENT_3_EN: EventData = {
       },
       {
         id: 'c',
-        label: 'Wait 3 hours until his child responds.',
+        label: 'Cry quietly.',
         effect: { stress: 10, health: -5 },
-        outcome: 'Time crawls in anxiety. Finally Kilas replies: "Dad, I\'m at the boarding house, I\'m fine."',
+        outcome: 'Tears fall without a sound. Tonight, no decision is made.',
       },
     ],
   },
-  lesson:
-    'When afraid, verify with official sources and direct witnesses — never transfer money to an unknown "evacuation team".',
+  lesson: 'Validating data saves both your wallet and your mental health.',
 };

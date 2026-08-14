@@ -1,6 +1,6 @@
 import type { EventData } from '../types/game';
 
-/** EVENT 4: Hoaks Obat Sirup Beracun (Health Risk) — MVP.md §4 */
+/** EVENT 4: Hoaks Obat Sirup Beracun (Health Risk) — MD_MVP_new_1 §5 */
 export const EVENT_4_ID: EventData = {
   id: 'poison-syrup',
   number: 4,
@@ -9,33 +9,38 @@ export const EVENT_4_ID: EventData = {
   tag: 'Risiko Kesehatan',
   atmosphere: [
     'Pukul 14.00 siang. Bimo, anak bungsu, demam tinggi di tempat tidur.',
-    'Facebook viral: "Jangan minum obat sirup X karena racun kimia! Anak-anak bisa meninggal!"',
     'Sri menangis histeris di samping tempat tidur. Botol sirup penurun panas tergeletak di meja — tepat di antara Anton dan anaknya.',
   ],
+  scenario: {
+    app: 'fb',
+    sender: 'InfoSehat.Alami',
+    message: 'JANGAN minum obat sirup X karena racun kimia! ⚠ Anak-anak bisa MENINGGAL! (poster infografis peringatan)',
+    note: 'Bimo demam tinggi · Sri menangis histeris di samping tempat tidur',
+  },
   miniGames: [
     {
-      id: 'mg1-bpom',
-      title: 'Database BPOM',
+      id: 'mg1-reverse-image',
+      title: 'Reverse Image Search — Poster Obat',
       flavor:
-        'Anton membuka portal resmi badan pengawas obat, mencari kebenaran di balik postingan yang mengancam nyawa anaknya.',
+        'Anton menatap poster infografis peringatan obat beracun di Facebook. Merasa curiga dengan desainnya yang amatir, ia melakukan pencarian gambar terbalik.',
       options: [
         {
           id: 'a',
-          label: 'Cek website BPOM — obat dinyatakan aman, lulus uji klinis.',
-          effect: { stress: -20, accuracy: 15, factCheck: 1 },
-          outcome: 'Nomor izin edar terdaftar, lulus uji klinis. Tidak ada penarikan produk.',
+          label: 'Langsung percaya poster tersebut buatan instansi resmi.',
+          effect: { stress: 20 },
+          outcome: 'Logo instansi di pojok poster terlihat meyakinkan di mata yang panik.',
         },
         {
           id: 'b',
-          label: 'Percaya postingan Facebook bulat-bulat tanpa verifikasi.',
-          effect: { stress: 25 },
-          outcome: 'Setiap kata di postingan itu terasa menusuk. Anton menelan semuanya.',
+          label: 'Temukan poster itu adalah editan iseng yang mencatut logo lama.',
+          effect: { stress: -15, accuracy: 15, factCheck: 1 },
+          outcome: 'Desain amatir, logo versi lama yang sudah tidak dipakai. Jelas editan iseng.',
         },
         {
           id: 'c',
-          label: 'Bertanya ke grup WhatsApp tetangga.',
-          effect: { stress: 5, accuracy: 5 },
-          outcome: 'Jawaban simpang siur: ada yang percaya, ada yang menenangkan.',
+          label: 'Mengabaikan poster dan panik sendiri.',
+          effect: { stress: 10 },
+          outcome: 'Poster itu dibiarkan menggantung. Ketakutan justru membesar.',
         },
       ],
     },
@@ -48,7 +53,7 @@ export const EVENT_4_ID: EventData = {
         {
           id: 'a',
           label: 'WA Bidan Puskesmas — dibilang hoaks dan obat aman.',
-          effect: { stress: -15, accuracy: 15, factCheck: 1 },
+          effect: { stress: -15, accuracy: 15 },
           outcome: '"Itu hoaks berulang tiap tahun, Pak. Obatnya aman, beri sesuai dosis."',
         },
         {
@@ -74,7 +79,7 @@ export const EVENT_4_ID: EventData = {
         {
           id: 'a',
           label: 'Cek akun pembuat post: blog pribadi tanpa latar medis.',
-          effect: { stress: -10, accuracy: 15, factCheck: 1 },
+          effect: { stress: -10, accuracy: 15 },
           outcome: 'Penulisnya hobi blog tentang "pengobatan alami". Bukan dokter, bukan apoteker.',
         },
         {
@@ -97,19 +102,19 @@ export const EVENT_4_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Obat ini beracun, buang sekarang dan biarkan anak menahan panas!',
+        label: 'Buang obat sekarang — itu beracun.',
         effect: { stress: 30, accuracy: -10, flags: ['believedHealthHoax'] },
         outcome: 'Ketakutan menang. Botol sirup itu kini tampak seperti botol racun.',
       },
       {
         id: 'b',
-        label: 'Ini hoaks pencemaran nama baik, obat dari apotek ini aman.',
+        label: 'Hoaks pencemaran nama baik, obat aman.',
         effect: { stress: -20, accuracy: 15 },
-        outcome: 'BPOM aman, bidan tenang, penulis bukan dokter. Anton yakin.',
+        outcome: 'Poster editan, bidan tenang, penulis bukan dokter. Anton yakin.',
       },
       {
         id: 'c',
-        label: 'Saya takut memberikan obatnya, serba salah.',
+        label: 'Serba salah — takut memberi obatnya.',
         effect: { stress: 20, accuracy: -5 },
         outcome: 'Anton menatap botol itu lama sekali, tidak berani mengambil keputusan.',
       },
@@ -120,19 +125,19 @@ export const EVENT_4_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Buang obat sirup ke sampah, beri anak air mentah.',
+        label: 'Buang obat, beri air mentah.',
         effect: { health: -40, stress: 40, flags: ['believedHealthHoax'] },
         outcome: 'Tanpa obat, demam Bimo melonjak. Sore itu, anaknya masuk IGD.',
       },
       {
         id: 'b',
-        label: 'Beri obat sesuai dosis dokter, kompres hangat.',
+        label: 'Beri obat sesuai dosis dokter.',
         effect: { stress: -20 },
         outcome: 'Malamnya demam Bimo turun. Anak itu tertidur pulas. Anton lega.',
       },
       {
         id: 'c',
-        label: 'Beli obat herbal online mahal tak dikenal.',
+        label: 'Beli herbal mahal.',
         effect: { money: -500000, stress: 10 },
         outcome: 'Setengah juta untuk "herbal ajaib" tanpa izin edar. Tak ada efeknya.',
       },
@@ -143,26 +148,25 @@ export const EVENT_4_ID: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Buang obat sekarang detik ini.',
+        label: 'Buang obat detik ini.',
         effect: { health: -20, stress: 30 },
         outcome: 'Bertindak ceroboh tanpa konsultasi medis. Botol obat masuk tong sampah.',
       },
       {
         id: 'b',
-        label: 'Konfirmasi ke bidan selama 5 menit.',
+        label: 'Konfirmasi bidan 5 menit.',
         effect: { stress: -20, health: 10, accuracy: 10 },
         outcome: 'Lima menit bicara dengan bidan memastikan tindakan medis yang tepat.',
       },
       {
         id: 'c',
-        label: 'Tunggu hingga esok hari.',
+        label: 'Diam kebingungan.',
         effect: { health: -25, stress: 20 },
         outcome: 'Demam anak dibiarkan tanpa penanganan awal sepanjang malam.',
       },
     ],
   },
-  lesson:
-    'Kesehatan tidak boleh diputuskan dari postingan media sosial. Konsultasi tenaga medis selalu.',
+  lesson: 'Konsultasi pada ahli medis mencegah fatalitas.',
 };
 
 export const EVENT_4_EN: EventData = {
@@ -173,33 +177,38 @@ export const EVENT_4_EN: EventData = {
   tag: 'Health Risk',
   atmosphere: [
     '2 PM. Bimo, the youngest, lies in bed with a high fever.',
-    'Facebook is buzzing: "Do NOT drink Syrup X — it contains chemical poison! Children could die!"',
     'Sri sobs hysterically beside the bed. The fever syrup bottle sits on the table — right between Anton and his child.',
   ],
+  scenario: {
+    app: 'fb',
+    sender: 'HealthyNatural.Info',
+    message: 'Do NOT drink Syrup X — it contains chemical poison! ⚠ Children could DIE! (warning infographic poster)',
+    note: 'Bimo has a high fever · Sri sobs hysterically beside the bed',
+  },
   miniGames: [
     {
-      id: 'mg1-bpom',
-      title: 'BPOM Database',
+      id: 'mg1-reverse-image',
+      title: 'Reverse Image Search — Medicine Poster',
       flavor:
-        'Anton opens the official drug-regulatory portal, searching for the truth behind the post threatening his child\'s life.',
+        'Anton stares at the infographic warning poster on Facebook. Suspicious of its amateur design, he runs a reverse image search.',
       options: [
         {
           id: 'a',
-          label: 'Check the BPOM site — the drug is declared safe, passed clinical trials.',
-          effect: { stress: -20, accuracy: 15, factCheck: 1 },
-          outcome: 'Registration number valid, clinical trials passed. No product recall.',
+          label: 'Believe the poster was made by an official agency.',
+          effect: { stress: 20 },
+          outcome: 'The agency logo in the corner looks convincing to panicked eyes.',
         },
         {
           id: 'b',
-          label: 'Believe the Facebook post completely, without verification.',
-          effect: { stress: 25 },
-          outcome: 'Every word in that post stings. Anton swallows it all.',
+          label: 'Discover the poster is a prank edit using an outdated logo.',
+          effect: { stress: -15, accuracy: 15, factCheck: 1 },
+          outcome: 'Amateur design, an old logo no longer in use. Clearly a prank edit.',
         },
         {
           id: 'c',
-          label: 'Ask the neighbors\' WhatsApp group.',
-          effect: { stress: 5, accuracy: 5 },
-          outcome: 'Mixed replies: some believe it, some try to calm him.',
+          label: 'Ignore the poster and panic on his own.',
+          effect: { stress: 10 },
+          outcome: 'The poster is left hanging. The fear only grows.',
         },
       ],
     },
@@ -212,7 +221,7 @@ export const EVENT_4_EN: EventData = {
         {
           id: 'a',
           label: 'WhatsApp the midwife — she says it\'s a hoax and the drug is safe.',
-          effect: { stress: -15, accuracy: 15, factCheck: 1 },
+          effect: { stress: -15, accuracy: 15 },
           outcome: '"That hoax comes back every year, sir. The medicine is safe — give it per the dosage."',
         },
         {
@@ -223,7 +232,7 @@ export const EVENT_4_EN: EventData = {
         },
         {
           id: 'c',
-          label: 'Rush the child to the ER in the middle of the day in a panic.',
+          label: 'Rush the child to the ER in a panic.',
           effect: { stress: 30, money: -200000 },
           outcome: 'A crowded ER, Rp 200,000 in fees. All for an ordinary fever.',
         },
@@ -238,7 +247,7 @@ export const EVENT_4_EN: EventData = {
         {
           id: 'a',
           label: 'Check the poster: a personal blog with no medical background.',
-          effect: { stress: -10, accuracy: 15, factCheck: 1 },
+          effect: { stress: -10, accuracy: 15 },
           outcome: 'The author blogs about "natural healing" as a hobby. Not a doctor, not a pharmacist.',
         },
         {
@@ -261,19 +270,19 @@ export const EVENT_4_EN: EventData = {
     options: [
       {
         id: 'a',
-        label: 'This medicine is poison — throw it away and let the child endure the fever!',
+        label: 'Throw it away now — it\'s poison.',
         effect: { stress: 30, accuracy: -10, flags: ['believedHealthHoax'] },
         outcome: 'Fear wins. The syrup bottle now looks like a bottle of poison.',
       },
       {
         id: 'b',
-        label: 'A hoax designed to smear the product — the pharmacy medicine is safe.',
+        label: 'A smear hoax — the medicine is safe.',
         effect: { stress: -20, accuracy: 15 },
-        outcome: 'BPOM says safe, the midwife is calm, the author isn\'t a doctor. Anton is sure.',
+        outcome: 'An edited poster, a calm midwife, an author who isn\'t a doctor. Anton is sure.',
       },
       {
         id: 'c',
-        label: 'I\'m scared to give the medicine — torn either way.',
+        label: 'Torn either way — scared to give the medicine.',
         effect: { stress: 20, accuracy: -5 },
         outcome: 'Anton stares at the bottle for a long time, unable to decide.',
       },
@@ -284,19 +293,19 @@ export const EVENT_4_EN: EventData = {
     options: [
       {
         id: 'a',
-        label: 'Throw the syrup in the trash, give the child raw water.',
+        label: 'Throw the medicine away, give raw water.',
         effect: { health: -40, stress: 40, flags: ['believedHealthHoax'] },
         outcome: 'Without medicine, Bimo\'s fever spikes. That evening, his child is admitted to the ER.',
       },
       {
         id: 'b',
-        label: 'Give the medicine at the doctor\'s dosage, apply a warm compress.',
+        label: 'Give the medicine at the doctor\'s dosage.',
         effect: { stress: -20 },
         outcome: 'By night, Bimo\'s fever drops. The child sleeps soundly. Anton is relieved.',
       },
       {
         id: 'c',
-        label: 'Buy expensive unknown herbal medicine online.',
+        label: 'Buy expensive herbal medicine.',
         effect: { money: -500000, stress: 10 },
         outcome: 'Half a million for a "miracle herb" with no license. It does nothing.',
       },
@@ -319,12 +328,11 @@ export const EVENT_4_EN: EventData = {
       },
       {
         id: 'c',
-        label: 'Wait until tomorrow.',
+        label: 'Stand frozen in confusion.',
         effect: { health: -25, stress: 20 },
         outcome: 'The fever goes untreated all night.',
       },
     ],
   },
-  lesson:
-    'Never decide your family\'s health from a social-media post. Always consult a medical professional.',
+  lesson: 'Consulting a medical expert prevents fatalities.',
 };
