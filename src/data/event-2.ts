@@ -24,6 +24,7 @@ export const EVENT_2_ID: EventData = {
       title: 'Reverse Image Search — Rak Kosong',
       flavor:
         'Anton mencolek layar HP-nya yang berminyak, menyeret video TikTok rak kosong tersebut ke mesin pencari visual untuk melacak jejak rekam digitalnya.',
+      image: { src: '/images/event2-tiktok-shelves.svg', caption: 'Video TikTok rak minimarket kosong' },
       options: [
         {
           id: 'a',
@@ -193,6 +194,7 @@ export const EVENT_2_EN: EventData = {
       title: 'Reverse Image Search — Empty Shelves',
       flavor:
         'Anton pokes at his greasy phone screen, dragging the empty-shelf TikTok video into a visual search engine to trace its digital footprint.',
+      image: { src: '/images/event2-tiktok-shelves.svg', caption: 'TikTok video of empty minimarket shelves' },
       options: [
         {
           id: 'a',

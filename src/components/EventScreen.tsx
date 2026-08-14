@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useGame } from '../game/GameContext';
 import { STRINGS } from '../i18n/strings';
 import type { ChoiceOption, SelectionSlot } from '../types/game';
+import ReverseImagePanel from './ReverseImagePanel';
 
 const LETTERS = ['A', 'B', 'C'];
 
@@ -118,6 +119,10 @@ export default function EventScreen() {
                 {tab.title}
               </h3>
               <p className="mt-1 font-mono text-xs leading-relaxed text-muted">{tab.flavor}</p>
+
+              {/* Live reverse-image search — the hoax image under investigation */}
+              {tab.image && <ReverseImagePanel image={tab.image} lang={state.language} />}
+
               <p className="mb-2 mt-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-muted">
                 {T.tabs.pick}
               </p>

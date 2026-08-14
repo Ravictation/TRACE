@@ -75,6 +75,8 @@ export interface MiniGame {
   /** Narrative setup — what Anton is doing in this tab. */
   flavor: string;
   options: ChoiceOption[];
+  /** The hoax image under investigation — enables live reverse-image search. */
+  image?: { src: string; caption: string };
 }
 
 /** Vonis / Tindakan / Waktu dropdowns share the same shape. */

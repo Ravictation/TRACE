@@ -64,6 +64,14 @@ export const STRINGS = {
       hint: 'Semua pilihan diproses sekaligus saat ENTER.',
       locked: (n: number) => `Lengkapi ${n} pilihan lagi untuk ENTER`,
     },
+    reverseImage: {
+      searchBtn: '🔍 TELUSURI GAMBAR INI',
+      searching: 'Menghubungi mesin pencari visual… (hosting gratis, bisa butuh waktu)',
+      resultsLabel: (n: number, source: string) => `${n} hasil dari ${source}`,
+      openSource: 'Buka sumber',
+      empty: 'Tidak ada gambar serupa ditemukan — gambar ini tidak punya jejak digital.',
+      error: 'Mesin pencari visual sedang offline. Gunakan analisismu sendiri.',
+    },
     story: {
       continue: 'LANJUT ▸',
     },
@@ -211,6 +219,14 @@ export const STRINGS = {
       label: 'ENTER — PROCESS CHOICES',
       hint: 'All choices are processed at once on ENTER.',
       locked: (n: number) => `Complete ${n} more picks to ENTER`,
+    },
+    reverseImage: {
+      searchBtn: '🔍 SEARCH THIS IMAGE',
+      searching: 'Contacting the visual search engine… (free hosting, may take a while)',
+      resultsLabel: (n: number, source: string) => `${n} results from ${source}`,
+      openSource: 'Open source',
+      empty: 'No similar images found — this image has no digital footprint.',
+      error: 'The visual search engine is offline. Use your own judgement.',
     },
     story: {
       continue: 'CONTINUE ▸',

@@ -24,6 +24,7 @@ export const EVENT_1_ID: EventData = {
       title: 'Reverse Image — Cek Foto Profil HRD',
       flavor:
         'Anton merasa janggal dengan foto profil WhatsApp sang HRD yang tampak terlalu sempurna layaknya model stok internet. Ia memutuskan menyeret foto tersebut ke mesin pencari visual.',
+      image: { src: '/images/event1-hrd-profile.svg', caption: 'Foto profil "HRD PT Jaya Logistik"' },
       options: [
         {
           id: 'a',
@@ -193,6 +194,7 @@ export const EVENT_1_EN: EventData = {
       title: 'Reverse Image — Check the HRD Profile Photo',
       flavor:
         'Anton finds the HRD\'s WhatsApp profile photo suspicious — too perfect, like an internet stock model. He decides to drag it into a visual search engine.',
+      image: { src: '/images/event1-hrd-profile.svg', caption: '"HRD PT Jaya Logistik" profile photo' },
       options: [
         {
           id: 'a',

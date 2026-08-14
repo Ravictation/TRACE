@@ -58,6 +58,18 @@ Event 5 selesai → 5 ending kondisional
 
 Skor akhir = Akurasi×10 + Reputasi×5 + Tabungan÷10rb + Cek Fakta×25 + bonus ending. Skor tersimpan di leaderboard lokal (+ seed `public/leaderboard.json`) dan bisa dibagikan ke WhatsApp/X/Facebook/Telegram/Instagram.
 
+## 🔍 Live Reverse Image Search
+
+Tab MG1 di setiap event menampilkan **gambar hoaks** (mock visual di `public/images/`) dengan tombol **"Telusuri gambar ini"** yang memanggil API reverse image search sungguhan:
+
+- `POST /search-image/upload` → unggah gambar → dapat `file_path`
+- `POST /search-image/search?image_path=…` → hasil gambar serupa dari provider (Brave/SerpAPI/BrightData)
+- Endpoint: `https://api-search-similarity-image.onrender.com` · Docs: `/docs`
+
+Hasil nyata ditampilkan dalam game (judul, sumber, link). Jika API offline / tidak terjangkau / gagal, game menampilkan pesan fallback dan **tetap dapat dimainkan** (offline-safe).
+
+> ⚠ **Catatan server API:** agar panggilan dari browser bisa dibaca, aktifkan CORS di sisi FastAPI (`CORSMiddleware` dengan `allow_origins=["*"]`, `allow_methods=["*"]`, `allow_headers=["*"]`) dan pastikan token provider (Brave/SerpAPI/BrightData) valid — tanpa itu endpoint search mengembalikan `SUBSCRIPTION_TOKEN_INVALID`.
+
 ## 🧠 Pedagogi
 
 - **SIFT Method** (Mike Caulfield) — tiap mini-game melatih Stop / Investigate / Find / Trace
@@ -78,7 +90,7 @@ npm run preview    # preview production
 - **Vite 8 + React 19 + TypeScript**
 - **Tailwind CSS v4** (design tokens OKLCH di `src/styles/global.css`, system di `design.md`)
 - **@fontsource** JetBrains Mono + Geist — bundled lokal, offline
-- Tanpa backend, tanpa API eksternal, tanpa database
+- Tanpa backend sendiri, tanpa database. Satu API eksternal opsional: reverse image search (gagal pun game tetap jalan)
 
 ## 📁 Struktur
 
@@ -95,6 +107,7 @@ src/
 │   ├── score.ts               — resolveEnding (prioritas MVP) + skor akhir
 │   ├── stats.ts               — applyEffect + aggregateEffect (clamp stat)
 │   ├── format.ts              — format Rupiah + delta chips efek
+│   ├── reverseImage.ts        — klien API reverse image (upload + search + parsing)
 │   ├── storage.ts             — save v3 (resume mid-story), leaderboard, lang
 │   └── useCountUp.ts          — animasi angka count-up
 ├── i18n/strings.ts            — semua label UI (ID/EN)
@@ -104,11 +117,14 @@ src/
     ├── StatsBar               — 5 statistik Anton + progres event
     ├── StoryScreen            — prolog
     ├── EventScreen            — scenario box + tab MG 1–3 + dropdown keputusan + ENTER
+    ├── ReverseImagePanel      — live reverse image search (API similarity search)
     ├── EventEndScreen         — pesan "Event Selesai" + dampak bersih pilihan
     ├── EndingScreen           — ending, skor, leaderboard, share
     ├── IntroScreen            — menu: profil Anton, bahasa, tutorial
     ├── TutorialModal          — cara main 4 langkah
     └── LeaderboardModal / Mascot / BrandIcon
+
+public/images/                 — 5 mock visual hoaks (SVG) untuk reverse image search
 
 scripts/
 └── simulate.ts                — simulator playthrough (verifikasi 5 ending reachable)

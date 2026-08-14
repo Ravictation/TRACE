@@ -23,6 +23,7 @@ export const EVENT_3_ID: EventData = {
       title: 'Reverse Image Search — Foto Erupsi',
       flavor:
         'Anton merasa ngeri melihat foto lahar panas di Facebook. Dengan tangan gemetar, ia memasukkan foto tersebut ke pencarian gambar terbalik untuk menguji keasliannya.',
+      image: { src: '/images/event3-eruption.svg', caption: 'Foto "Merapi meletus" di Facebook' },
       options: [
         {
           id: 'a',
@@ -191,6 +192,7 @@ export const EVENT_3_EN: EventData = {
       title: 'Reverse Image Search — Eruption Photo',
       flavor:
         'Anton is horrified by the photo of hot lava on Facebook. With trembling hands, he runs it through a reverse image search to test its authenticity.',
+      image: { src: '/images/event3-eruption.svg', caption: 'The "Merapi eruption" Facebook photo' },
       options: [
         {
           id: 'a',

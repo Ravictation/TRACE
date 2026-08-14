@@ -23,6 +23,7 @@ export const EVENT_4_ID: EventData = {
       title: 'Reverse Image Search — Poster Obat',
       flavor:
         'Anton menatap poster infografis peringatan obat beracun di Facebook. Merasa curiga dengan desainnya yang amatir, ia melakukan pencarian gambar terbalik.',
+      image: { src: '/images/event4-poster.svg', caption: 'Poster peringatan "obat sirup beracun"' },
       options: [
         {
           id: 'a',
@@ -191,6 +192,7 @@ export const EVENT_4_EN: EventData = {
       title: 'Reverse Image Search — Medicine Poster',
       flavor:
         'Anton stares at the infographic warning poster on Facebook. Suspicious of its amateur design, he runs a reverse image search.',
+      image: { src: '/images/event4-poster.svg', caption: 'The "poisoned syrup" warning poster' },
       options: [
         {
           id: 'a',

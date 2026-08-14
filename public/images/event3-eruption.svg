@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 400" font-family="monospace">
+  <rect width="340" height="400" fill="#1c1917"/>
+  <rect x="10" y="10" width="320" height="380" fill="#0f0d0b" stroke="#f5f0e6" stroke-width="3"/>
+  <!-- night sky -->
+  <rect x="10" y="10" width="320" height="300" fill="#171320"/>
+  <circle cx="60" cy="60" r="2" fill="#f5f0e6"/>
+  <circle cx="130" cy="40" r="2" fill="#f5f0e6"/>
+  <circle cx="260" cy="70" r="2" fill="#f5f0e6"/>
+  <circle cx="300" cy="30" r="2" fill="#f5f0e6"/>
+  <!-- volcano -->
+  <path d="M40 310 L170 120 L300 310 Z" fill="#26221e" stroke="#3a332c" stroke-width="3"/>
+  <!-- lava glow -->
+  <ellipse cx="170" cy="120" rx="18" ry="10" fill="#ef4444"/>
+  <path d="M170 125 L158 165 L170 150 L182 165 Z" fill="#ef4444"/>
+  <path d="M170 130 L164 200 L170 185 L176 200 Z" fill="#f97316"/>
+  <circle cx="170" cy="115" r="26" fill="#ef4444" opacity="0.25"/>
+  <!-- smoke -->
+  <circle cx="170" cy="80" r="14" fill="#8a8378" opacity="0.6"/>
+  <circle cx="158" cy="62" r="10" fill="#8a8378" opacity="0.5"/>
+  <circle cx="184" cy="50" r="8" fill="#8a8378" opacity="0.4"/>
+  <!-- ground -->
+  <rect x="10" y="310" width="320" height="80" fill="#1c1917"/>
+  <text x="170" y="340" text-anchor="middle" font-size="14" font-weight="bold" fill="#ef4444">🌋 GUNUNG MERAPI</text>
+  <text x="170" y="362" text-anchor="middle" font-size="14" font-weight="bold" fill="#ef4444">MELETUS DAHSYAT!</text>
+  <text x="170" y="384" text-anchor="middle" font-size="10" fill="#8a8378">Info Gempa &amp; Bencana · 5 mnt lalu</text>
+</svg>

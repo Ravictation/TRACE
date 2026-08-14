@@ -23,6 +23,7 @@ export const EVENT_5_ID: EventData = {
       title: 'Reverse Image Search — Poster Air Beracun',
       flavor:
         'Anton menerima grafis peringatan air PDAM beracun di grup warga. Sebelum meneruskannya, ia menguji keaslian grafis tersebut lewat pencarian gambar.',
+      image: { src: '/images/event5-water-graphic.svg', caption: 'Grafis "air PDAM beracun" di WAG' },
       options: [
         {
           id: 'a',
@@ -191,6 +192,7 @@ export const EVENT_5_EN: EventData = {
       title: 'Reverse Image Search — Toxic Water Poster',
       flavor:
         'Anton receives a warning graphic about toxic PDAM water in the residents\' group. Before forwarding it, he tests its authenticity with an image search.',
+      image: { src: '/images/event5-water-graphic.svg', caption: 'The "toxic PDAM water" WAG graphic' },
       options: [
         {
           id: 'a',
