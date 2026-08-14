@@ -1,65 +1,69 @@
-# TRACE — Every claim leaves a trace.
+# HOAX DEFENDER: ANTON'S DILEMMA
 
-**TRACE** adalah game verifikasi fakta bergaya OSINT (Open-Source Intelligence) untuk UNESCO Youth Hackathon 2026. Pemain berperan sebagai jurnalis di meja verifikasi — menerima konten viral, menyelidiki dengan tools OSINT simulasi, menginterogasi sumber (AI), dan memutuskan: *benarkah ini?*
+**Hoax Defender: Anton's Dilemma** adalah game naratif pilihan (bilingual ID/EN) yang mengajarkan ketahanan terhadap hoaks lewat satu hari kehidupan **Anton Wibowo** — ayah 45 tahun korban PHK yang rapuh terhadap disinformasi. Pemain membimbing Anton melewati 5 event nyata (job scam, panic buying, hoaks bencana, hoaks kesehatan, krisis WAG), dan setiap pilihan mengubah nasib keluarganya.
 
-**🌐 Bilingual (ID/EN):** seluruh game tersedia dalam Bahasa Indonesia dan English. Pilih bahasa di layar intro (default: Indonesia), preferensi tersimpan di localStorage. Semua konten kasus & UI diterjemahkan penuh.
-
-**Vertikal slice: 4 kasus hoaks Indonesia.** Konten viral dirender ulang dalam mock platform sosial media yang realistis (X, TikTok, Instagram, Facebook, WhatsApp) — karena konten palsu nyebar di platform yang pemain pakai sehari-hari.
+**🌐 Bilingual (ID/EN):** seluruh game tersedia dalam Bahasa Indonesia dan English. Pilih bahasa di layar intro (default: Indonesia), preferensi tersimpan di localStorage.
 
 ---
 
 ## 🎮 Gameplay
 
 ```
-Konten viral masuk (share counter naik live)
+Prolog (02:15 — Anton terjaga di kontrakannya)
       ↓
-Pilih tool investigasi (5 focus point, tiap tool habis 1)
+Event 1–5, masing-masing:
+  3 Mini-Game cek fakta (pilih 1 dari 3 opsi)
       ↓
-Temukan clue → verdict + action
+  VONIS (kesimpulan Anton)
       ↓
-Konsekuensi + debrief SIFT (Stop / Investigate / Find / Trace)
+  TINDAKAN (apa yang dilakukan)
       ↓
-Kasus berikutnya → 4 kasus total
+  WAKTU (kapan bertindak — panik atau menunggu?)
+      ↓
+Event 5 selesai → 5 ending kondisional
 ```
 
-**Tekanan waktu nyata:** share counter berdetak (+120–300/menit). Salah verdict = penipuan menyebar. Counter berubah amber ≥70% threshold, merah ≥90%. **End game:** waktu habis (limit per kasus) atau counter mencapai threshold = kasus gagal otomatis dengan konsekuensi khusus per kasus (mis. penipu mengantongi donasi). Skor: dasar + bonus kecepatan (makin cepat makin tinggi) + share dicegah.
+**Statistik inti (terlihat di status bar, berubah tiap pilihan):**
 
-## 🗂 Kasus
+| Stat | Awal | Efek |
+|---|---|---|
+| 💰 Uang | Rp 5.000.000 | Transfer ke penipu menguras tabungan |
+| 🧠 Stres | 50% (max 100%) | Panik & buru-buru menaikkan; cek fakta menurunkan |
+| ❤️ Kesehatan | 100/100 | Keputusan keliru (mis. buang obat) menurunkan HP keluarga |
+| 🌟 Reputasi | 100 | Naik saat klarifikasi bijak, anjlok saat menyebar hoaks |
+| 🎯 Akurasi | 0% (max 100%) | Naik setiap cek fakta benar di mini-game |
 
-| # | Kasus | Platform | Pelajaran |
+**Hidden flags:** `Scam_Count`, `Hoaks_Share_Count`, `Fact_Check_Count`, plus flag naratif (`believedHealthHoax`, `trueEndingKey`).
+
+## 🗂 5 Event
+
+| # | Event | Waktu | Pelajaran |
 |---|---|---|---|
-| 1 | **Banjir Jakarta palsu** — foto daur ulang + donasi bodong | X | Foto asli ≠ cerita asli (miscontextualization) |
-| 2 | **"Merapi meletus"** — footage Etna 2021 jadi Merapi | TikTok | Geolocation + cek lembaga resmi (PVMBG/BNPB/BMKG) |
-| 3 | **Donasi gempa Cianjur** — dana ke rekening pribadi | Facebook, WhatsApp | Verifikasi fundraiser: badge, rekening, registrasi |
-| 4 | **"dr. Rina RSCM"** — klaim medis palsu | WhatsApp, Instagram | Cek kredensial (STR), Kemenkes/WHO, trace screenshot |
+| 1 | **Tawaran Kerja Kilat** — WA "HRD" minta transfer Rp 300rb | 02:30 | Perusahaan asli tidak meminta uang ke pelamar |
+| 2 | **Kepanikan Sembako** — video rak kosong viral | 08:00 | Cek tanggal & asal video sebelum panic buying |
+| 3 | **Hoaks Bencana Magelang** — "Merapi meletus", anak tak bisa dihubungi | 13:15 | Verifikasi ke sumber resmi & saksi langsung |
+| 4 | **Hoaks Obat Sirup Beracun** — anak demam, FB panik | 14:00 | Keputusan kesehatan jangan dari postingan medsos |
+| 5 | **Ujian Terakhir Admin WAG** — "Air PDAM beracun se-Jakarta" | 20:00 | Klarifikasi tenang + bukti resmi mengalahkan broadcast panik |
 
-## 🛠 Tools Investigasi
+## 🎬 5 Ending (prioritas: Pariah → Hospitalized → Panic Spreader → Hero → Survivor)
 
-| Tool | Fungsi |
+| Ending | Trigger |
 |---|---|
-| 🔍 Reverse Image Search | Grid hasil pencarian — temukan match (foto daur ulang) |
-| 👤 Account Inspector | Profil: followers, umur akun, verifikasi, recent posts, red flags |
-| 📰 News Wire | Headline media — ketiadaan liputan = bukti |
-| 🔗 Link Inspector | Expand short link, bandingkan domain asli vs klaim |
-| 💬 Interrogate Source | Chat bebas dengan saksi AI — cari kontradiksi |
-| 🏛 Official Sources | Pernyataan lembaga resmi (PVMBG, Kemenkes, WHO, dll) |
-| 💰 Fundraiser Check | Mockup halaman galang dana — verifikasi badge, rekening, lembaga |
+| 💸 **Pariah & Bangkrut** | Uang ≤ Rp 200rb & tertipu ≥ 2 & hoaks disebar ≥ 2 |
+| 🏥 **Keluarga di Rumah Sakit** | HP ≤ 20 ATAU percaya hoaks kesehatan |
+| 📣 **Penyebar Panik** | Hoaks disebar ≥ 3 & reputasi ≤ 20 |
+| 🦸 **Pahlawan Cek Fakta** (terbaik) | Tidak menyebar hoaks, tidak tertipu, akurasi ≥ 75, stres ≤ 35 |
+| 🌫️ **Penyintas Terisolasi** | Fallback netral |
 
-## 🤖 AI di Game
+> Deviasi dari MVP.md: trigger Pariah `money <= 0` diubah menjadi `money <= 200.000` — angka event di MVP sendiri membuat saldo tak mungkin menyentuh 0 (kerugian maksimal ≈ Rp 4,87 jt dari awal 5 jt, sisa Rp 130.000). Semua angka event MVP §4 tidak diubah.
 
-**Source interrogation** menggunakan pendekatan *validated response tree* (hasil keputusan desain: demo tidak boleh gagal):
-
-1. Pertanyaan pemain di-embed client-side via **transformers.js** (`all-MiniLM-L6-v2`)
-2. Cosine similarity terhadap 12–15 Q&A valid per kasus
-3. Match ≥ threshold → respons yang sudah divalidasi; di bawah → deflection fallback
-
-Model berjalan on-device (WebAssembly) — **tanpa API key, tanpa server, tanpa biaya, offline-safe**. Jika model gagal load, otomatis fallback ke keyword matching.
+Skor akhir = Akurasi×10 + Reputasi×5 + Tabungan÷10rb + Cek Fakta×25 + bonus ending. Skor tersimpan di leaderboard lokal (+ seed `public/leaderboard.json`) dan bisa dibagikan ke WhatsApp/X/Facebook/Telegram/Instagram.
 
 ## 🧠 Pedagogi
 
-- **SIFT Method** (Mike Caulfield): tiap kasus = S→I→F→T, di-debrief setelah verdict
-- **Prebunking / Inoculation theory** (van der Linden, Roozenbeek): paparan aman ke taktik manipulasi
-- **Stealth assessment**: tiap interaksi = data point (tools dipakai, waktu, kalibrasi confidence, pertanyaan interogasi)
+- **SIFT Method** (Mike Caulfield) — tiap mini-game melatih Stop / Investigate / Find / Trace
+- **Prebunking / Inoculation theory** (van der Linden, Roozenbeek) — paparan aman ke taktik manipulasi: urgency, authority palsu, lookalike domain, bot accounts
+- **Stealth assessment** — tiap pilihan = data point (akurasi, waktu bertindak, jejak rekam)
 
 ## 🚀 Menjalankan
 
@@ -74,7 +78,6 @@ npm run preview    # preview production
 
 - **Vite 8 + React 19 + TypeScript**
 - **Tailwind CSS v4** (design tokens OKLCH di `src/styles/global.css`, system di `design.md`)
-- **@xenova/transformers** — on-device embedding (Source Interrogation)
 - **@fontsource** JetBrains Mono + Geist — bundled lokal, offline
 - Tanpa backend, tanpa API eksternal, tanpa database
 
@@ -82,36 +85,46 @@ npm run preview    # preview production
 
 ```
 src/
-├── types/game.ts              — semua interface (Case, Tool, State)
+├── types/game.ts              — Stats, StatEffect, Event, Ending, GameState
 ├── data/
-│   ├── cases.ts               — registry kasus + TOOL_META
-│   └── case-{flood,volcano,donation,doctor}.ts
-├── game/GameContext.tsx       — reducer + timer + flow kasus
+│   ├── story.ts               — prolog + profil karakter Anton (ID/EN)
+│   ├── event-{1..5}.ts        — 5 event MVP (ID/EN)
+│   ├── events.ts              — registry event
+│   └── endings.ts             — 5 ending + narasi (ID/EN)
+├── game/GameContext.tsx       — reducer + state machine (prolog → event → ending)
 ├── utils/
-│   ├── embedding.ts           — transformers.js + keyword fallback
-│   └── useCountUp.ts          — animasi angka count-up (easeOutCubic)
-├── components/
-│   ├── Mascot                 — 8-bit detektif pixel art (grid CSS + keyframes, klik = wave)
-│   ├── DesktopTerminal        — shell split-screen
-│   ├── StatusBar              — timer + share counter + focus points
-│   ├── SocialFeed             — platform tabs per kasus
-│   ├── VerdictPanel / DebriefOverlay / IntroScreen
-│   ├── platforms/             — mock X, TikTok, IG, FB, WA
-│   └── tools/                 — 8 tool investigasi + ToolTabs
-└── styles/global.css          — design tokens + animations
+│   ├── score.ts               — resolveEnding (prioritas MVP) + skor akhir
+│   ├── stats.ts               — applyEffect + invertEffect (clamp stat)
+│   ├── format.ts              — format Rupiah + delta chips efek
+│   ├── storage.ts             — save v2 (resume mid-story), leaderboard, lang
+│   └── useCountUp.ts          — animasi angka count-up
+├── i18n/strings.ts            — semua label UI (ID/EN)
+├── styles/global.css          — design tokens + animations
+└── components/
+    ├── DesktopTerminal        — shell: header + stats bar + layar utama
+    ├── StatsBar               — 5 statistik Anton + progres event
+    ├── StoryScreen            — prolog & atmosfer event
+    ├── ChoiceScreen           — mini-game / vonis / tindakan / waktu (3 opsi)
+    ├── EventEndScreen         — jeda antar event + pelajaran
+    ├── EndingScreen           — ending, skor, leaderboard, share
+    ├── IntroScreen            — menu: profil Anton, bahasa, tutorial
+    ├── TutorialModal          — cara main 4 langkah
+    └── LeaderboardModal / Mascot / BrandIcon
+
+scripts/
+└── simulate.ts                — simulator playthrough (verifikasi 5 ending reachable)
 ```
 
-## ✏️ Menambah Kasus Baru
+## ✏️ Menambah / Mengubah Event
 
-1. Buat `src/data/case-xxx.ts` mengikuti `CaseData` (`src/types/game.ts`)
-2. Daftarkan di `src/data/cases.ts`
-3. (Opsional) tool baru → tambah ke `ToolType`, buat komponen di `components/tools/`, render di `InvestigationPanel.tsx`
+1. Edit `src/data/event-{n}.ts` mengikuti `EventData` (`src/types/game.ts`) — ID dan EN berdampingan
+2. (Opsional) ubah ending di `src/data/endings.ts` dan trigger di `utils/score.ts`
+3. Label UI baru → `src/i18n/strings.ts`
 
 ## 📄 Dokumen Terkait
 
+- `MVP.md` — proposal MVP Hoax Defender: Anton's Dilemma (spesifikasi game ini)
 - `design.md` — locked design system (palette, typography, motion)
-- `GRILLING_SUMMARY.md` & `BUILD_PLAN.md` — di direktori proyek (`TRACE/`)
-- `TRACE_Proposal_Draft.pdf` — proposal UNESCO
 
 ---
 

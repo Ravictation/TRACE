@@ -1,215 +1,147 @@
 export type Lang = 'id' | 'en';
 
-export type PlatformId = 'twitter' | 'instagram' | 'facebook' | 'whatsapp' | 'tiktok';
+/** One step in the per-event flow (see MVP.md §4). */
+export type StepId =
+  | 'prologue'
+  | 'atmo'
+  | 'mg1'
+  | 'mg2'
+  | 'mg3'
+  | 'judgement'
+  | 'action'
+  | 'time'
+  | 'eventEnd';
 
-export type ToolType =
-  | 'reverse-image'
-  | 'account'
-  | 'news-wire'
-  | 'link'
-  | 'source'
-  | 'fundraiser'
-  | 'official';
+export type FlowPhase = 'menu' | 'story' | 'ending';
 
-export type Phase = 'intro' | 'investigating' | 'debrief';
+/** Core stats from MVP.md §2. */
+export interface Stats {
+  /** Rp saldo Anton. */
+  money: number;
+  /** 0–100 % */
+  stress: number;
+  /** 0–100 HP */
+  health: number;
+  /** Poin reputasi sosial (floor 0, cap 200). */
+  reputation: number;
+  /** 0–100 % akurasi investigasi. */
+  accuracy: number;
+  scamCount: number;
+  hoaksShareCount: number;
+  factCheckCount: number;
+}
 
-export interface VerdictOption {
+export const INITIAL_STATS: Stats = {
+  money: 5_000_000,
+  stress: 50,
+  health: 100,
+  reputation: 100,
+  accuracy: 0,
+  scamCount: 0,
+  hoaksShareCount: 0,
+  factCheckCount: 0,
+};
+
+export const MIN_STRESS = 0;
+export const MAX_STRESS = 100;
+export const MIN_HEALTH = 0;
+export const MAX_HEALTH = 100;
+export const MIN_REPUTATION = 0;
+export const MAX_REPUTATION = 200;
+export const MIN_ACCURACY = 0;
+export const MAX_ACCURACY = 100;
+
+/** Stat deltas of a single choice (MVP.md lists these per option). */
+export interface StatEffect {
+  money?: number;
+  stress?: number;
+  health?: number;
+  reputation?: number;
+  accuracy?: number;
+  /** Scam_Count — tertipu (e.g. transfer ke penipu). */
+  scam?: number;
+  /** Hoaks_Share_Count — menyebarkan hoaks. */
+  hoaksShare?: number;
+  /** Fact_Check_Count — melakukan cek fakta. */
+  factCheck?: number;
+  /** Hidden narrative flags, e.g. 'believedHealthHoax', 'trueEndingKey'. */
+  flags?: string[];
+}
+
+export interface ChoiceOption {
   id: string;
+  /** The action as the player sees it before choosing (effects hidden). */
   label: string;
+  effect: StatEffect;
+  /** Short narrative beat shown after choosing. */
+  outcome: string;
 }
 
-export interface Debrief {
-  headline: string;
-  /** Shown when the case ends in failure (timeout or saturation). */
-  failHeadline: string;
-  /** What actually happened because the player failed. */
-  failConsequence: string;
-  /** Light educational extra shown on the debrief screen. */
-  funFact: string;
-  sift: { s: string; i: string; f: string; t: string };
-  realWorldTakeaway: string;
-  stats: {
-    timeLabel: string;
-    accuracyLabel: string;
-    toolsLabel: string;
-    sharesStoppedLabel: string;
-  };
+/** One mandatory mini-game per event (MVP.md: "Pilih 1 dari 3 opsi"). */
+export interface MiniGame {
+  id: string;
+  title: string;
+  /** Narrative setup — what Anton is doing. */
+  flavor: string;
+  options: ChoiceOption[];
 }
 
-export interface ViralPost {
-  platform: string;
-  authorName: string;
-  authorHandle: string;
-  content: string;
-  imageUrl: string;
-  shareCount: number;
-  shareRate: number; // shares per second
-  threshold: number;
-  timeLimitSeconds: number;
-  likes: number;
-  postedAgo: string;
+/** Judgement / Action / Time steps share the same shape. */
+export interface EventStep {
+  prompt: string;
+  options: ChoiceOption[];
 }
 
-export interface ReverseImageData {
-  query: string;
-  results: {
-    source: string;
-    year: string;
-    isMatch: boolean;
-    caption: string;
-  }[];
+export interface EventData {
+  id: string;
+  number: number;
+  /** In-world clock, e.g. '02:30 WIB'. */
+  time: string;
+  title: string;
+  tag: string;
+  /** Narrative paragraphs shown before the mini-games. */
+  atmosphere: string[];
+  miniGames: [MiniGame, MiniGame, MiniGame];
+  judgement: EventStep;
+  action: EventStep;
+  timeChoice: EventStep;
+  /** One-line media-literacy lesson shown at the event's end. */
+  lesson: string;
 }
 
-export interface AccountData {
-  avatarInitials: string;
+export type EndingId = 'pariah' | 'hospitalized' | 'panic-spreader' | 'hero' | 'survivor';
+
+export interface EndingData {
+  id: EndingId;
+  emoji: string;
+  title: string;
+  /** Short description of the trigger condition. */
+  condition: string;
+  narrative: string[];
+}
+
+export interface CharacterData {
   name: string;
-  handle: string;
-  bio: string;
-  joined: string;
-  joinedDetail: string;
-  postsCount: number;
-  followersCount: number;
-  followingCount: number;
-  isVerified: boolean;
-  verifiedDetail?: string;
-  recentPosts: { text: string; shares: string; likes: string }[];
-  redFlags: { id: string; label: string; detail: string }[];
-  greenFlags?: { id: string; label: string; detail: string }[];
-}
-
-export interface NewsWireData {
-  description: string;
-  outlets: { name: string; timeAgo: string; headline: string }[];
-  regionalNote: string;
-  confirmLabel: string;
-  confirmSuccessLabel: string;
-}
-
-export interface LinkData {
-  shortLink: string;
-  realDomain: string;
-  registered: string;
-  redirectsTo: string;
-  claimedDomain: string;
-  mismatchNote: string;
-}
-
-export interface SourceData {
-  witnessName: string;
-  introLines: string[];
-  validatedQA: { question: string; response: string; deflection: boolean }[];
-  fallbackResponse: string;
-}
-
-export interface FundraiserData {
-  campaignTitle: string;
-  organizer: string;
-  organizerHandle: string;
-  raisedAmount: string;
-  targetAmount: string;
-  daysLeft: string;
-  backersCount: string;
-  isVerified: boolean;
-  bankAccountName: string;
-  charityName: string;
-  registeredSince: string;
-  createdDaysAgo: string;
-  redFlags: { id: string; label: string; detail: string }[];
-}
-
-export interface OfficialData {
-  description: string;
-  statements: { agency: string; date: string; title: string; status: 'info' | 'clear' | 'alert' }[];
-  summaryNote: string;
-  confirmLabel: string;
-  confirmSuccessLabel: string;
-}
-
-export interface CaseTools {
-  reverseImage?: ReverseImageData;
-  account?: AccountData;
-  newsWire?: NewsWireData;
-  link?: LinkData;
-  source?: SourceData;
-  fundraiser?: FundraiserData;
-  official?: OfficialData;
-}
-
-export interface CaseData {
-  id: string;
-  title: string;
-  caseNumber: number;
-  intro: string[];
-  platforms: PlatformId[];
-  viralPost: ViralPost;
-  toolIntro: string;
-  availableTools: ToolType[];
-  tools: CaseTools;
-  verdict: {
-    options: VerdictOption[];
-    correctVerdictId: string;
-    correctAction: string;
-    actionOptions: string[];
-  };
-  debrief: Debrief;
-}
-
-export interface Clue {
-  id: string;
-  tool: ToolType;
-  title: string;
-  description: string;
-  category: 'red_flag' | 'green_flag' | 'neutral';
-}
-
-export interface ChatMessage {
-  id: string;
-  role: 'player' | 'source';
-  text: string;
-  deflection?: boolean;
-}
-
-export type EndReason = 'verdict' | 'timeout' | 'saturation';
-
-export interface CaseResult {
-  caseId: string;
-  correct: boolean;
-  verdictId: string;
-  actionId: string;
-  confidence: number;
-  timeSeconds: number;
-  cluesFound: number;
-  sharesAtSubmit: number;
-  score: number;
-  completedAt: string;
-  /** How the case ended: player verdict, time ran out, or the post saturated. */
-  endReason: EndReason;
+  tagline: string;
+  facts: { icon: string; label: string; detail: string }[];
 }
 
 export interface LeaderboardEntry {
   name: string;
   score: number;
+  /** Number of events survived (always 5 in Anton's Dilemma). */
   casesSolved: number;
   date: string;
 }
 
 export interface GameState {
-  caseIndex: number;
   language: Lang;
-  phase: Phase;
-  elapsedSeconds: number;
-  shareCount: number;
-  focusPoints: number;
-  maxFocusPoints: number;
-  discoveredClues: Clue[];
-  activeTool: ToolType | null;
-  /** Tools already paid for — reopening one is free. */
-  openedTools: ToolType[];
-  interrogationMessages: ChatMessage[];
-  isSourceTyping: boolean;
-  submitted: boolean;
-  verdictSelected: string | null;
-  actionSelected: string | null;
-  confidence: number;
-  completedResults: (CaseResult | null)[];
+  phase: FlowPhase;
+  eventIndex: number;
+  step: StepId;
+  stats: Stats;
+  flags: string[];
+  /** Option chosen in the current step — applied to stats, awaiting CONTINUE. */
+  chosenOption: string | null;
+  endingId: EndingId | null;
 }

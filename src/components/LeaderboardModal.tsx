@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useGame } from '../game/GameContext';
-import { CASES } from '../data/cases';
 import { STRINGS } from '../i18n/strings';
 import type { LeaderboardEntry } from '../types/game';
 import { getFullLeaderboard } from '../utils/storage';
@@ -64,7 +63,7 @@ export default function LeaderboardModal({ onClose }: Props) {
                   {e.name}
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-wider opacity-70">
-                  {T.leaderboard.casesSolved(e.casesSolved, CASES[state.language].length)}
+                  {T.leaderboard.casesSolved(e.casesSolved)}
                 </span>
                 <span className="tabular-nums font-mono text-sm font-bold">
                   {e.score.toLocaleString(state.language === 'id' ? 'id-ID' : 'en-US')}

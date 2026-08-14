@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useGame } from '../game/GameContext';
+import { ENDINGS } from '../data/endings';
 import { STRINGS } from '../i18n/strings';
+import type { UiStrings } from '../i18n/strings';
 
 /**
- * Interactive tutorial — 6 steps, each with a clickable mini-demo so the
- * player learns by doing (spread counter, focus points, reverse image,
- * missing coverage, verdict, fail conditions).
+ * Tutorial — 4 static steps explaining Anton's Dilemma:
+ * the role, the 5 stats, the per-event flow, and the 5 endings.
  */
-type TutorialStrings = (typeof STRINGS)['id']['tutorial'];
-
 interface Props {
   onClose: () => void;
 }
@@ -17,7 +16,7 @@ export default function TutorialModal({ onClose }: Props) {
   const { state } = useGame();
   const T = STRINGS[state.language].tutorial;
   const [step, setStep] = useState(0);
-  const total = 6;
+  const total = 4;
   const isLast = step === total - 1;
 
   return (
@@ -42,9 +41,7 @@ export default function TutorialModal({ onClose }: Props) {
           {Array.from({ length: total }).map((_, i) => (
             <div
               key={i}
-              className={`h-1.5 flex-1 border border-border ${
-                i <= step ? 'bg-accent' : 'bg-panel'
-              }`}
+              className={`h-1.5 flex-1 border border-border ${i <= step ? 'bg-accent' : 'bg-panel'}`}
             />
           ))}
         </div>
@@ -52,14 +49,12 @@ export default function TutorialModal({ onClose }: Props) {
           {T.stepOf(step + 1, total)}
         </div>
 
-        {/* Step content — demos remount per step so their state resets */}
-        <div className="min-h-[320px]">
-          {step === 0 && <StepMission T={T} />}
-          {step === 1 && <StepStatusBar T={T} />}
-          {step === 2 && <StepReverse T={T} />}
-          {step === 3 && <StepNews T={T} />}
-          {step === 4 && <StepVerdict T={T} />}
-          {step === 5 && <StepScore T={T} />}
+        {/* Step content */}
+        <div key={step} className="min-h-[240px]">
+          {step === 0 && <Step title={T.s1.title} body={T.s1.body} demo={<StepAnton />} />}
+          {step === 1 && <Step title={T.s2.title} body={T.s2.body} demo={<StepStats />} />}
+          {step === 2 && <Step title={T.s3.title} body={T.s3.body} demo={<StepFlow T={STRINGS[state.language]} />} />}
+          {step === 3 && <Step title={T.s4.title} body={T.s4.body} demo={<StepEndings endings={ENDINGS[state.language]} />} />}
         </div>
 
         {/* Nav */}
@@ -74,7 +69,9 @@ export default function TutorialModal({ onClose }: Props) {
           <button
             onClick={isLast ? onClose : () => setStep((s) => Math.min(total - 1, s + 1))}
             className={`border-2 border-border px-4 py-1.5 font-mono text-xs font-bold tracking-wider transition ${
-              isLast ? 'bg-success text-white shadow-[2px_2px_0_0_#1f1b16]' : 'bg-accent text-border shadow-[2px_2px_0_0_#1f1b16] hover:bg-accent/90'
+              isLast
+                ? 'bg-success text-white shadow-[2px_2px_0_0_#1f1b16]'
+                : 'bg-accent text-border shadow-[2px_2px_0_0_#1f1b16] hover:bg-accent/90'
             }`}
           >
             {isLast ? T.start : T.next}
@@ -85,310 +82,96 @@ export default function TutorialModal({ onClose }: Props) {
   );
 }
 
-/* ── Step scaffold ───────────────────────────────────────── */
-
-function StepShell({
-  title,
-  body,
-  children,
-}: {
-  title: string;
-  body: string;
-  children: React.ReactNode;
-}) {
+function Step({ title, body, demo }: { title: string; body: string; demo: React.ReactNode }) {
   return (
     <div className="animate-slide-in">
-      <h3 className="font-display text-base font-bold uppercase tracking-wide text-text">
-        {title}
-      </h3>
+      <h3 className="font-display text-base font-bold uppercase tracking-wide text-text">{title}</h3>
       <p className="mb-4 mt-1 font-mono text-xs leading-relaxed text-muted">{body}</p>
-      {children}
+      {demo}
     </div>
   );
 }
 
-/* ── Step 1: mission + spread counter ────────────────────── */
+/* ── Step 1: Anton ───────────────────────────────────────── */
 
-function StepMission({ T }: { T: TutorialStrings }) {
-  const [count, setCount] = useState(12000);
-  const over = count >= 80000;
+function StepAnton() {
   return (
-    <StepShell title={T.s1.title} body={T.s1.body}>
-      <div className="border-2 border-border bg-[#15202b] p-3">
-        <div className="flex items-center gap-2 text-sm">
-          <span className="flex size-7 items-center justify-center rounded-full bg-[#263440] font-mono text-[10px] font-bold text-[#8899a6]">
-            B
+    <div className="border-2 border-border bg-panel p-3">
+      <div className="flex items-center gap-2 font-mono text-xs text-text">
+        <span className="flex size-8 items-center justify-center border-2 border-border bg-accent font-display text-sm font-bold text-border">
+          A
+        </span>
+        <span className="font-bold">Anton Wibowo, 45</span>
+        <span className="ml-auto text-[10px] text-muted">PHK 2 bulan lalu</span>
+      </div>
+      <p className="mt-2 font-mono text-[11px] leading-relaxed text-muted">
+        🏠 Jakarta Timur · 👩 Sri (istri) · 🎓 Kilas (kuliah di Magelang) · 📚 Bimo (SMP)
+      </p>
+    </div>
+  );
+}
+
+/* ── Step 2: the 5 stats ─────────────────────────────────── */
+
+const STATS_DEMO = [
+  { icon: '💰', label: 'Uang', value: 'Rp 5.000.000' },
+  { icon: '🧠', label: 'Stres', value: '50%' },
+  { icon: '❤️', label: 'Kesehatan', value: '100' },
+  { icon: '🌟', label: 'Reputasi', value: '100' },
+  { icon: '🎯', label: 'Akurasi', value: '0%' },
+];
+
+function StepStats() {
+  return (
+    <div className="grid grid-cols-5 gap-2">
+      {STATS_DEMO.map((s) => (
+        <div key={s.label} className="border-2 border-border bg-panel p-2 text-center shadow-[2px_2px_0_0_#1f1b16]">
+          <div className="text-sm">{s.icon}</div>
+          <div className="mt-1 font-mono text-[10px] font-bold text-text">{s.value}</div>
+          <div className="font-mono text-[8px] uppercase tracking-wider text-muted">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Step 3: the event flow ──────────────────────────────── */
+
+function StepFlow({ T }: { T: UiStrings }) {
+  const flow = [T.steps.mg(1), T.steps.judgement, T.steps.action, T.steps.time];
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      {flow.map((label, i) => (
+        <span key={i} className="flex items-center gap-2">
+          <span
+            className={`border-2 border-border px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider ${
+              i === 0 ? 'bg-accent text-border' : 'bg-panel text-text'
+            }`}
+          >
+            {label}
           </span>
-          <span className="font-bold text-white">info_banjir_jkt</span>
-          <span className="ml-auto text-[10px] text-[#8899a6]">2 jam lalu</span>
-        </div>
-        <p className="mt-2 text-[13px] leading-snug text-white">
-          BANJIR BESAR MELANDA JAKARTA SELATAN HARI INI!! Pemerintah TUTUP-TUTUPI.
-        </p>
-        <div className="mt-2 flex aspect-video items-center justify-center border border-[#38444d] bg-[#1c2a38] font-mono text-[10px] text-[#8899a6]">
-          [ foto ]
-        </div>
+          {i < flow.length - 1 && <span className="font-mono text-text">→</span>}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/* ── Step 4: the 5 endings ───────────────────────────────── */
+
+function StepEndings({ endings }: { endings: (typeof ENDINGS)['id'] }) {
+  return (
+    <div className="space-y-1.5">
+      {endings.map((e) => (
         <div
-          className={`mt-2 font-mono text-xs font-bold ${
-            over ? 'animate-pulse-danger text-danger' : 'text-[#8899a6]'
+          key={e.id}
+          className={`border-2 border-border px-3 py-1.5 font-mono text-[11px] ${
+            e.id === 'hero' ? 'bg-success text-white' : 'bg-panel text-text'
           }`}
         >
-          🔄 {count.toLocaleString()} share
+          {e.emoji} {e.title}
         </div>
-      </div>
-      <button
-        onClick={() => setCount((c) => c + 1500)}
-        disabled={over}
-        className="mt-3 w-full border-2 border-border bg-accent py-2 font-mono text-xs font-bold tracking-wider text-border transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:bg-panel disabled:text-muted"
-      >
-        {T.s1.spreadBtn}
-      </button>
-      <p className="mt-2 font-mono text-[10px] leading-relaxed text-muted">
-        {over ? '⚠ ' + T.s6.fail : T.s1.hint}
-      </p>
-    </StepShell>
-  );
-}
-
-/* ── Step 2: status bar + focus points ───────────────────── */
-
-function StepStatusBar({ T }: { T: TutorialStrings }) {
-  const TOOLS = [
-    { id: 'rev', label: T.s2.tools[0] },
-    { id: 'acc', label: T.s2.tools[1] },
-    { id: 'news', label: T.s2.tools[2] },
-  ];
-  const [focus, setFocus] = useState(5);
-  const [opened, setOpened] = useState<string[]>([]);
-  const [active, setActive] = useState<string | null>(null);
-  const [lastFree, setLastFree] = useState(false);
-
-  const click = (id: string) => {
-    if (opened.includes(id)) {
-      setActive(id);
-      setLastFree(true);
-      return;
-    }
-    if (focus <= 0) return;
-    setOpened((o) => [...o, id]);
-    setFocus((f) => f - 1);
-    setActive(id);
-    setLastFree(false);
-  };
-
-  return (
-    <StepShell title={T.s2.title} body={T.s2.body}>
-      <div className="flex flex-wrap items-center gap-2 border-2 border-border bg-panel2 px-3 py-2">
-        <span className="font-mono text-[10px] font-bold text-muted">{T.s2.focusLabel}</span>
-        <div className="flex gap-1">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <span key={i} className={`size-2.5 border border-border ${i < focus ? 'bg-accent' : 'bg-panel'}`} />
-          ))}
-        </div>
-        <span className="font-mono text-xs font-bold text-text">{focus}/5</span>
-      </div>
-
-      <div className="mt-2 flex flex-wrap gap-2">
-        {TOOLS.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => click(t.id)}
-            className={`border-2 border-border px-2.5 py-1.5 font-mono text-[11px] font-bold transition ${
-              active === t.id
-                ? 'bg-accent text-border shadow-[2px_2px_0_0_#1f1b16]'
-                : 'bg-panel text-muted hover:bg-accent/40'
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-
-      <p className="mt-2 min-h-8 font-mono text-[10px] leading-relaxed text-warning">
-        {lastFree && T.s2.freeReopen}
-      </p>
-    </StepShell>
-  );
-}
-
-/* ── Step 3: reverse image match ──────────────────────────── */
-
-function StepReverse({ T }: { T: TutorialStrings }) {
-  const [status, setStatus] = useState<'idle' | 'wrong' | 'won'>('idle');
-  const [shake, setShake] = useState<number | null>(null);
-
-  const click = (i: number) => {
-    if (status === 'won') return;
-    if (i === 2) {
-      setStatus('won');
-    } else {
-      setStatus('wrong');
-      setShake(i);
-      window.setTimeout(() => setShake(null), 450);
-    }
-  };
-
-  return (
-    <StepShell title={T.s3.title} body={T.s3.body}>
-      <div className="grid grid-cols-2 gap-2">
-        {T.s3.results.map((label, i) => (
-          <button
-            key={i}
-            onClick={() => click(i)}
-            className={`flex flex-col overflow-hidden border-2 border-border text-left transition ${
-              status === 'won' && i === 2
-                ? 'animate-pop-in border-success bg-success text-white'
-                : status === 'wrong' && shake === i
-                  ? 'animate-shake border-danger bg-danger'
-                  : 'bg-panel hover:border-accent'
-            }`}
-          >
-            <div className="flex aspect-[4/3] items-center justify-center bg-panel2 font-mono text-[10px] text-muted">
-              [ {i + 1} ]
-            </div>
-            <div className="p-1.5 font-mono text-[10px] text-text">{label}</div>
-          </button>
-        ))}
-      </div>
-      <p
-        className={`mt-2 min-h-8 font-mono text-xs font-bold ${
-          status === 'won' ? 'text-success' : status === 'wrong' ? 'text-warning' : 'text-muted'
-        }`}
-      >
-        {status === 'won' ? T.s3.win : status === 'wrong' ? T.s3.wrong : ''}
-      </p>
-    </StepShell>
-  );
-}
-
-/* ── Step 4: missing coverage ─────────────────────────────── */
-
-function StepNews({ T }: { T: TutorialStrings }) {
-  const [confirmed, setConfirmed] = useState(false);
-  return (
-    <StepShell title={T.s4.title} body={T.s4.body}>
-      <div className="space-y-1.5">
-        {T.s4.headlines.map((h, i) => (
-          <div key={i} className="border-2 border-border bg-panel p-2 text-[11px] text-text">
-            {h}
-          </div>
-        ))}
-      </div>
-      <button
-        onClick={() => setConfirmed(true)}
-        disabled={confirmed}
-        className={`mt-3 w-full border-2 py-2 font-mono text-xs font-bold tracking-wider transition ${
-          confirmed
-            ? 'animate-pop-in border-success bg-success text-white'
-            : 'border-warning bg-warning text-white hover:bg-warning/90'
-        }`}
-      >
-        {confirmed ? T.s4.confirmed : T.s4.confirmBtn}
-      </button>
-    </StepShell>
-  );
-}
-
-/* ── Step 5: verdict demo ─────────────────────────────────── */
-
-function StepVerdict({ T }: { T: TutorialStrings }) {
-  const [v, setV] = useState<number | null>(null);
-  const [a, setA] = useState<number | null>(null);
-  const [result, setResult] = useState<'idle' | 'won' | 'lose'>('idle');
-
-  const submit = () => {
-    if (v === null || a === null) return;
-    setResult(v === 1 && a === 1 ? 'won' : 'lose');
-  };
-
-  return (
-    <StepShell title={T.s5.title} body={T.s5.body}>
-      <div className="space-y-1.5">
-        {T.s5.verdicts.map((label, i) => (
-          <label
-            key={i}
-            className={`flex cursor-pointer items-center gap-2 border-2 border-border px-2.5 py-1.5 text-xs transition ${
-              v === i ? 'bg-accent text-border' : 'bg-panel text-text hover:bg-accent/30'
-            }`}
-          >
-            <input type="radio" checked={v === i} onChange={() => setV(i)} className="accent-border" />
-            {label}
-          </label>
-        ))}
-      </div>
-      <div className="mt-2 space-y-1.5">
-        {T.s5.actions.map((label, i) => (
-          <label
-            key={i}
-            className={`flex cursor-pointer items-center gap-2 border-2 border-border px-2.5 py-1.5 text-xs transition ${
-              a === i ? 'bg-accent text-border' : 'bg-panel text-text hover:bg-accent/30'
-            }`}
-          >
-            <input type="radio" checked={a === i} onChange={() => setA(i)} className="accent-border" />
-            {label}
-          </label>
-        ))}
-      </div>
-      <button
-        onClick={submit}
-        disabled={v === null || a === null}
-        className="mt-3 w-full border-2 border-border bg-accent py-2 font-mono text-xs font-bold tracking-wider text-border transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:bg-panel disabled:text-muted"
-      >
-        {T.s5.submit}
-      </button>
-      <p
-        className={`mt-2 min-h-8 font-mono text-xs font-bold ${
-          result === 'won' ? 'text-success' : result === 'lose' ? 'text-warning' : 'text-muted'
-        }`}
-      >
-        {result === 'won' ? T.s5.win : result === 'lose' ? T.s5.lose : ''}
-      </p>
-    </StepShell>
-  );
-}
-
-/* ── Step 6: score + fail conditions ──────────────────────── */
-
-function StepScore({ T }: { T: TutorialStrings }) {
-  const [fill, setFill] = useState(0.35);
-  const failed = fill >= 1;
-
-  return (
-    <StepShell title={T.s6.title} body={T.s6.body}>
-      <div className="border-2 border-border bg-panel2 p-3">
-        <div className="mb-1 flex items-center justify-between font-mono text-[10px] text-muted">
-          <span>📊 Share counter</span>
-          <span className="tabular-nums text-text">{Math.round(fill * 100)}%</span>
-        </div>
-        <div className="h-2.5 overflow-hidden border border-border bg-panel">
-          <div
-            className={`h-full transition-all duration-500 ${
-              fill >= 0.9 ? 'bg-danger' : fill >= 0.7 ? 'bg-warning' : 'bg-accent'
-            }`}
-            style={{ width: `${Math.min(100, fill * 100)}%` }}
-          />
-        </div>
-        <div className="mt-2 flex justify-between font-mono text-[9px] text-muted">
-          <span>0</span>
-          <span className={fill >= 0.7 ? 'font-bold text-warning' : ''}>70% ⚠</span>
-          <span className={fill >= 0.9 ? 'font-bold text-danger' : ''}>90% 🔴</span>
-          <span>100% = GAGAL</span>
-        </div>
-      </div>
-
-      {failed ? (
-        <div className="animate-pop-in mt-3 border-2 border-danger bg-danger/10 p-3">
-          <p className="font-mono text-xs font-bold text-danger">{T.s6.fail}</p>
-          <p className="mt-1 font-mono text-[10px] text-text">{T.s6.scoreLine}</p>
-        </div>
-      ) : (
-        <button
-          onClick={() => setFill((f) => f + 0.22)}
-          className="mt-3 w-full border-2 border-border bg-danger py-2 font-mono text-xs font-bold tracking-wider text-white transition hover:bg-danger/90"
-        >
-          {T.s6.spreadBtn}
-        </button>
-      )}
-    </StepShell>
+      ))}
+    </div>
   );
 }
