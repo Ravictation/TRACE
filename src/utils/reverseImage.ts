@@ -12,6 +12,10 @@
 
 const API_BASE = 'https://api-search-similarity-image.onrender.com';
 
+/** Provider used for similar-image search. The server defaults to Brave,
+ *  but reverse image runs on SerpAPI (Google Lens) — pass it explicitly. */
+const SEARCH_PROVIDER = 'serpapi';
+
 export interface ReverseImageResult {
   title: string;
   source: string;
@@ -76,8 +80,8 @@ function normalizeResults(raw: unknown): ReverseImageResult[] {
     items = raw;
   } else if (raw && typeof raw === 'object') {
     const obj = raw as Record<string, unknown>;
-    // common provider key names
-    for (const key of ['image_results', 'images', 'items', 'results', 'related_images', 'inline_images']) {
+    // common provider key names (serpapi Google Lens uses visual_matches)
+    for (const key of ['image_results', 'images', 'items', 'results', 'related_images', 'inline_images', 'visual_matches']) {
       const v = obj[key];
       if (Array.isArray(v)) {
         items = v;
@@ -116,11 +120,15 @@ async function uploadImage(png: Blob, signal: AbortSignal): Promise<string> {
 async function searchByPath(imagePath: string, signal: AbortSignal): Promise<ReverseImageSearchOutcome> {
   const url = new URL(`${API_BASE}/search-image/search`);
   url.searchParams.set('image_path', imagePath);
+  url.searchParams.set('provider', SEARCH_PROVIDER);
   const res = await fetch(url.toString(), { method: 'POST', signal });
-  if (!res.ok) throw new Error(`search failed: HTTP ${res.status}`);
-  const json = (await res.json()) as SearchResponse;
-  if (json.status_code !== 200 || !json.data) {
-    throw new Error(typeof json.error === 'string' ? json.error : json.message ?? 'search error');
+  const json = (await res.json().catch(() => null)) as SearchResponse | null;
+  if (!res.ok) {
+    const detail = json?.message ?? (typeof json?.error === 'string' ? json.error : undefined) ?? `HTTP ${res.status}`;
+    throw new Error(detail);
+  }
+  if (!json || json.status_code !== 200 || !json.data) {
+    throw new Error(typeof json?.error === 'string' ? json.error : (json?.message ?? 'search error'));
   }
   return {
     source: json.data.source ?? 'mesin pencari',

@@ -8,7 +8,7 @@ type Status =
   | { kind: 'loading' }
   | { kind: 'done'; outcome: ReverseImageSearchOutcome }
   | { kind: 'empty' }
-  | { kind: 'error' };
+  | { kind: 'error'; detail: string };
 
 /**
  * Live reverse-image search for a mini-game tab: uploads the hoax image to
@@ -32,8 +32,8 @@ export default function ReverseImagePanel({
       setStatus(
         outcome.results.length > 0 ? { kind: 'done', outcome } : { kind: 'empty' },
       );
-    } catch {
-      setStatus({ kind: 'error' });
+    } catch (err) {
+      setStatus({ kind: 'error', detail: err instanceof Error ? err.message : String(err) });
     }
   };
 
@@ -102,9 +102,12 @@ export default function ReverseImagePanel({
       )}
 
       {status.kind === 'error' && (
-        <p className="animate-pop-in mt-2 border-2 border-border bg-panel p-2 font-mono text-[10px] leading-relaxed text-muted">
-          {T.reverseImage.error}
-        </p>
+        <div className="animate-pop-in mt-2 border-2 border-border bg-panel p-2">
+          <p className="font-mono text-[10px] leading-relaxed text-muted">{T.reverseImage.error}</p>
+          <p className="mt-1 break-words font-mono text-[9px] leading-relaxed text-muted/70">
+            {status.detail}
+          </p>
+        </div>
       )}
     </div>
   );
