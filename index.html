@@ -1,26 +1,106 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1c1917" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+    <!-- Primary SEO -->
+    <title>Hoax Defender: Anton’s Dilemma — Game Edukasi Anti Hoaks</title>
     <meta
       name="description"
-      content="Hoax Defender: Anton's Dilemma — live a day as Anton Wibowo and protect his family from hoaxes, scams, and panic."
+      content="Game literasi digital bilingual (ID/EN). Jalani satu hari Anton Wibowo, korban PHK yang rentan hoaks — lindungi keluarganya dari penipuan kerja, panic buying, hoaks bencana & kesehatan. Main gratis di browser."
     />
+    <link rel="canonical" href="https://trace-game-xi.vercel.app/" />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Hoax Defender: Anton's Dilemma" />
+    <meta property="og:site_name" content="Hoax Defender: Anton’s Dilemma" />
+    <meta property="og:title" content="Hoax Defender: Anton’s Dilemma — Game Edukasi Anti Hoaks" />
     <meta
       property="og:description"
-      content="A bilingual hoax-defense story game. One panicked click can ruin everything — in Indonesian & English."
+      content="Satu klik panik bisa menghancurkan segalanya. Game naratif cek fakta bilingual (ID/EN) untuk melatih ketahanan terhadap hoaks."
     />
+    <meta property="og:url" content="https://trace-game-xi.vercel.app/" />
     <meta property="og:image" content="https://trace-game-xi.vercel.app/icon.png" />
+    <meta property="og:image:alt" content="Hoax Defender: Anton’s Dilemma" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <title>Hoax Defender: Anton's Dilemma</title>
+    <meta name="twitter:title" content="Hoax Defender: Anton’s Dilemma — Game Edukasi Anti Hoaks" />
+    <meta
+      name="twitter:description"
+      content="Game naratif cek fakta bilingual (ID/EN). Lindungi keluarga Anton dari hoaks, penipuan, dan kepanikan massal."
+    />
+    <meta name="twitter:image" content="https://trace-game-xi.vercel.app/icon.png" />
+
+    <!-- Structured data — helps Google understand this is a free educational game -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Hoax Defender: Anton’s Dilemma",
+      "alternateName": "Hoax Defender",
+      "description": "Game naratif edukasi anti-hoaks bilingual (Indonesia & Inggris). Pemain menjalani satu hari Anton Wibowo, ayah 45 tahun korban PHK, dan melindungi keluarganya dari hoaks, penipuan online, panic buying, dan disinformasi lewat 5 event cek fakta dengan 5 kemungkinan ending.",
+      "url": "https://trace-game-xi.vercel.app/",
+      "image": "https://trace-game-xi.vercel.app/icon.png",
+      "inLanguage": ["id", "en"],
+      "genre": ["Educational game", "Interactive fiction", "Simulation game"],
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any (Web browser)",
+      "playMode": "SinglePlayer",
+      "gamePlatform": "Web browser",
+      "educationalUse": "Media and information literacy, fact-checking, digital resilience",
+      "about": ["hoaks", "disinformasi", "literasi digital", "cek fakta", "penipuan online", "media literacy"],
+      "keywords": "hoax, hoaks, disinformasi, literasi digital, cek fakta, fact checking, game edukasi, anti hoax, Indonesia",
+      "author": {
+        "@type": "Organization",
+        "name": "TRACE",
+        "url": "https://trace-game-xi.vercel.app/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "TRACE",
+        "url": "https://trace-game-xi.vercel.app/"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      },
+      "datePublished": "2026-08-14"
+    }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Fallback content for crawlers & users before the app hydrates -->
+      <main style="max-width: 40rem; margin: 4rem auto; padding: 0 1.5rem; font-family: monospace">
+        <h1>Hoax Defender: Anton’s Dilemma</h1>
+        <p>
+          Game literasi digital bilingual (ID/EN). Jalani satu hari Anton Wibowo — ayah 45 tahun
+          korban PHK yang rapuh terhadap hoaks. Periksa pesan WhatsApp, video TikTok, dan postingan
+          Facebook; selesaikan mini-game cek fakta; dan tentukan nasib keluarganya lewat 5 kemungkinan ending.
+        </p>
+        <p>🕵️ Main gratis di browser — tanpa instalasi, tanpa daftar.</p>
+      </main>
+    </div>
+    <noscript>
+      <main style="max-width: 40rem; margin: 4rem auto; padding: 0 1.5rem; font-family: monospace">
+        <h1>Hoax Defender: Anton’s Dilemma</h1>
+        <p>
+          Game literasi digital bilingual (ID/EN) yang melatih ketahanan terhadap hoaks, penipuan
+          online, dan kepanikan massal lewat 5 event cek fakta dan 5 kemungkinan ending.
+        </p>
+        <p>Aktifkan JavaScript untuk memainkan game ini.</p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

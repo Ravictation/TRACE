@@ -136,6 +136,11 @@ scripts/
 2. (Opsional) ubah ending di `src/data/endings.ts` dan trigger di `utils/score.ts`
 3. Label UI baru → `src/i18n/strings.ts`
 
+## 🔎 SEO
+
+- Meta description + Open Graph + Twitter card lengkap dan **JSON-LD `VideoGame`** (schema.org) di `index.html` — konten fallback juga disediakan untuk crawler tanpa JS
+- `public/robots.txt` + `public/sitemap.xml` — submit sitemap di [Google Search Console](https://search.google.com/search-console) agar cepat terindeks
+
 ## 📄 Dokumen Terkait
 
 - `MD_MVP_new_1 (1).md` — proposal MVP + spesifikasi UI terbaru (sistem tab & dropdown, spesifikasi game ini)
